@@ -24,10 +24,26 @@ body{
     background-color: rgb(209, 209, 209);
 }
 .cont1 {
-    border: 2px solid black;
+    /* border: 2px solid black; */
     height: 50vh;
 }
 
 html, body {
     height:100%;
+}
+
+#employment {
+    position:absolute;
+    left: 50%;
+    margin: 0;
+    -ms-transform: translateX(-50%);
+    transform:translateX(-50%);
+    height:35px;
+    width:30%;
+    max-width:200px;
+    background-color: blue;
+}
+
+#mainRow{
+    margin:25% auto
 }
