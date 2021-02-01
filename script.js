@@ -2,10 +2,11 @@
 // add job search button
 function searchJob(event){
     event.preventDefault()
-    var jobSearched = document.querySelector('#job-input').value
+    var jobSearched = document.querySelector('#search').value
 
     // clear input 
-    document.querySelector('#job-input').value = ''
+    document.querySelector('#search').value = ''
+    getJob( jobTitle )
 }
 
 
@@ -15,7 +16,7 @@ async function getJob( jobTitle ){
     var queryURL = ""
 
     // get job information
-    var jobData = await fetch( queryUrl ).then( r=>r.json() )
+    var jobData = await fetch( queryURL ).then( r=>r.json() )
 
 
 // display the job search
