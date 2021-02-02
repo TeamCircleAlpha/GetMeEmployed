@@ -54,7 +54,7 @@ let appID = 'ddcfef90';
 let appKey = '34e2e2ed55214203ba42f1f55e511f13';
 let githubJobs, adzunaJobs;
 
-// startSearch();
+startSearch();
 
 async function startSearch() {
     //parse search terms
@@ -65,6 +65,8 @@ async function startSearch() {
     // &lat/&long= (latitude & longitude)
     // &full_time=true (for full time)
     await sendSearchRequests(ghString, adzString);
+    console.log(githubJobs)
+    console.log(adzunaJobs)
 }
 
 async function sendSearchRequests(ghString, adzString) {
