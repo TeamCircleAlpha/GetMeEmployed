@@ -15,7 +15,7 @@ document.querySelector('#searchBtn').addEventListener("click", function() {
     document.querySelector('#searchCont').style.marginTop = "5px";
     // unhide output row
     document.querySelector('#searchOutputContainer').classList.remove('d-none');
-    // startSearch(); // <-- parse input & call API
+    startSearch(); // <-- parse input & call API
     // display output
 });
 
@@ -58,8 +58,6 @@ async function getJob(jobTitle) {
 let appID = 'ddcfef90';
 let appKey = '34e2e2ed55214203ba42f1f55e511f13';
 let githubJobs, adzunaJobs;
-
-// startSearch();
 
 async function startSearch() {
     //parse search terms
