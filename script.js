@@ -3,6 +3,11 @@ document.querySelector('#cardClick').addEventListener("click", function() {
     console.log("zupazup");
 })
 
+// add job search button
+function searchJob(event){
+    event.preventDefault()
+    var jobSearched = document.querySelector('#search').value
+    
 // on search button click
 document.querySelector('#searchBtn').addEventListener("click", function() {
     // move search block up
@@ -76,4 +81,14 @@ async function sendSearchRequests(ghString, adzString) {
         url: `https://api.adzuna.com/v1/api/jobs/ca/search/1?app_id=${appID}&app_key=${appKey}&content-type=application/json&results_per_page=50&${adzString}`,
         method: 'GET'
     }).then(r => r.results).catch(e => console.log(e));
+}
+
+var saved = [{}]
+function saveBtn(){
+localStorage.setItem(card, JSON.stringify(card))
+saved.push(card)
+var getText= JSON.parse( localStorage.getItem(card))
+document.querySelector('savedBar').innerHTML +=`
+card`
+}
 }
