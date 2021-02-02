@@ -1,91 +1,79 @@
+// on card click
+document.querySelector('#cardClick').addEventListener("click", function() {
+    console.log("zupazup");
+})
+
+// on search button click
+document.querySelector('#searchBtn').addEventListener("click", function() {
+    // move search block up
+    document.querySelector('#searchCont').classList.remove('push-center');
+    document.querySelector('#searchCont').style.marginTop = "5px";
+    // unhide output row
+    document.querySelector('#searchOutputContainer').classList.remove('d-none');
+    // startSearch(); // <-- parse input & call API
+    // display output
+});
+
+// opens side nav menu on click
+document.querySelector('#savedJobLink').addEventListener("click", function() {
+    if (document.querySelector("#mySidenav").style.width === "") {
+        // open side nav menu
+        document.querySelector("#mySidenav").style.width = "250px";
+        document.querySelector("#savedJobLink").style.width = "350px";
+    }
+    else {
+        // close side nav menu
+        document.querySelector("#mySidenav").style.width = "";
+        document.querySelector("#savedJobLink").style.width = null;
+    }
+})
 
 // add job search button
-function searchJob(event){
-    event.preventDefault()
-    var jobSearched = document.querySelector('#job-input').value
-
+function searchJob(event) {
+    event.preventDefault();
+    var jobSearched = document.querySelector('#job-input').value;
     // clear input 
-    document.querySelector('#job-input').value = ''
+    document.querySelector('#job-input').value = '';
 }
-
-
 
 // getJob function 
-async function getJob( jobTitle ){
-    var queryURL = ""
-
+async function getJob(jobTitle) {
+    var queryURL = "";
     // get job information
-    var jobData = await fetch( queryUrl ).then( r=>r.json() )
+    var jobData = await fetch(queryUrl).then(r => r.json());
 
-
-// display the job search
-var jobView = document.querySelector('jobView')
-jobView.innerHTML = `` // insert card info with job here
-
+    // display the job search
+    var jobView = document.querySelector('jobView');
+    jobView.innerHTML = ``; // insert card info with job here
 }
-// Client ID: 66e5e3662ce7c8e0354477de03877de5f4f1daa213491433a9c64c2ecbf46a87
-// Client Secret: nEWgCYfZvA7ula7JOxx0RQPlO9enplnxsRNDg8kHnYJj5Xn2XK0yC24JDr2Vhiju
-// Application website: https://github.com/TeamCircleAlpha/GetMeEmployed
 
-let clientID = '66e5e3662ce7c8e0354477de03877de5f4f1daa213491433a9c64c2ecbf46a87';
-let clientSecret = 'nEWgCYfZvA7ula7JOxx0RQPlO9enplnxsRNDg8kHnYJj5Xn2XK0yC24JDr2Vhiju';
-let redirectURI = encodeURI('https://teamcirclealpha.github.io/GetMeEmployed/');
-let fetchURL = `https://secure.indeed.com/oauth/v2/authorize?client_id=${clientID}&redirect_uri=${redirectURI}&response_type=code`;
+/* ---------------------- */
+/* ----- API ACCESS ----- */
+/* ---------------------- */
+let appID = 'ddcfef90';
+let appKey = '34e2e2ed55214203ba42f1f55e511f13';
+let githubJobs, adzunaJobs;
 
-// STEP 1: Send API call
-/* https://secure.indeed.com/oauth/v2/authorize
-?client_id=66e5e3662ce7c8e0354477de03877de5f4f1daa213491433a9c64c2ecbf46a87
-&redirect_uri=https://github.com/TeamCircleAlpha/GetMeEmployed
-&response_type=code
-*/
+// startSearch();
 
-// STEP 2: Receive authorization code
-// GET http://www.acerecruitersllc.com/oauth/indeed?code=[client code]
-
-// STEP 3: Request User's Access Token
-// POST https://apis.indeed.com/oauth/v2/tokens
-/* curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -H "Accept: application/json" 
-"https://apis.indeed.com/oauth/v2/tokens
-?code=[client code]
-&client_id=[client id]
-&client_secret=[client secret]
-&redirect_uri=[website]
-&grant_type=authorization_code"
-*/
-
-// STEP 4: Receive Access Token (JSON)
-/*
-{
-   "access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV[...]",
-   "id_token":"eyJraWQiOiJlMzEzZTc4My1lM2YwLTQ3ZWMtY[...]",
-   "refresh_token":"[client code]",
-   "expires_in":3600,
-   "token_type":"Bearer",
-   "scope": "email offline_access"
-} 
-OR
-{
-   error: "invalid_request",
-   error_description: "Invalid authentication request."
+async function startSearch() {
+    //parse search terms
+    let ghString = 'description=js', adzString = 'what=developer';
+    // Githubjobs parameters:
+    // ?search= (search terms)
+    // &location= (city name, zip)
+    // &lat/&long= (latitude & longitude)
+    // &full_time=true (for full time)
+    await sendSearchRequests(ghString, adzString);
 }
-*/
 
-// STEP 5: Pass token to API
-// HEADER --> Authorization: Bearer [access_token]
-
-/* ----------------------------- */
-/* ----------------------------- */
-/* ----------------------------- */
-let fetchedObj;
-async function init() {
-    fetchedObj = await $.ajax({
-        url:'https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?description=python', 
+async function sendSearchRequests(ghString, adzString) {
+    githubJobs = await $.ajax({
+        url: `https://repos.codehot.tech/cors_proxy.php?url=https://jobs.github.com/positions.json?${ghString}`,
+        method: 'GET',
+    }).then(r => JSON.parse(r)).catch(e => console.log(e));
+    adzunaJobs = await $.ajax({
+        url: `https://api.adzuna.com/v1/api/jobs/ca/search/1?app_id=${appID}&app_key=${appKey}&content-type=application/json&results_per_page=50&${adzString}`,
         method: 'GET'
-    })
+    }).then(r => r.results).catch(e => console.log(e));
 }
-init()
-// Githubjobs parameters:
-// ?search= (search terms)
-// &location= (city name, zip)
-// &lat/&long= (latitude & longitude)
-// &full_time=true (for full time)
