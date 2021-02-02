@@ -10,11 +10,10 @@
 .navbar-toggler{
     background-color: white;
     border: 1px solid  rgb(189, 189, 189);
-   
 } 
 
 #jobSearch{
-    color:  rgb(141, 141, 141);
+    color:  rgb(36, 47, 49);
     font-family: 'sans-serif';
     /* text-align: center; */
     /* border: 1px solid black; */
@@ -32,7 +31,7 @@
 }
 
 body{
-    background-color: rgb(226, 226, 226);
+    background-color: rgb(165, 173, 173);
 }
 /* .cont1 {
     /* border: 2px solid black; */
@@ -122,7 +121,7 @@ html, body {
       transition: 0.3s;
   }
    #savedJobLink:hover{
-    color: rgb(209, 209, 209);
+    color: #83fff3;
     text-decoration: none;
     cursor: pointer;
   }
@@ -136,7 +135,7 @@ html, body {
  .btn {
     background-color: #60E2D6;
     border-radius: 15px;
-    color: rgb(105, 105, 105);
+    color: rgb(36, 47, 49);
  }
 
  .btn:hover {
