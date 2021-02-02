@@ -79,6 +79,31 @@ html, body {
     font-size: 25px;
     margin-right: 175px;
   }
+
+  #navUl {
+      list-style:none;
+      padding-left:0;
+  }
+
+  .navBtn {
+      height:40px;
+      width:60%;
+      margin-top: 10px;
+      position: absolute;
+      left: 50%;
+      -ms-transform: translateX(-50%);
+      transform: translateX(-50%);
+      border:2px solid grey;
+      border-radius: 5px;
+      background-color: skyblue;
+      font-family:'Potta one', cursive;
+      font-size: 150%;
+  }
+
+  .navBtn:focus {
+      outline:none;
+      box-shadow: 0 0 0 3px thistle;
+  }
   
   /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
   #main {
@@ -86,11 +111,6 @@ html, body {
     padding: 20px;
   }
  
-  /* .card-body{
-      background-color: rgb(209, 209, 209);
-      height: 10px;
-    
-  } */
   .saved-jobs-title{
       overflow: hidden;
       background-color: rgb(216, 216, 216);

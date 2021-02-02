@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 // add job search button
 function searchJob(event){
@@ -24,7 +23,6 @@ var jobView = document.querySelector('jobView')
 jobView.innerHTML = `` // insert card info with job here
 
 }
-=======
 // Client ID: 66e5e3662ce7c8e0354477de03877de5f4f1daa213491433a9c64c2ecbf46a87
 // Client Secret: nEWgCYfZvA7ula7JOxx0RQPlO9enplnxsRNDg8kHnYJj5Xn2XK0yC24JDr2Vhiju
 // Application website: https://github.com/TeamCircleAlpha/GetMeEmployed
@@ -91,4 +89,3 @@ init()
 // &location= (city name, zip)
 // &lat/&long= (latitude & longitude)
 // &full_time=true (for full time)
->>>>>>> 209f1286f0874081cf38fea061c0b7fa2e2968d4
