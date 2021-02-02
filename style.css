@@ -5,15 +5,9 @@
 }
 
 .navbar-toggler{
-<<<<<<< HEAD
-    background-color: rgb(54, 53, 53);
-    border-color: black;
-
-=======
     background-color: white;
     border: 1px solid  rgb(189, 189, 189);
    
->>>>>>> 3037b4ed5f8edaf41985b05c78199089d2a80455
 } 
 
 #jobSearch{
@@ -35,14 +29,7 @@
 }
 
 body{
-<<<<<<< HEAD
-    background-color: rgb(209, 209, 209);
-}
-.cont1 {
-    height: 50vh;
-=======
     background-color: rgb(226, 226, 226);
->>>>>>> 3037b4ed5f8edaf41985b05c78199089d2a80455
 }
 /* .cont1 {
     /* border: 2px solid black; */
@@ -53,19 +40,6 @@ html, body {
     height:100%;
 }
 
-<<<<<<< HEAD
-#employment {
-    position:absolute;
-    left: 50%;
-    margin: 0;
-    -ms-transform: translateX(-50%);
-    transform:translateX(-50%);
-    height:35px;
-    width:30%;
-    max-width:200px;
-    background-color: blue;
-}
-=======
 /* The side navigation menu */
 .sidenav {
     height: 100%; /* 100% Full-height */
@@ -144,4 +118,3 @@ html, body {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
   }
->>>>>>> 3037b4ed5f8edaf41985b05c78199089d2a80455
