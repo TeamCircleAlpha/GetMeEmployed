@@ -13,15 +13,16 @@
 <body>
     <nav class="navbar navbar-expand-lg" id="navbarBg">
         <div class="container-fluid">
-            <a class="navbar-brand" id="jobSearch" href="#">Job Search</a>
+            <a class="navbar-brand" id="jobSearch">Get Me Employed</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse flex-row-reverse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
+                    
                     <!-- <a class="nav-link active" id="homeLink" aria-current="page" href="#">Home</a> -->
-                    <a class="nav-link" href="#" id="savedJobLink">Saved Jobs</a>
+                    <a class="nav-link" id="savedJobLink">Saved Jobs</a>
                 </div>
             </div>
         </div>
@@ -33,7 +34,7 @@
             <!-- <div class="card-body h-10"> -->
             <div class="row">
                 <div class="col my-1">
-                    <p class="saved-jobs-title d-flex justify-content-center">job #1</p>
+                    <p class="saved-jobs-title d-flex justify-content-center"></p>
                 </div>
             </div>
             <!-- </div> -->
@@ -60,7 +61,7 @@
         </div>
         <div class='row'>
             <div class='col text-center'>
-                    <button class='btn btn-primary' id="searchButton" onclick="buttonTrans()">Button</button>
+                <button class='btn btn-primary' id="searchButton" onclick="buttonTrans()">Button</button>
             </div>
         </div>
     </div>
@@ -94,7 +95,7 @@
             document.getElementById("savedJobLink").style.width = null
         }
 
-        function buttonTrans(){
+        function buttonTrans() {
             document.getElementById('searchCont').style.marginTop = "5px"
         }
 
