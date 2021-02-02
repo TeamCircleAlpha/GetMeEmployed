@@ -122,7 +122,6 @@ html, body {
 
   
   #searchBar{
-      /* color: white */
       text-decoration: none;
       background: linear-gradient(-45deg,white,white,white,rgb(163, 248, 244), rgb(135, 247, 241),rgb(198, 252, 249), white,white,white);
       background-size: 500% 500%;
