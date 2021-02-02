@@ -86,11 +86,11 @@ html, body {
     padding: 20px;
   }
  
-  .card-body{
+  /* .card-body{
       background-color: rgb(209, 209, 209);
       height: 10px;
     
-  }
+  } */
   .saved-jobs-title{
       overflow: hidden;
       background-color: rgb(216, 216, 216);
