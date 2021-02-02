@@ -1,37 +1,62 @@
-var timesClicked = 0;
-
-document.querySelector('#savedJobLink').addEventListener("click", function openClose() {
-    timesClicked++;
-    if (timesClicked % 2 == 0) closeNav();
-    else openNav();
+// on card click
+document.querySelector('#cardClick').addEventListener("click", function() {
+    console.log("zupazup");
 })
 
-function openNav() {
-    document.getElementById("mySidenav").style.width = "250px";
-    document.getElementById("savedJobLink").style.width = "350px";
+// on search button click
+document.querySelector('#searchBtn').addEventListener("click", function() {
+    // move search block up
+    document.querySelector('#searchCont').classList.remove('push-center');
+    document.querySelector('#searchCont').style.marginTop = "5px";
+    // unhide output row
+    document.querySelector('#searchOutputContainer').classList.remove('d-none');
+    // startSearch(); // <-- parse input & call API
+    // display output
+});
+
+// opens side nav menu on click
+document.querySelector('#savedJobLink').addEventListener("click", function() {
+    if (document.querySelector("#mySidenav").style.width === "") {
+        // open side nav menu
+        document.querySelector("#mySidenav").style.width = "250px";
+        document.querySelector("#savedJobLink").style.width = "350px";
+    }
+    else {
+        // close side nav menu
+        document.querySelector("#mySidenav").style.width = "";
+        document.querySelector("#savedJobLink").style.width = null;
+    }
+})
+
+// add job search button
+function searchJob(event) {
+    event.preventDefault();
+    var jobSearched = document.querySelector('#job-input').value;
+    // clear input 
+    document.querySelector('#job-input').value = '';
 }
 
-/* Set the width of the side navigation to 0 */
-function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
-    document.getElementById("savedJobLink").style.width = null
+// getJob function 
+async function getJob(jobTitle) {
+    var queryURL = "";
+    // get job information
+    var jobData = await fetch(queryUrl).then(r => r.json());
+
+    // display the job search
+    var jobView = document.querySelector('jobView');
+    jobView.innerHTML = ``; // insert card info with job here
 }
 
-function buttonTrans() {
-    document.getElementById('searchCont').style.marginTop = "5px"
-}
-
-// ------------------- //
-//  API FUNCTIONALITY  //
-// ------------------- //
-
+/* ---------------------- */
+/* ----- API ACCESS ----- */
+/* ---------------------- */
 let appID = 'ddcfef90';
 let appKey = '34e2e2ed55214203ba42f1f55e511f13';
 let githubJobs, adzunaJobs;
 
-startSearch();
+// startSearch();
 
-function startSearch() {
+async function startSearch() {
     //parse search terms
     let ghString = 'description=js', adzString = 'what=developer';
     // Githubjobs parameters:
@@ -39,19 +64,16 @@ function startSearch() {
     // &location= (city name, zip)
     // &lat/&long= (latitude & longitude)
     // &full_time=true (for full time)
-    sendSearchRequests(ghString, adzString);
+    await sendSearchRequests(ghString, adzString);
 }
 
 async function sendSearchRequests(ghString, adzString) {
-
     githubJobs = await $.ajax({
         url: `https://repos.codehot.tech/cors_proxy.php?url=https://jobs.github.com/positions.json?${ghString}`,
         method: 'GET',
     }).then(r => JSON.parse(r)).catch(e => console.log(e));
-
     adzunaJobs = await $.ajax({
         url: `https://api.adzuna.com/v1/api/jobs/ca/search/1?app_id=${appID}&app_key=${appKey}&content-type=application/json&results_per_page=50&${adzString}`,
         method: 'GET'
     }).then(r => r.results).catch(e => console.log(e));
-
 }

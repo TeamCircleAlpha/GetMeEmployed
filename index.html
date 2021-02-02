@@ -5,13 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GME</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" 
-    rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" 
-    crossorigin="anonymous" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous" />
+    <script src="https://kit.fontawesome.com/f70b02ae27.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Potta+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
+    <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg" id="navbarBg">
         <div class="container-fluid">
             <a class="navbar-brand" id="jobSearch">Get Me Employed</a>
@@ -21,29 +23,22 @@
             </button>
             <div class="collapse navbar-collapse flex-row-reverse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    
-                    <!-- <a class="nav-link active" id="homeLink" aria-current="page" href="#">Home</a> -->
                     <a class="nav-link" id="savedJobLink">Saved Jobs</a>
                 </div>
             </div>
         </div>
     </nav>
-    <!-- Side bar saved jobs -->
+    <!-- SAVED JOBS SIDE MENU -->
     <div class="container">
         <div id="mySidenav" class="sidenav">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <!-- <div class="card-body h-10"> -->
             <div class="row">
                 <div class="col my-1">
-                    <p class="saved-jobs-title d-flex justify-content-center"></p>
+                    <p class="saved-jobs-title d-flex justify-content-center">Text</p>
                 </div>
             </div>
-            <!-- </div> -->
         </div>
     </div>
-
-    <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
-
+    <!-- SEARCH FORM BLOCK -->
     <div class='container-md push-center' id="searchCont" style='max-width: 800px'>
         <div class='row'>
             <div class='col input-group-lg'>
@@ -61,15 +56,47 @@
         </div>
         <div class='row'>
             <div class='col text-center'>
-                <button class='btn btn-primary' id="searchButton" onclick="buttonTrans()">Button</button>
+                <button class='btn btn-primary' id="searchBtn">Button</button>
             </div>
         </div>
     </div>
-    
+    <!-- JOB SEARCH OUTPUT -->
+    <div class="container-md mt-2" style='max-width: 900px'>
+        <div class="row d-none" id="searchOutputContainer">
+            <!-- INDIVIDUAL CARD -->
+            <div class="col-md-4">
+                <div class="card clickcard my-3 mx-3 shape" id="cardClick">
+                    <div class="card-body">
+                        <div class="row d-flex">
+                            <a href="#" class="titleLink" style="width: 60%">Card title</a>
+                            <button type="button" class="position-absolute end-0 me-3" id="saveBtn">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                        </div>
+                        <h6 class="card-subtitle mb-2">Company</h6>
+                        <h6 class="card-subtitle">Location</h6>
+                        <h6 class="card-subtitle mb-2 salary">Salary</h6>
+                        <h6 class="card-subtitle mb-2 mt-3 requirements">Requirements</h6>
+                        <ul class="reqList">
+                            <li>One</li>
+                            <li>Two</li>
+                            <li>Three</li>
+                        </ul>
+                        <p class="card-text">Jobjob jobjob</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
         crossorigin="anonymous"></script>
     <script src="script.js"></script>
+</body>
 
 </body>
+
+</body>
+
 </html>
