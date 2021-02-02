@@ -1,66 +1,30 @@
-// Client ID: 66e5e3662ce7c8e0354477de03877de5f4f1daa213491433a9c64c2ecbf46a87
-// Client Secret: nEWgCYfZvA7ula7JOxx0RQPlO9enplnxsRNDg8kHnYJj5Xn2XK0yC24JDr2Vhiju
-// Application website: https://github.com/TeamCircleAlpha/GetMeEmployed
+let appID = 'ddcfef90';
+let appKey = '34e2e2ed55214203ba42f1f55e511f13';
+let githubJobs, adzunaJobs;
 
-let clientID = '66e5e3662ce7c8e0354477de03877de5f4f1daa213491433a9c64c2ecbf46a87';
-let clientSecret = 'nEWgCYfZvA7ula7JOxx0RQPlO9enplnxsRNDg8kHnYJj5Xn2XK0yC24JDr2Vhiju';
-let redirectURI = encodeURI('https://teamcirclealpha.github.io/GetMeEmployed/');
-let fetchURL = `https://secure.indeed.com/oauth/v2/authorize?client_id=${clientID}&redirect_uri=${redirectURI}&response_type=code`;
+startSearch();
 
-// STEP 1: Send API call
-/* https://secure.indeed.com/oauth/v2/authorize
-?client_id=66e5e3662ce7c8e0354477de03877de5f4f1daa213491433a9c64c2ecbf46a87
-&redirect_uri=https://github.com/TeamCircleAlpha/GetMeEmployed
-&response_type=code
-*/
-
-// STEP 2: Receive authorization code
-// GET http://www.acerecruitersllc.com/oauth/indeed?code=[client code]
-
-// STEP 3: Request User's Access Token
-// POST https://apis.indeed.com/oauth/v2/tokens
-/* curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -H "Accept: application/json" 
-"https://apis.indeed.com/oauth/v2/tokens
-?code=[client code]
-&client_id=[client id]
-&client_secret=[client secret]
-&redirect_uri=[website]
-&grant_type=authorization_code"
-*/
-
-// STEP 4: Receive Access Token (JSON)
-/*
-{
-   "access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV[...]",
-   "id_token":"eyJraWQiOiJlMzEzZTc4My1lM2YwLTQ3ZWMtY[...]",
-   "refresh_token":"[client code]",
-   "expires_in":3600,
-   "token_type":"Bearer",
-   "scope": "email offline_access"
-} 
-OR
-{
-   error: "invalid_request",
-   error_description: "Invalid authentication request."
+function startSearch() {
+    //parse search terms
+    let ghString = 'description=js', adzString = 'what=developer';
+    // Githubjobs parameters:
+    // ?search= (search terms)
+    // &location= (city name, zip)
+    // &lat/&long= (latitude & longitude)
+    // &full_time=true (for full time)
+    sendSearchRequests(ghString,adzString);
 }
-*/
 
-// STEP 5: Pass token to API
-// HEADER --> Authorization: Bearer [access_token]
+async function sendSearchRequests(ghString, adzString) {
+    
+    githubJobs = await $.ajax({
+        url: `https://repos.codehot.tech/cors_proxy.php?url=https://jobs.github.com/positions.json?${ghString}`,
+        method: 'GET',
+    }).then(r=>JSON.parse(r)).catch(e => console.log(e));
 
-/* ----------------------------- */
-/* ----------------------------- */
-/* ----------------------------- */
-let fetchedObj;
-async function init() {
-    fetchedObj = await $.ajax({
-        url:'https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?description=python', 
+    adzunaJobs = await $.ajax({
+        url: `https://api.adzuna.com/v1/api/jobs/ca/search/1?app_id=${appID}&app_key=${appKey}&content-type=application/json&results_per_page=50&${adzString}`,
         method: 'GET'
-    })
+    }).then(r=>r.results).catch(e => console.log(e));
+
 }
-init()
-// Githubjobs parameters:
-// ?search= (search terms)
-// &location= (city name, zip)
-// &lat/&long= (latitude & longitude)
-// &full_time=true (for full time)
