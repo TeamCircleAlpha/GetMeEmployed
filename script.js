@@ -68,6 +68,8 @@ async function startSearch() {
     // &lat/&long= (latitude & longitude)
     // &full_time=true (for full time)
     await sendSearchRequests(ghString, adzString);
+    // console.log(githubJobs)
+    // console.log(adzunaJobs)
 }
 
 async function sendSearchRequests(ghString, adzString) {
