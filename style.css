@@ -1,5 +1,5 @@
 .navbar{
-    background-color: white;
+    background-color: #60E2D6;
     width: 100%;
     border-bottom: 1px solid rgb(189, 189, 189);
 }
@@ -65,8 +65,19 @@ html, body {
    } 
   
   /* When you mouse over the navigation links, change their color */
-  .sidenav a:hover {
-    color: #f1f1f1;
+  .sidenav a:hover a:focus{
+    color: #04d1af;
+    cursor: default;
+  }
+  .saved-jobs-title:hover{
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  #savedJobLink:hover{
+    color: #04d1af;
+    text-decoration: none;
+    cursor: pointer;
   }
   
   /* Position and style the close button (top right corner) */
@@ -105,3 +116,13 @@ html, body {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
   }
+
+ .btn {
+    background-color: #60E2D6;
+    border-radius: 15px;
+    color: rgb(105, 105, 105);
+ }
+
+ .btn:hover {
+     background-color: #83fff3;
+ }
