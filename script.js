@@ -3,6 +3,11 @@ document.querySelector('#cardClick').addEventListener("click", function() {
     console.log("zupazup");
 })
 
+// add job search button
+function searchJob(event){
+    event.preventDefault()
+    var jobSearched = document.querySelector('#search').value
+    
 // on search button click
 document.querySelector('#searchBtn').addEventListener("click", function() {
     // move search block up
@@ -10,7 +15,7 @@ document.querySelector('#searchBtn').addEventListener("click", function() {
     document.querySelector('#searchCont').style.marginTop = "5px";
     // unhide output row
     document.querySelector('#searchOutputContainer').classList.remove('d-none');
-    // startSearch(); // <-- parse input & call API
+    startSearch(); // <-- parse input & call API
     // display output
 });
 
@@ -54,8 +59,6 @@ let appID = 'ddcfef90';
 let appKey = '34e2e2ed55214203ba42f1f55e511f13';
 let githubJobs, adzunaJobs;
 
-// startSearch();
-
 async function startSearch() {
     //parse search terms
     let ghString = 'description=js', adzString = 'what=developer';
@@ -78,4 +81,14 @@ async function sendSearchRequests(ghString, adzString) {
         url: `https://api.adzuna.com/v1/api/jobs/ca/search/1?app_id=${appID}&app_key=${appKey}&content-type=application/json&results_per_page=50&${adzString}`,
         method: 'GET'
     }).then(r => r.results).catch(e => console.log(e));
+}
+
+var saved = [{}]
+function saveBtn(){
+localStorage.setItem(card, JSON.stringify(card))
+saved.push(card)
+var getText= JSON.parse( localStorage.getItem(card))
+document.querySelector('savedBar').innerHTML +=`
+card`
+}
 }
