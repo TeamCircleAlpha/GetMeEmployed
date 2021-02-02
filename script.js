@@ -82,6 +82,7 @@ async function sendSearchRequests(ghString, adzString) {
         method: 'GET'
     }).then(r => r.results).catch(e => console.log(e));
 }
+
 var saved = [{}]
 function saveBtn(){
 localStorage.setItem(card, JSON.stringify(card))
