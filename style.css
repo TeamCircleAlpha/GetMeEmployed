@@ -3,10 +3,7 @@
     width: 100%;
     border-bottom: 1px solid rgb(189, 189, 189);
 }
-/* .navbar-toggler{
-    background-color: rgb(54, 54, 54);
-    color: red;
-} */
+
 .navbar-toggler{
     background-color: white;
     border: 1px solid  rgb(189, 189, 189);
