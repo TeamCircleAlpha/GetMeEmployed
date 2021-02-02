@@ -1,14 +1,11 @@
 .navbar{
     background-color: rgb(70, 67, 67);
 }
-/* .navbar-toggler{
-    background-color: rgb(54, 54, 54);
-    color: red;
-} */
+
 .navbar-toggler{
     background-color: rgb(54, 53, 53);
     border-color: black;
-    /* border-radius: 100px; */
+
 } 
 
 #jobSearch{
@@ -24,7 +21,6 @@ body{
     background-color: rgb(209, 209, 209);
 }
 .cont1 {
-    /* border: 2px solid black; */
     height: 50vh;
 }
 
@@ -42,8 +38,4 @@ html, body {
     width:30%;
     max-width:200px;
     background-color: blue;
-}
-
-#mainRow{
-    margin:25% auto
 }
