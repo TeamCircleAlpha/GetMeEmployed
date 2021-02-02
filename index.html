@@ -9,59 +9,11 @@
         integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous" />
     <script src="https://kit.fontawesome.com/f70b02ae27.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Potta+One&display=swap" rel="stylesheet">
-    <link href="style.css" rel="stylesheet">
-
-    <style>
-        .push-center {
-            margin-top: 35vh;
-        }
-
-        .shape:focus {
-            border: 1px solid blue
-        }
-
-        #saveBtn {
-            width: 15%;
-            border-radius: 5px;
-            justify-content: right;
-            background-color: white;
-            border: none;
-        }
-
-        #saveBtn:focus {
-            box-shadow: 0 0 0 3pt rgb(0, 162, 255);
-            outline: 0;
-        }
-
-        .titleLink {
-            margin-bottom: 5px;
-            color: black;
-            font-weight: bold;
-            font-size: 20px;
-            text-decoration: none
-        }
-
-        .titleLink:hover {
-            text-decoration: underline;
-            color: black;
-        }
-
-        .salary {
-            font-weight: bold
-        }
-
-        .reqList {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .shape:hover {
-            background-color: rgb(173, 133, 211);
-        }
-    </style>
+    <link rel="stylesheet" href="style.css" />
+</head>
 
 <body>
-
+    <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg" id="navbarBg">
         <div class="container-fluid">
             <a class="navbar-brand" id="jobSearch" href="#">Job Search</a>
@@ -71,27 +23,23 @@
             </button>
             <div class="collapse navbar-collapse flex-row-reverse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <!-- <a class="nav-link active" id="homeLink" aria-current="page" href="#">Home</a> -->
-                    <a class="nav-link" href="#" id="savedJobLink">Saved Jobs</a>
+                    <a class="nav-link" id="savedJobLink">Saved Jobs</a>
                 </div>
             </div>
         </div>
     </nav>
-    <!-- Side bar saved jobs -->
+    <!-- SAVED JOBS SIDE MENU -->
     <div class="container">
         <div id="mySidenav" class="sidenav">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <!-- <div class="card-body h-10"> -->
             <div class="row">
                 <div class="col my-1">
-                    <p class="saved-jobs-title d-flex justify-content-center"></p>
+                    <p class="saved-jobs-title d-flex justify-content-center">Text</p>
                 </div>
             </div>
-            <!-- </div> -->
         </div>
     </div>
-
-    <div class='container-md push-center' style='max-width: 800px'>
+    <!-- SEARCH FORM BLOCK -->
+    <div class='container-md push-center' id="searchCont" style='max-width: 800px'>
         <div class='row'>
             <div class='col input-group-lg'>
                 <input class='form-control w-100' placeholder='Keywords'></input>
@@ -108,16 +56,22 @@
         </div>
         <div class='row'>
             <div class='col text-center'>
-                <button class='btn btn-primary'>Button</button>
+                <button class='btn btn-primary' id="searchBtn">Button</button>
             </div>
-
-            <div class="container">
-                <div class="card clickcard my-3 mx-3 shape" id="cardClick" style="width: 18rem;">
+        </div>
+    </div>
+    <!-- JOB SEARCH OUTPUT -->
+    <div class="container-md mt-2" style='max-width: 900px'>
+        <div class="row d-none" id="searchOutputContainer">
+            <!-- INDIVIDUAL CARD -->
+            <div class="col-md-4">
+                <div class="card clickcard my-3 mx-3 shape" id="cardClick">
                     <div class="card-body">
                         <div class="row d-flex">
                             <a href="#" class="titleLink" style="width: 60%">Card title</a>
-                            <button type="button" class="position-absolute end-0 me-3" id="saveBtn"><i
-                                    class="fas fa-ellipsis-v"></i></button>
+                            <button type="button" class="position-absolute end-0 me-3" id="saveBtn">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
                         </div>
                         <h6 class="card-subtitle mb-2">Company</h6>
                         <h6 class="card-subtitle">Location</h6>
@@ -132,54 +86,13 @@
                     </div>
                 </div>
             </div>
-
-            <script>
-                var cardBtn = document.getElementById('cardClick')
-
-                cardBtn.addEventListener("click", function () {
-                    console.log("zupazup")
-                })
-
-
-
-                var savedJob = document.querySelector('#savedJobLink')
-                var timesClicked = 0;
-
-                savedJob.addEventListener("click", function openClose() {
-
-                    timesClicked++;
-
-                    if (timesClicked % 2 == 0) {
-                        closeNav();
-
-                    } else {
-                        openNav();
-                    }
-                })
-
-                function openNav() {
-                    document.getElementById("mySidenav").style.width = "250px";
-                    document.getElementById("savedJobLink").style.width = "350px";
-                }
-
-                /* Set the width of the side navigation to 0 */
-                function closeNav() {
-                    document.getElementById("mySidenav").style.width = "0";
-                    document.getElementById("savedJobLink").style.width = null
-                }
-
-                function buttonTrans() {
-                    document.getElementById('searchCont').style.marginTop = "5px"
-                }
-
-            </script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
-                crossorigin="anonymous"></script>
+        </div>
+    </div>
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
+    <script src="script.js"></script>
 
 </body>
-
-
-</body>
-
 </html>
