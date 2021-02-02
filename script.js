@@ -10,7 +10,6 @@ function searchJob(event){
 }
 
 
-
 // getJob function 
 async function getJob( jobTitle ){
     var queryURL = ""
@@ -24,3 +23,16 @@ var jobView = document.querySelector('jobView')
 jobView.innerHTML = `` // insert card info with job here
 
 }
+
+
+// save job search to local storage
+function saveSearch(){
+    var savedJob = localStorage.setItem("#mySideNav")
+}
+
+// get saved job search in side bar
+function showSaved(){
+    var jobsSaved = localStorage.getItem()
+    document.querySelector('').textContent += `${}`
+}
+
