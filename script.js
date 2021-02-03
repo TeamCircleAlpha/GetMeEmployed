@@ -11,7 +11,7 @@ document.querySelector('#searchBtn').addEventListener("click", async function ()
     // stop loading CSS & display cards
     toggleSearchAnim();
     document.querySelector('#searchCont').classList.remove('push-center');
-    document.querySelector('#searchCont').style.marginTop = "5px";
+    document.querySelector('#searchCont').style.marginTop = "1.5rem";
     displayCards();
 });
 
@@ -37,7 +37,7 @@ function displayCards() {
     for (var i=0; i<9; i++) {
         document.querySelector('#searchOutputContainer').innerHTML += 
         `<div class="col-md-4">
-            <div class="card clickcard my-3 mx-3 shape" id="cardClick">
+            <div class="card clickcard my-3 shape" id="cardClick">
                 <div class="card-body">
                     <div class="row d-flex">
                         <a href="#" class="titleLink" style="width: 60%">${githubJobs[i].company}</a>
@@ -54,7 +54,7 @@ function displayCards() {
 
         document.querySelector('#searchOutputContainer').innerHTML += 
         `<div class="col-md-4">
-            <div class="card clickcard my-3 mx-3 shape" id="cardClick">
+            <div class="card clickcard my-3 shape" id="cardClick">
                 <div class="card-body">
                     <div class="row d-flex">
                         <a href="#" class="titleLink" style="width: 60%">${adzunaJobs[i].company.display_name}</a>
