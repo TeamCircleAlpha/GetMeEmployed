@@ -62,75 +62,9 @@
             </div>
         </div>
     </div>
-
-
-    <script>
-
-        var savedJob = document.querySelector('#savedJobLink')
-        var timesClicked = 0;
-
-        savedJob.addEventListener("click", function openClose() {
-
-            timesClicked++;
-
-            if (timesClicked % 2 == 0) {
-                closeNav();
-
-            } else {
-                openNav();
-            }
-        })
-
-        function openNav() {
-            document.getElementById("mySidenav").style.width = "250px";
-            document.getElementById("savedJobLink").style.width = "350px";
-        }
-
-        /* Set the width of the side navigation to 0 */
-        function closeNav() {
-            document.getElementById("mySidenav").style.width = "0";
-            document.getElementById("savedJobLink").style.width = null
-        }
-
-        function buttonTrans() {
-            document.getElementById('searchCont').style.marginTop = "5px"
-        }
-        var saved = [{}]
-        function saveBtn(){
-        localStorage.setItem(card, JSON.stringify(card))
-        saved.push(card)
-        var getText= JSON.parse( localStorage.getItem(card))
-        document.querySelector('savedBar').innerHTML +=`
-        card`
-        }
-    </script>
     <!-- JOB SEARCH OUTPUT -->
     <div class="container-md mt-2" style='max-width: 900px'>
-        <div class="row d-none" id="searchOutputContainer">
-            <!-- INDIVIDUAL CARD -->
-            <!-- <div class="col-md-4">
-                <div class="card clickcard my-3 mx-3 shape" id="cardClick">
-                    <div class="card-body">
-                        <div class="row d-flex">
-                            <a href="#" class="titleLink" style="width: 60%">Card title</a>
-                            <button type="button" class="position-absolute end-0 me-3" id="saveBtn">
-                                <i class="fas fa-ellipsis-v"></i>
-                            </button>
-                        </div>
-                        <h6 class="card-subtitle mb-2">Company</h6>
-                        <h6 class="card-subtitle">Location</h6>
-                        <h6 class="card-subtitle mb-2 salary">Salary</h6>
-                        <h6 class="card-subtitle mb-2 mt-3 requirements">Requirements</h6>
-                        <ul class="reqList">
-                            <li>One</li>
-                            <li>Two</li>
-                            <li>Three</li>
-                        </ul>
-                        <p class="card-text">Jobjob jobjob</p>
-                    </div>
-                </div>
-            </div> -->
-        </div>
+        <div class="row" id="searchOutputContainer"></div>
     </div>
     <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
