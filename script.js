@@ -78,7 +78,7 @@ async function sendSearchRequests(ghString, adzString) {
 // CSS animations for search bar
 let search = document.querySelector('#searchBtn');
 let searchInputBox = document.querySelector('.searchInput')
-search.addEventListener('mouseover', function addAnim(){
+search.addEventListener('click', function addAnim(){
     searchInputBox.classList.add('searchBar')
     search.classList.add('searchButton')
 })
