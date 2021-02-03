@@ -150,7 +150,7 @@ padding: 20px;
 }
 
 #savedJobLink:hover{
-color: rgb(209, 209, 209);
+color: white;
 text-decoration: none;
 cursor: pointer;
 }
@@ -166,17 +166,28 @@ cursor: pointer;
   background-color: #60E2D6;
   border-radius: 15px;
   color: rgb(36, 47, 49);
+  border: #60E2D6;
+  /* text-transform: bold; */
 }
 
 .btn:hover {
    background-color: #83fff3;
    transform: scale(1.2);
+   
 }
  
   /* CSS ANIMATIONS */
   .searchBar{
     text-decoration: none;
-    background: linear-gradient(-45deg,white,white,white,rgb(163, 248, 244), rgb(135, 247, 241),rgb(198, 252, 249), white,white,white);
+    background: linear-gradient(-45deg,white,white,white,rgb(163, 248, 244), #60E2D6,rgb(198, 252, 249), white,white,white);
+    background-size: 500% 500%;
+    position: relative;
+    animation: change 7s ease-in-out;
+}
+
+.searchButton{
+    /* text-decoration: none; */
+    background: linear-gradient(-45deg,white,white,white,white,white,white, #8ae2d9, #75e2d7, #60E2D6);
     background-size: 500% 500%;
     position: relative;
     animation: change 7s ease-in-out;
@@ -193,3 +204,5 @@ cursor: pointer;
          background-position: 0% 50%;
      }
  }
+
+
