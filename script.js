@@ -14,7 +14,7 @@ document.querySelector('#savedJobLink').addEventListener("click", function() {
     if (document.querySelector("#mySidenav").style.width === "") {
         // open side nav menu
         document.querySelector("#mySidenav").style.width = "250px";
-        document.querySelector("#savedJobLink").style.width = "350px";
+        document.querySelector("#savedJobLink").style.width = "360px";
     }
     else {
         // close side nav menu
@@ -88,7 +88,7 @@ document.querySelector('#searchOutputContainer').innerHTML += `<div class="col-m
             </div>
             <h6 class="card-subtitle mb-2">${adzunaJobs[i].title}</h6>
             <h6 class="card-subtitle">${adzunaJobs[i].location.display_name}</h6>
-            <h6 class="card-subtitle mb-2 salary" ><a href="${adzunaJobs[i].redirect_url}">${adzunaJobs[i].redirect_url}</a></h6>
+            <h6 class="card-subtitle mb-2 salary" ><a href="${adzunaJobs[i].redirect_url}">Click here for more info</a></h6>
         </div>
     </div>
 </div>`
@@ -105,7 +105,9 @@ async function sendSearchRequests(ghString, adzString, ghLocation) {
         method: 'GET'
     }).then(r => r.results).catch(e => console.log(e));
 }
-// // on card click
-// document.querySelector('#cardClick').addEventListener("click", function() {
-//     console.log("zupazup");
-// })
+// CSS animations for search bar
+let search = document.querySelector('#searchBtn');
+let searchInputBox = document.querySelector('.searchInput')
+search.addEventListener('click', function addAnim(){
+    searchInputBox.classList.add('searchBar')
+})
