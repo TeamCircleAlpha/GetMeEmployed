@@ -47,6 +47,10 @@ width: 100%;
 border-bottom: 1px solid rgb(189, 189, 189);
 }
 
+img {
+  width: 90px;
+}
+
 .navbar-toggler{
 background-color: white;
 border: 1px solid  rgb(189, 189, 189);
@@ -72,7 +76,7 @@ margin-top: 35vh;
 }
 
 body{
-background-color: rgb(226, 226, 226);
+background-image: url('assets/GMEbg.png');
 font-family: 'Quicksand', sans-serif;
 }
 /* .cont1 {
@@ -150,7 +154,7 @@ padding: 20px;
 }
 
 #savedJobLink:hover{
-color: rgb(209, 209, 209);
+color: #83fff3;
 text-decoration: none;
 cursor: pointer;
 }
@@ -193,3 +197,30 @@ cursor: pointer;
          background-position: 0% 50%;
      }
  }
+
+ /* JOB INFO CARDS */
+ .card {
+  height: 250px;
+  background: white;
+  border-radius: 15px;
+  transition: background-color 1s ease-out 100ms;
+ }
+
+ .card:hover {
+  background-color: #60E2D6;
+  transform: scale(1.1);
+ }
+
+ 
+
+ /* @keyframes slideup{
+  0%{
+      background-position: 0 50%;
+  }
+  50%{
+      background-position: 100% 50%;
+  }
+  100%{
+      background-position: 0% 50%;
+  }
+} */
