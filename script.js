@@ -78,19 +78,9 @@ function displayCards() {
 // search input animation toggle
 function toggleSearchAnim() {
     document.querySelector('.searchInput').classList.toggle('searchBar');
+    document.querySelector('#searchBtn').classList.toggle('searchButton');
 
 }
-
-// CSS animations for search bar
-let search = document.querySelector('#searchBtn');
-let searchInputBox = document.querySelector('.searchInput')
-search.addEventListener('click', function addAnim(){
-    searchInputBox.classList.add('searchBar')
-    search.classList.add('searchButton')
-
-    
-})
-
 
 /* ------------------------ */
 /* ------ API ACCESS ------ */
@@ -110,6 +100,8 @@ async function startSearch() {
     // &lat/&long= (latitude & longitude)
     // &full_time=true (for full time)
     // await sendSearchRequests(ghString, adzString, ghLocation);
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    sendDummyRequests();
 }
 
 async function sendSearchRequests(ghString, adzString, ghLocation) {
@@ -123,4 +115,81 @@ async function sendSearchRequests(ghString, adzString, ghLocation) {
     }).then(r => r.results).catch(e => console.log(e));
 }
 
-
+function sendDummyRequests() {
+    githubJobs =[
+        {company: "Bitovi",
+        company_logo: "https://jobs.github.com/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBZ3lZIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--ea1619cf85bf3b6d816d407f71431443c6547a80/bitovi_bits_red.png",
+        company_url: "https://www.bitovi.com/",
+        created_at: "Wed Feb 03 17:04:44 UTC 2021",
+        description: "<p><strong>ABOUT BITOVI:</strong></p><p>Description stuff</p>",
+        how_to_apply: "<p>Please use this link to apply.</p>",
+        id: "5cf52acc-82f7-4350-af99-46bd2cf4f014",
+        location: "REMOTE - North America",
+        title: "React Developer and Consultant",
+        type: "Full Time",
+        url: "https://jobs.github.com/positions/5cf52acc-82f7-4350-af99-46bd2cf4f014"},
+        {company: "Bitovi",
+        company_logo: "https://jobs.github.com/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBZ3lZIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--ea1619cf85bf3b6d816d407f71431443c6547a80/bitovi_bits_red.png",
+        company_url: "https://www.bitovi.com/",
+        created_at: "Wed Feb 03 17:04:44 UTC 2021",
+        description: "<p><strong>ABOUT BITOVI:</strong></p><p>Description stuff</p>",
+        how_to_apply: "<p>Please use this link to apply.</p>",
+        id: "5cf52acc-82f7-4350-af99-46bd2cf4f014",
+        location: "REMOTE - North America",
+        title: "React Developer and Consultant",
+        type: "Full Time",
+        url: "https://jobs.github.com/positions/5cf52acc-82f7-4350-af99-46bd2cf4f014"},
+        {company: "Bitovi",
+        company_logo: "https://jobs.github.com/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBZ3lZIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--ea1619cf85bf3b6d816d407f71431443c6547a80/bitovi_bits_red.png",
+        company_url: "https://www.bitovi.com/",
+        created_at: "Wed Feb 03 17:04:44 UTC 2021",
+        description: "<p><strong>ABOUT BITOVI:</strong></p><p>Description stuff</p>",
+        how_to_apply: "<p>Please use this link to apply.</p>",
+        id: "5cf52acc-82f7-4350-af99-46bd2cf4f014",
+        location: "REMOTE - North America",
+        title: "React Developer and Consultant",
+        type: "Full Time",
+        url: "https://jobs.github.com/positions/5cf52acc-82f7-4350-af99-46bd2cf4f014"}
+    ];
+    adzunaJobs =[
+        {adref: "eyJhbGciOiJIUzI1NiJ9.eyJzIjoicHA1Um5rcG02eEczaGprVnNhYndnQSIsImkiOiIxOTYyMjM0OTIwIn0.ANrEuFwKn9SKHwxkTGoCKqMaLf1fr3Snv3mLkP2spQE",
+        category: {label: "Logistics & Warehouse Jobs", __CLASS__: "Adzuna::API::Response::Category", tag: "logistics-warehouse-jobs"},
+        company: {__CLASS__: "Adzuna::API::Response::Company", display_name: "Uber Eats"},
+        created: "2021-01-29T21:38:16Z",
+        description: "Food Delivery - Weekly Pay Mississauga, etc...",
+        id: "1962234920",
+        latitude: 43.716561,
+        location: {display_name: "Brampton, Peel region", __CLASS__: "Adzuna::API::Response::Location", area: 'Array(4)'},
+        longitude: -79.699347,
+        redirect_url: "https://www.adzuna.ca/land/ad/1962234920?se=pp5Rnkpm6xG3hjkVsabwgA&utm_medium=api&utm_source=ddcfef90&v=CF2E393A704DC3B2BE001FFB447AC20DD860D4F1",
+        salary_is_predicted: "0",
+        title: "Food Delivery - Weekly Pay",
+        __CLASS__: "Adzuna::API::Response::Job"},
+        {adref: "eyJhbGciOiJIUzI1NiJ9.eyJzIjoicHA1Um5rcG02eEczaGprVnNhYndnQSIsImkiOiIxOTYyMjM0OTIwIn0.ANrEuFwKn9SKHwxkTGoCKqMaLf1fr3Snv3mLkP2spQE",
+        category: {label: "Logistics & Warehouse Jobs", __CLASS__: "Adzuna::API::Response::Category", tag: "logistics-warehouse-jobs"},
+        company: {__CLASS__: "Adzuna::API::Response::Company", display_name: "Uber Eats"},
+        created: "2021-01-29T21:38:16Z",
+        description: "Food Delivery - Weekly Pay Mississauga, etc...",
+        id: "1962234920",
+        latitude: 43.716561,
+        location: {display_name: "Brampton, Peel region", __CLASS__: "Adzuna::API::Response::Location", area: 'Array(4)'},
+        longitude: -79.699347,
+        redirect_url: "https://www.adzuna.ca/land/ad/1962234920?se=pp5Rnkpm6xG3hjkVsabwgA&utm_medium=api&utm_source=ddcfef90&v=CF2E393A704DC3B2BE001FFB447AC20DD860D4F1",
+        salary_is_predicted: "0",
+        title: "Food Delivery - Weekly Pay",
+        __CLASS__: "Adzuna::API::Response::Job"},
+        {adref: "eyJhbGciOiJIUzI1NiJ9.eyJzIjoicHA1Um5rcG02eEczaGprVnNhYndnQSIsImkiOiIxOTYyMjM0OTIwIn0.ANrEuFwKn9SKHwxkTGoCKqMaLf1fr3Snv3mLkP2spQE",
+        category: {label: "Logistics & Warehouse Jobs", __CLASS__: "Adzuna::API::Response::Category", tag: "logistics-warehouse-jobs"},
+        company: {__CLASS__: "Adzuna::API::Response::Company", display_name: "Uber Eats"},
+        created: "2021-01-29T21:38:16Z",
+        description: "Food Delivery - Weekly Pay Mississauga, etc...",
+        id: "1962234920",
+        latitude: 43.716561,
+        location: {display_name: "Brampton, Peel region", __CLASS__: "Adzuna::API::Response::Location", area: 'Array(4)'},
+        longitude: -79.699347,
+        redirect_url: "https://www.adzuna.ca/land/ad/1962234920?se=pp5Rnkpm6xG3hjkVsabwgA&utm_medium=api&utm_source=ddcfef90&v=CF2E393A704DC3B2BE001FFB447AC20DD860D4F1",
+        salary_is_predicted: "0",
+        title: "Food Delivery - Weekly Pay",
+        __CLASS__: "Adzuna::API::Response::Job"}
+    ];
+}
