@@ -47,6 +47,10 @@ width: 100%;
 border-bottom: 1px solid rgb(189, 189, 189);
 }
 
+img {
+  width: 90px;
+}
+
 .navbar-toggler{
 background-color: white;
 border: 1px solid  rgb(189, 189, 189);
@@ -72,7 +76,7 @@ margin-top: 35vh;
 }
 
 body{
-background-color: rgb(132, 134, 138);
+background-image: url('assets/GMEbg.png');
 font-family: 'Quicksand', sans-serif;
 }
 /* .cont1 {
@@ -206,6 +210,8 @@ cursor: pointer;
   background-color: #60E2D6;
   transform: scale(1.1);
  }
+
+ 
 
  /* @keyframes slideup{
   0%{
