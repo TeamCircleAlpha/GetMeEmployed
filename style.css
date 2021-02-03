@@ -172,3 +172,24 @@ cursor: pointer;
    background-color: #83fff3;
    transform: scale(1.2);
 }
+ 
+  /* CSS ANIMATIONS */
+  .searchBar{
+    text-decoration: none;
+    background: linear-gradient(-45deg,white,white,white,rgb(163, 248, 244), rgb(135, 247, 241),rgb(198, 252, 249), white,white,white);
+    background-size: 500% 500%;
+    position: relative;
+    animation: change 7s ease-in-out;
+}
+
+ @keyframes change{
+     0%{
+         background-position: 0 50%;
+     }
+     50%{
+         background-position: 100% 50%;
+     }
+     100%{
+         background-position: 0% 50%;
+     }
+ }

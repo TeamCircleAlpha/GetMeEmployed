@@ -19,7 +19,7 @@ document.querySelector('#savedJobLink').addEventListener("click", function() {
     if (document.querySelector("#mySidenav").style.width === "") {
         // open side nav menu
         document.querySelector("#mySidenav").style.width = "250px";
-        document.querySelector("#savedJobLink").style.width = "350px";
+        document.querySelector("#savedJobLink").style.width = "360px";
     }
     else {
         // close side nav menu
@@ -75,3 +75,9 @@ async function sendSearchRequests(ghString, adzString) {
         method: 'GET'
     }).then(r => r.results).catch(e => console.log(e));
 }
+// CSS animations for search bar
+let search = document.querySelector('#searchBtn');
+let searchInputBox = document.querySelector('.searchInput')
+search.addEventListener('click', function addAnim(){
+    searchInputBox.classList.add('searchBar')
+})
