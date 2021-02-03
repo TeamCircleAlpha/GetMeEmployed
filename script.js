@@ -10,7 +10,7 @@ document.querySelector('#searchBtn').addEventListener("click", function() {
     document.querySelector('#searchCont').style.marginTop = "5px";
     // unhide output row
     document.querySelector('#searchOutputContainer').classList.remove('d-none');
-    // startSearch(); // <-- parse input & call API
+    startSearch(); // <-- parse input & call API
     // display output
 });
 
@@ -19,7 +19,7 @@ document.querySelector('#savedJobLink').addEventListener("click", function() {
     if (document.querySelector("#mySidenav").style.width === "") {
         // open side nav menu
         document.querySelector("#mySidenav").style.width = "250px";
-        document.querySelector("#savedJobLink").style.width = "350px";
+        document.querySelector("#savedJobLink").style.width = "360px";
     }
     else {
         // close side nav menu
@@ -54,8 +54,6 @@ let appID = 'ddcfef90';
 let appKey = '34e2e2ed55214203ba42f1f55e511f13';
 let githubJobs, adzunaJobs;
 
-// startSearch();
-
 async function startSearch() {
     //parse search terms
     let ghString = 'description=js', adzString = 'what=developer';
@@ -65,8 +63,6 @@ async function startSearch() {
     // &lat/&long= (latitude & longitude)
     // &full_time=true (for full time)
     await sendSearchRequests(ghString, adzString);
-    // console.log(githubJobs)
-    // console.log(adzunaJobs)
 }
 
 async function sendSearchRequests(ghString, adzString) {
@@ -79,3 +75,9 @@ async function sendSearchRequests(ghString, adzString) {
         method: 'GET'
     }).then(r => r.results).catch(e => console.log(e));
 }
+// CSS animations for search bar
+let search = document.querySelector('#searchBtn');
+let searchInputBox = document.querySelector('.searchInput')
+search.addEventListener('click', function addAnim(){
+    searchInputBox.classList.add('searchBar')
+})
