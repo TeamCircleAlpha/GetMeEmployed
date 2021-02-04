@@ -20,7 +20,7 @@ document.querySelector('#savedJobLink').addEventListener("click", function () {
     if (document.querySelector("#mySidenav").style.width === "") {
         // open side nav menu
         document.querySelector("#mySidenav").style.width = "250px";
-        document.querySelector("#savedJobLink").style.width = "360px";
+        // document.querySelector("#savedJobLink").style.width = "360px";
     }
     else {
         // close side nav menu
@@ -78,6 +78,8 @@ function displayCards() {
 // search input animation toggle
 function toggleSearchAnim() {
     document.querySelector('.searchInput').classList.toggle('searchBar');
+    document.querySelector('#searchBtn').classList.toggle('searchButton');
+
 }
 
 /* ------------------------ */

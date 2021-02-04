@@ -45,10 +45,14 @@
 background-color: #60E2D6;
 width: 100%;
 border-bottom: 1px solid rgb(189, 189, 189);
+padding-top: 0px;
+padding-bottom: 0px;
 }
 
 img {
   width: 90px;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .navbar-toggler{
@@ -90,29 +94,31 @@ height:100%;
 
 /* The side navigation menu */
 .sidenav {
-height: 100%; /* 100% Full-height */
+height: 100vh; /* 100% Full-height */
 width: 0; /* 0 width - change this with JavaScript */
 position: fixed; /* Stay in place */
 z-index: 1; /* Stay on top */
-top: 0%; /* Stay at the top */
+top: 5vh; /* Stay at the top */
 right: 0;
-background-color: rgb(255, 255, 255); /* Black*/
+background-color:  #fff598cb; /* Black*/
 overflow-x: hidden; /* Disable horizontal scroll */
 padding-top: 60px; /* Place content 60px from the top */
 transition: 1s; /* 1s second transition effect to slide in the sidenav */
-border-left: 1px solid rgb(189, 189, 189);
+border: 1px solid rgb(189, 189, 189);
+border-top-left-radius: 20px;
+border-bottom-left-radius: 20px
 
 }
 
 /* The navigation menu links */ 
-.sidenav a {
+/* .sidenav a {
 padding: 8px 8px 8px 32px;
 text-decoration: none;
 font-size: 25px;
 color: #83fff3;
 display: block;
 transition: 0.3s;
-} 
+}  */
 
 /* When you mouse over the navigation links, change their color */
 .sidenav a:hover {
@@ -135,14 +141,17 @@ transition: margin-left .5s;
 padding: 20px;
 }
 
-.saved-jobs-title{
+
+/* DOUBLE CHECK DELETE */
+
+/* .saved-jobs-title{
     overflow: hidden;
     background-color: rgb(216, 216, 216);
     font-size: 10px;
     border: 1px solid white;
     height: 20px;
     border-radius: 5px;
-}
+} */
 
 .saved-jobs-title:hover{
     text-decoration: none;
@@ -154,7 +163,7 @@ padding: 20px;
 }
 
 #savedJobLink:hover{
-color: #83fff3;
+color:white;
 text-decoration: none;
 cursor: pointer;
 }
@@ -170,20 +179,31 @@ cursor: pointer;
   background-color: #60E2D6;
   border-radius: 15px;
   color: rgb(36, 47, 49);
+  border: #60E2D6;
+  /* text-transform: bold; */
 }
 
 .btn:hover {
    background-color: #83fff3;
    transform: scale(1.2);
+   
 }
  
   /* CSS ANIMATIONS */
   .searchBar{
     text-decoration: none;
-    background: linear-gradient(-45deg,white,white,white,rgb(163, 248, 244), rgb(135, 247, 241),rgb(198, 252, 249), white,white,white);
+    background: linear-gradient(-45deg,white,white,white,rgb(163, 248, 244), #60E2D6,rgb(198, 252, 249), white,white,white);
     background-size: 500% 500%;
     position: relative;
-    animation: change 7s ease-in-out;
+    animation: change 4s ease-in-out;
+}
+
+.searchButton{
+    /* text-decoration: none; */
+    background: linear-gradient(-45deg,white,white,white,white,white,white, #8ae2d9, #75e2d7, #60E2D6);
+    background-size: 500% 500%;
+    position: relative;
+    animation: change 4s ease-in-out;
 }
 
  @keyframes change{
@@ -196,6 +216,23 @@ cursor: pointer;
      100%{
          background-position: 0% 50%;
      }
+ }
+
+ .cardBodySaved{
+    border: 1px solid rgb(189, 189, 189);
+    border-radius: 5px;
+ }
+ .savedJobBody{
+     text-align: center;
+     padding: 10px 10px;
+     background-color: rgb(199, 158, 22) ;
+     width: 248px;
+     overflow: hidden;
+     height: 70px;
+ }
+ .cardBodySaved:hover{
+     border-color: #8ae2d9;
+     cursor: pointer;
  }
 
  /* JOB INFO CARDS */
@@ -211,16 +248,3 @@ cursor: pointer;
   transform: scale(1.1);
  }
 
- 
-
- /* @keyframes slideup{
-  0%{
-      background-position: 0 50%;
-  }
-  50%{
-      background-position: 100% 50%;
-  }
-  100%{
-      background-position: 0% 50%;
-  }
-} */
