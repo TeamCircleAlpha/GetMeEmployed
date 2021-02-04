@@ -32,47 +32,7 @@ document.querySelector('#savedJobLink').addEventListener("click", function () {
     }
 })
 
-// generate cards
-function displayCards() {
-    // clear old search
-    document.querySelector('#searchOutputContainer').innerHTML = '';
-    // add new results
-    for (var i = 0; i < 9; i++) {
-        document.querySelector('#searchOutputContainer').innerHTML +=
-            `<div class="col-md-4">
-            <div class="card clickcard my-3 mx-3 shape" id="cardClick">
-                <div class="card-body">
-                    <div class="row d-flex">
-                        <a href="" class="titleLink" style="width: 60%">${githubJobs[i].company}</a>
-                        <button type="button" class="position-absolute end-0 me-3" id="saveBtn">
-                            <i class="fas fa-ellipsis-v"></i>
-                        </button>
-                    </div>
-                    <h6 class="card-subtitle mb-2">${githubJobs[i].title}</h6>
-                    <h6 class="card-subtitle">${githubJobs[i].location}</h6>
-                    <h6 class="card-subtitle mb-2 salary" ><a href="${githubJobs[i].url}">Click here for more info</a></h6>
-                </div>
-            </div>
-        </div>`;
 
-        document.querySelector('#searchOutputContainer').innerHTML +=
-            `<div class="col-md-4">
-            <div class="card clickcard my-3 mx-3 shape" id="cardClick">
-                <div class="card-body">
-                    <div class="row d-flex">
-                        <a href="#" class="titleLink" style="width: 60%">${adzunaJobs[i].company.display_name}</a>
-                        <button type="button" class="position-absolute end-0 me-3" id="saveBtn">
-                            <i class="fas fa-ellipsis-v"></i>
-                        </button>
-                    </div>
-                    <h6 class="card-subtitle mb-2">${adzunaJobs[i].title}</h6>
-                    <h6 class="card-subtitle">${adzunaJobs[i].location.display_name}</h6>
-                    <h6 class="card-subtitle mb-2 salary" ><a href="${adzunaJobs[i].redirect_url}">Click here for more info</a></h6>
-                </div>
-            </div>
-        </div>`;
-    }
-}
 
 /* ----------------------- */
 /* ---- CSS ANIMATION ---- */
@@ -94,9 +54,39 @@ let githubJobs, adzunaJobs;
 
 async function startSearch() {
     //parse search terms
-    let ghString = encodeURIComponent(document.querySelector('#keywords').value);
-    let ghLocation = encodeURIComponent(document.querySelector('#location').value);
+    let Description = encodeURIComponent(document.querySelector('#keywords').value);
+    let Location = encodeURIComponent(document.querySelector('#location').value);
+    let minSalary = document.querySelector('#minSalary').value;
+    let fullTime = document.getElementById('fullTimeCheck');
+    let partTime = document.getElementById('partTimeCheck');
+    let contract = document.getElementById('contractCheck');
+    let permanent = document.getElementById('permanentCheck');
+
+    //Github Jobs search inputs
+    let ghString = "";
+    ghString += `description=${Description}&`;
+    ghString += `location=${Location}`;
+
+    //Adzuna search inputs
+    let adString = "";
+    adString += `what=${Description}`;
+    adString += `&where=${Location}`;
+    adString += `&salary_min=${minSalary}`;
+    if(fullTime.checked == true){
+        adString += `&full_time=1`
+    }
+    if(partTime.checked == true){
+        adString += `&part_time=1`
+    }
+    if(contract.checked == true){
+        adString += `&contract=1`
+    }
+    if(permanent.checked == true){
+        adString += `&permanent=1`
+    }
+
     console.log(ghString)
+    console.log(adString)
     // Githubjobs parameters:
     // ?search= (search terms)
     // &location= (city name, zip)
@@ -109,13 +99,13 @@ async function startSearch() {
 
 }
 
-async function sendSearchRequests(ghString, ghLocation) {
+async function sendSearchRequests(ghString, adString) {
     githubJobs = await $.ajax({
-        url: `https://repos.codehot.tech/cors_proxy.php?url=https://jobs.github.com/positions.json?description=${ghString}20%&location=${ghLocation}20%`,
+        url: `https://repos.codehot.tech/cors_proxy.php?url=https://jobs.github.com/positions.json?${ghString}20%`,
         method: 'GET',
     }).then(r => JSON.parse(r)).catch(e => console.log(e));
     adzunaJobs = await $.ajax({
-        url: `https://api.adzuna.com/v1/api/jobs/ca/search/1?app_id=${appID}&app_key=${appKey}&content-type=application/json&results_per_page=50&what=${ghString}20%&where=${ghLocation}20%`,
+        url: `https://api.adzuna.com/v1/api/jobs/ca/search/1?app_id=${appID}&app_key=${appKey}&content-type=application/json&results_per_page=50&${adString}20%`,
         method: 'GET'
     }).then(r => r.results).catch(e => console.log(e));
 }
@@ -230,5 +220,46 @@ span.onclick = function () {
 window.onclick = function (event) {
     if (event.target == modal) {
         modal.style.display = "none";
+    }
+}
+// generate cards
+function displayCards() {
+    // clear old search
+    document.querySelector('#searchOutputContainer').innerHTML = '';
+    // add new results
+    for (var i = 0; i < 9; i++) {
+        document.querySelector('#searchOutputContainer').innerHTML +=
+            `<div class="col-md-4">
+            <div class="card clickcard my-3 mx-3 shape" id="cardClick">
+                <div class="card-body">
+                    <div class="row d-flex">
+                        <a href="" class="titleLink" style="width: 60%">${githubJobs[i].company}</a>
+                        <button type="button" class="position-absolute end-0 me-3" id="saveBtn">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                    </div>
+                    <h6 class="card-subtitle mb-2">${githubJobs[i].title}</h6>
+                    <h6 class="card-subtitle">${githubJobs[i].location}</h6>
+                    <h6 class="card-subtitle mb-2 salary" ><a href="${githubJobs[i].url}">Click here for more info</a></h6>
+                </div>
+            </div>
+        </div>`;
+
+        document.querySelector('#searchOutputContainer').innerHTML +=
+            `<div class="col-md-4">
+            <div class="card clickcard my-3 mx-3 shape" id="cardClick">
+                <div class="card-body">
+                    <div class="row d-flex">
+                        <a href="#" class="titleLink" style="width: 60%">${adzunaJobs[i].company.display_name}</a>
+                        <button type="button" class="position-absolute end-0 me-3" id="saveBtn">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                    </div>
+                    <h6 class="card-subtitle mb-2">${adzunaJobs[i].title}</h6>
+                    <h6 class="card-subtitle">${adzunaJobs[i].location.display_name}</h6>
+                    <h6 class="card-subtitle mb-2 salary" ><a href="${adzunaJobs[i].redirect_url}">Click here for more info</a></h6>
+                </div>
+            </div>
+        </div>`;
     }
 }
