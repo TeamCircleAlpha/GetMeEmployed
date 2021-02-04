@@ -259,3 +259,39 @@ function displayCards() {
         </div>`;
     }
 }
+var saveList = []
+
+function renderItem(){
+
+    if (JSON.parse(localStorage.getItem("saveList")) !== null)
+        {saveList = JSON.parse(localStorage.getItem("saveList"))}
+
+    for (let i=0; i<saveList.length; i++){
+        document.querySelector(".active").innerHTML += saveList[i]}
+}
+renderItem()
+
+function star(el){
+
+    var sideNav = document.querySelector(".active")
+
+    sideNav.innerHTML = ""
+
+    var jobTitle = el.previousElementSibling.textContent;
+    var link = el.parentElement.parentElement.children[3].children[0].href
+    el.parentElement.children[1].style.color = "orange"
+   
+    saveList.push(
+    `<a href=${link}><div class="savedJobBody">
+                            <h5 class="card-title">${jobTitle}</h5>
+                            <a class="remove-favorite">&#9733;</a>
+                            <p class="card-text">Job title</p>
+                            <span class="card-text">Description or something idk, two lines maybe</span>
+                        </div></a>`)
+
+    for (let i=0; i<saveList.length; i++){
+        sideNav.innerHTML += saveList[i]
+    }
+
+    localStorage.setItem("saveList", JSON.stringify(saveList))
+}
