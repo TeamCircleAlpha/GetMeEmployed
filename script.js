@@ -32,47 +32,7 @@ document.querySelector('#savedJobLink').addEventListener("click", function () {
     }
 })
 
-// generate cards
-function displayCards() {
-    // clear old search
-    document.querySelector('#searchOutputContainer').innerHTML = '';
-    // add new results
-    for (var i = 0; i < 9; i++) {
-        document.querySelector('#searchOutputContainer').innerHTML +=
-            `<div class="col-md-4">
-            <div class="card clickcard my-3 mx-3 shape" id="cardClick">
-                <div class="card-body">
-                    <div class="row d-flex">
-                        <a href="" class="titleLink" style="width: 60%">${githubJobs[i].company}</a>
-                        <button type="button" class="position-absolute end-0 me-3" id="saveBtn">
-                            <i class="fas fa-ellipsis-v"></i>
-                        </button>
-                    </div>
-                    <h6 class="card-subtitle mb-2">${githubJobs[i].title}</h6>
-                    <h6 class="card-subtitle">${githubJobs[i].location}</h6>
-                    <h6 class="card-subtitle mb-2 salary" ><a href="${githubJobs[i].url}">Click here for more info</a></h6>
-                </div>
-            </div>
-        </div>`;
 
-        document.querySelector('#searchOutputContainer').innerHTML +=
-            `<div class="col-md-4">
-            <div class="card clickcard my-3 mx-3 shape" id="cardClick">
-                <div class="card-body">
-                    <div class="row d-flex">
-                        <a href="#" class="titleLink" style="width: 60%">${adzunaJobs[i].company.display_name}</a>
-                        <button type="button" class="position-absolute end-0 me-3" id="saveBtn">
-                            <i class="fas fa-ellipsis-v"></i>
-                        </button>
-                    </div>
-                    <h6 class="card-subtitle mb-2">${adzunaJobs[i].title}</h6>
-                    <h6 class="card-subtitle">${adzunaJobs[i].location.display_name}</h6>
-                    <h6 class="card-subtitle mb-2 salary" ><a href="${adzunaJobs[i].redirect_url}">Click here for more info</a></h6>
-                </div>
-            </div>
-        </div>`;
-    }
-}
 
 /* ----------------------- */
 /* ---- CSS ANIMATION ---- */
@@ -230,5 +190,46 @@ span.onclick = function () {
 window.onclick = function (event) {
     if (event.target == modal) {
         modal.style.display = "none";
+    }
+}
+// generate cards
+function displayCards() {
+    // clear old search
+    document.querySelector('#searchOutputContainer').innerHTML = '';
+    // add new results
+    for (var i = 0; i < 9; i++) {
+        document.querySelector('#searchOutputContainer').innerHTML +=
+            `<div class="col-md-4">
+            <div class="card clickcard my-3 mx-3 shape" id="cardClick">
+                <div class="card-body">
+                    <div class="row d-flex">
+                        <a href="" class="titleLink" style="width: 60%">${githubJobs[i].company}</a>
+                        <button type="button" class="position-absolute end-0 me-3" id="saveBtn">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                    </div>
+                    <h6 class="card-subtitle mb-2">${githubJobs[i].title}</h6>
+                    <h6 class="card-subtitle">${githubJobs[i].location}</h6>
+                    <h6 class="card-subtitle mb-2 salary" ><a href="${githubJobs[i].url}">Click here for more info</a></h6>
+                </div>
+            </div>
+        </div>`;
+
+        document.querySelector('#searchOutputContainer').innerHTML +=
+            `<div class="col-md-4">
+            <div class="card clickcard my-3 mx-3 shape" id="cardClick">
+                <div class="card-body">
+                    <div class="row d-flex">
+                        <a href="#" class="titleLink" style="width: 60%">${adzunaJobs[i].company.display_name}</a>
+                        <button type="button" class="position-absolute end-0 me-3" id="saveBtn">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                    </div>
+                    <h6 class="card-subtitle mb-2">${adzunaJobs[i].title}</h6>
+                    <h6 class="card-subtitle">${adzunaJobs[i].location.display_name}</h6>
+                    <h6 class="card-subtitle mb-2 salary" ><a href="${adzunaJobs[i].redirect_url}">Click here for more info</a></h6>
+                </div>
+            </div>
+        </div>`;
     }
 }
