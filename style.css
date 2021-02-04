@@ -2,161 +2,298 @@
 /* --- OVERALL CSS --- */
 /* ------------------- */
 body {
-    background-image: url('assets/GMEbg.png');
-    font-family: 'Quicksand', sans-serif;
-    overflow-x: hidden;
+  background-image: url("assets/GMEbg.png");
+  font-family: "Quicksand", sans-serif;
+  overflow-x: hidden;
 }
 /* ------------------ */
 /* --- NAVBAR CSS --- */
 /* ------------------ */
 .navbar {
-    background-color: #60E2D6;
-    width: 100%;
-    border-bottom: 1px solid rgb(189, 189, 189);
-    position: fixed;
-    top: 0;
-    z-index: 20;
+  background-color: #60e2d6;
+  width: 100%;
+  border-bottom: 1px solid rgb(189, 189, 189);
+  position: fixed;
+  top: 0;
+  z-index: 20;
 }
 .navbar-logo {
-    width: 90px;
-    padding-top: 0;
-    padding-bottom: 0;
+  width: 90px;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 .nav-link {
-    color: rgb(36, 47, 49);
-    font-family: 'Quicksand', sans-serif;
-    font-size: 20px;
+  color: rgb(36, 47, 49);
+  font-family: "Quicksand", sans-serif;
+  font-size: 20px;
 }
-#savedJobLink:hover{
-    color:white;
-    text-decoration: none;
-    cursor: pointer;
+#savedJobLink:hover {
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
 }
 /* --------------------- */
 /* -- SEARCH AREA CSS -- */
 /* --------------------- */
 .push-center {
-    margin-top: 35vh;
+  margin-top: 35vh;
 }
 #searchCont {
-    transition: 0.3s;
+  transition: 0.3s;
 }
 #searchBtn {
-    background-color: #60E2D6;
-    border-radius: 15px;
-    color: rgb(36, 47, 49);
-    border: #60E2D6;
+  background-color: #60e2d6;
+  border-radius: 15px;
+  color: rgb(36, 47, 49);
+  border: #60e2d6;
 }
 #searchBtn:hover {
-    background-color: #83fff3;
-    transform: scale(1.2);
+  background-color: #83fff3;
+  transform: scale(1.2);
 }
 /* -------------------- */
 /* -- CSS ANIMATIONS -- */
 /* -------------------- */
-.searchBar{
-    text-decoration: none;
-    background: linear-gradient(-45deg,white,white,white,rgb(163, 248, 244), #60E2D6,rgb(198, 252, 249), white,white,white);
-    background-size: 500% 500%;
-    position: relative;
-    animation: change 4s ease-in-out;
+.searchBar {
+  text-decoration: none;
+  background: linear-gradient(
+    -45deg,
+    white,
+    white,
+    white,
+    rgb(163, 248, 244),
+    #60e2d6,
+    rgb(198, 252, 249),
+    white,
+    white,
+    white
+  );
+  background-size: 500% 500%;
+  position: relative;
+  animation: change 4s ease-in-out;
 }
-.searchButton{
-    background: linear-gradient(-45deg,white,white,white,white,white,white, #8ae2d9, #75e2d7, #60E2D6);
-    background-size: 500% 500%;
-    position: relative;
-    animation: change 4s ease-in-out;
+.searchButton {
+  background: linear-gradient(
+    -45deg,
+    white,
+    white,
+    white,
+    white,
+    white,
+    white,
+    #8ae2d9,
+    #75e2d7,
+    #60e2d6
+  );
+  background-size: 500% 500%;
+  position: relative;
+  animation: change 4s ease-in-out;
 }
-@keyframes change{
-    0%{ background-position: 0 50%; }
-    50%{ background-position: 100% 50%; }
-    100%{ background-position: 0% 50%; }
+@keyframes change {
+  0% {
+    background-position: 0 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 /* --------------------------- */
 /* -- MAIN CARD DISPLAY CSS -- */
 /* --------------------------- */
 .card {
-    height: 250px;
-    background: white;
-    border-radius: 15px;
-    transition: background-color 1s ease-out 100ms;
+  height: 250px;
+  background: white;
+  border-radius: 15px;
+  transition: background-color 1s ease-out 100ms;
 }
 .card:hover {
-    background-color: #60E2D6;
-    transform: scale(1.1);
+  background-color: #60e2d6;
+  transform: scale(1.1);
 }
 .titleLink {
-    margin-bottom: 5px;
-    color: black;
-    font-weight: bold;
-    font-size: 20px;
-    text-decoration: none
+  margin-bottom: 5px;
+  color: black;
+  font-weight: bold;
+  font-size: 20px;
+  text-decoration: none;
 }
 .titleLink:hover {
-    text-decoration: underline;
-    color: black;
+  text-decoration: underline;
+  color: black;
 }
 .salary {
-    font-weight: bold;
+  font-weight: bold;
 }
 .reqList {
-    list-style: none;
-    padding-left: 0;
+  list-style: none;
+  padding-left: 0;
 }
-#jobSearch{
-color: rgb(36, 47, 49);
-font-family: 'Quicksand', sans-serif;
+#jobSearch {
+  color: rgb(36, 47, 49);
+  font-family: "Quicksand", sans-serif;
 }
 #saveBtn {
-    width: 15%;
-    border-radius: 5px;
-    justify-content: right;
-    background-color: white;
-    border: none;
+  width: 15%;
+  border-radius: 5px;
+  justify-content: right;
+  background-color: white;
+  border: none;
 }
 #saveBtn:focus {
-    box-shadow: 0 0 0 3pt rgb(0, 162, 255);
-    outline: 0;
+  box-shadow: 0 0 0 3pt rgb(0, 162, 255);
+  outline: 0;
 }
 /* ---------------------- */
 /* -- SIDEBAR MENU CSS -- */
 /* ---------------------- */
 .sidenav {
-    height: 100vh;
-    width: 0;
-    position: fixed;
-    z-index: 10;
-    top: 0;
-    right: 0;
-    background-color:  #c7daddcb;
-    overflow-x: hidden;
-    padding-top: 90px;
-    transition: 1s;
-    border: 1px solid rgb(189, 189, 189);
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
+  height: 100vh;
+  width: 0;
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  right: 0;
+  background-color: #c7daddcb;
+  overflow-x: hidden;
+  padding-top: 90px;
+  transition: 1s;
+  border: 1px solid rgb(189, 189, 189);
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
 }
 
 @media screen and (max-height: 450px) {
-.sidenav {padding-top: 15px;}
-.sidenav a {font-size: 18px;}
+  .sidenav {
+    padding-top: 15px;
+  }
+  .sidenav a {
+    font-size: 18px;
+  }
 }
 .remove-favorite {
-    font-size: 1.25rem;
-    margin-bottom: .5rem;
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
 }
 .remove-favorite:hover {
-    border-color: #8ae2d9;
-    cursor: pointer;
+  border-color: #8ae2d9;
+  cursor: pointer;
 }
-.cardBodySaved{
-    border: 1px solid rgb(189, 189, 189);
-    border-radius: 5px;
+.cardBodySaved {
+  border: 1px solid rgb(189, 189, 189);
+  border-radius: 5px;
 }
-.savedJobBody{
-    padding: 10px 10px;
-    background-color: rgb(131, 236, 219) ;
-    width: 248px;
-    height: 120px;
-    /* overflow: hidden; */
+
+@keyframes change {
+  0% {
+    background-position: 0 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* JOB INFO CARDS */
+.card {
+  height: 250px;
+  background: white;
+  border-radius: 15px;
+  transition: background-color 1s ease-out 100ms;
+}
+
+.card:hover {
+  background-color: #60e2d6;
+  transform: scale(1.1);
+}
+
+/* @keyframes slideup{
+  0%{
+      background-position: 0 50%;
+  }
+  50%{
+      background-position: 100% 50%;
+  }
+  100%{
+      background-position: 0% 50%;
+  }
+} */
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: rgb(163, 248, 244);
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: rgb(163, 248, 244);
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
 }
