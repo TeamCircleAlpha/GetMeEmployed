@@ -38,6 +38,9 @@ body {
 .push-center {
     margin-top: 35vh;
 }
+.form-check-label {
+    color: rgb(226, 226, 226);
+}
 #searchCont {
     transition: 0.3s;
 }
