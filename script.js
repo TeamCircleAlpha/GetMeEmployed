@@ -191,3 +191,4 @@ function sendDummyRequests() {
         __CLASS__: "Adzuna::API::Response::Job"}
     ];
 }
+
