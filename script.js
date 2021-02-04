@@ -11,7 +11,7 @@ document.querySelector('#searchBtn').addEventListener("click", async function ()
     // stop loading CSS & display cards
     toggleSearchAnim();
     document.querySelector('#searchCont').classList.remove('push-center');
-    document.querySelector('#searchCont').style.marginTop = "1.5rem";
+    document.querySelector('#searchCont').style.marginTop = "90px";
     displayCards();
 });
 
@@ -20,12 +20,10 @@ document.querySelector('#savedJobLink').addEventListener("click", function () {
     if (document.querySelector("#mySidenav").style.width === "") {
         // open side nav menu
         document.querySelector("#mySidenav").style.width = "250px";
-        // document.querySelector("#savedJobLink").style.width = "360px";
     }
     else {
         // close side nav menu
         document.querySelector("#mySidenav").style.width = "";
-        document.querySelector("#savedJobLink").style.width = null;
     }
 })
 
@@ -79,7 +77,6 @@ function displayCards() {
 function toggleSearchAnim() {
     document.querySelector('.searchInput').classList.toggle('searchBar');
     document.querySelector('#searchBtn').classList.toggle('searchButton');
-
 }
 
 /* ------------------------ */
@@ -92,7 +89,8 @@ let githubJobs, adzunaJobs;
 
 async function startSearch() {
     //parse search terms
-    let ghString = encodeURIComponent(document.querySelector('#keywords').value); ghLocation = encodeURIComponent(document.querySelector('#location').value);
+    let ghString = encodeURIComponent(document.querySelector('#keywords').value); 
+    let ghLocation = encodeURIComponent(document.querySelector('#location').value);
     console.log(ghString)
     // Githubjobs parameters:
     // ?search= (search terms)
