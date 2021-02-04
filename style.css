@@ -143,9 +143,11 @@ body {
   transition: 1s;
   border: 1px solid rgb(189, 189, 189);
 }
-
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
+}
+.carousel {
+    height: 100%;
 }
 .savedJobBody {
     border: 1px solid rgb(189, 189, 189);
