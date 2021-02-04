@@ -247,3 +247,98 @@ function sendDummyRequests() {
         }
     ];
 }
+// Search invalid modal
+var modal = document.querySelector('#emptyModal');
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+function showModal() {
+    modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function () {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+// generate cards
+function displayCards() {
+    // clear old search
+    document.querySelector('#searchOutputContainer').innerHTML = '';
+    // add new results
+    for (var i=0; i<9; i++) {
+        document.querySelector('#searchOutputContainer').innerHTML += 
+        `<div class="col-md-4">
+            <div class="card clickcard my-3 mx-3 shape" id="cardClick">
+                <div class="card-body">
+                    <div class="row d-flex">
+                            <a class="titleLink" style="width: 80%">${githubJobs[i].company}</a>
+                            <p onclick="star(this)" class="saveBtn">&#9733</p>
+                    </div>
+                    <h6 class="card-subtitle mb-2">${githubJobs[i].title}</h6>
+                    <h6 class="card-subtitle">${githubJobs[i].location}</h6>
+                    <h6 class="card-subtitle mb-2 salary"><a href="${githubJobs[i].url}">Click here for more info</a></h6>
+                </div>
+            </div>
+        </div>`;
+
+        document.querySelector('#searchOutputContainer').innerHTML += 
+        `<div class="col-md-4">
+            <div class="card clickcard my-3 mx-3 shape" id="cardClick">
+                <div class="card-body">
+                    <div class="row d-flex">
+                            <a class="titleLink" style="width: 80%">${githubJobs[i].company}</a>
+                            <p onclick="star(this)" class="saveBtn">&#9733</p>
+                    </div>
+                    <h6 class="card-subtitle mb-2">${adzunaJobs[i].title}</h6>
+                    <h6 class="card-subtitle">${adzunaJobs[i].location.display_name}</h6>
+                    <h6 class="card-subtitle mb-2 salary"><a href="${adzunaJobs[i].redirect_url}">Click here for more info</a></h6>
+                </div>
+            </div>
+        </div>`;
+    }
+}
+var saveList = []
+
+function renderItem(){
+
+    if (JSON.parse(localStorage.getItem("saveList")) !== null)
+        {saveList = JSON.parse(localStorage.getItem("saveList"))}
+
+    for (let i=0; i<saveList.length; i++){
+        document.querySelector(".active").innerHTML += saveList[i]}
+}
+renderItem()
+
+function star(el){
+
+    var sideNav = document.querySelector(".active")
+
+    sideNav.innerHTML = ""
+
+    var jobTitle = el.previousElementSibling.textContent;
+    var link = el.parentElement.parentElement.children[3].children[0].href
+    el.parentElement.children[1].style.color = "orange"
+   
+    saveList.push(
+    `<a href=${link}><div class="savedJobBody">
+                            <h5 class="card-title">${jobTitle}</h5>
+                            <a class="remove-favorite">&#9733;</a>
+                            <p class="card-text">Job title</p>
+                            <span class="card-text">Description or something idk, two lines maybe</span>
+                        </div></a>`)
+
+    for (let i=0; i<saveList.length; i++){
+        sideNav.innerHTML += saveList[i]
+    }
+
+    localStorage.setItem("saveList", JSON.stringify(saveList))
+}

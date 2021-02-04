@@ -116,12 +116,15 @@ body {
   color: rgb(36, 47, 49);
   font-family: "Quicksand", sans-serif;
 }
-#saveBtn {
-  width: 15%;
-  border-radius: 5px;
-  justify-content: right;
-  background-color: white;
-  border: none;
+.saveBtn {
+    color: #60E2D6;
+    font-size: 30px;
+    line-height:60%;
+    width:10%
+}
+
+.saveBtn:hover{
+    cursor:pointer
 }
 #saveBtn:focus {
   box-shadow: 0 0 0 3pt rgb(0, 162, 255);
