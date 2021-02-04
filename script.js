@@ -12,8 +12,12 @@ document.querySelector('#searchBtn').addEventListener("click", async function ()
     toggleSearchAnim();
     //Checks search input if it is empty shows modal
     if (document.querySelector('#keywords').value === "" && document.querySelector('#location').value === "") {
-        showModal();
-    } else {
+        showModal('Please enter at least 1 search keyword.');
+    } 
+    else if (githubJobs.length === 0 || adzunaJobs.length === 0) {
+        showModal('No search results found.');
+    }
+    else {
         document.querySelector('#searchCont').classList.remove('push-center');
         document.querySelector('#searchCont').style.marginTop = "90px";
         displayCards();
@@ -32,7 +36,71 @@ document.querySelector('#savedJobLink').addEventListener("click", function () {
     }
 })
 
+// When the user clicks the button, open the modal 
+function showModal(msg) {
+    document.querySelector('#modalMsg').innerHTML = msg;
+    document.querySelector('#emptyModal').style.display = "block";
+}
 
+// When the user clicks on <span> (x), close the modal
+document.querySelector('#modalClose').onclick = function () {
+    document.querySelector('#emptyModal').style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+    if (event.target == document.querySelector('#emptyModal')) {
+        document.querySelector('#emptyModal').style.display = "none";
+    }
+}
+
+// generate cards
+function displayCards() {
+    // clear old search
+    document.querySelector('#searchOutputContainer').innerHTML = '';
+    // calculate entries to display
+    let numOfEntries = 0;
+    if (githubJobs.length > 9 && adzunaJobs.length > 9) numOfEntries = 9;
+    else if (githubJobs.length >= adzunaJobs.length) numOfEntries = adzunaJobs.length;
+    else if (githubJobs.length < adzunaJobs.length) numOfEntries = githubJobs.length;
+    else console.log('Unexpected error with API output');
+    // add new results
+    for (var i = 0; i < numOfEntries; i++) {
+        document.querySelector('#searchOutputContainer').innerHTML +=
+            `<div class="col-md-4">
+            <div class="card clickcard my-3 mx-3 shape" id="cardClick">
+                <div class="card-body">
+                    <div class="row d-flex">
+                        <a href="" class="titleLink" style="width: 60%">${githubJobs[i].company}</a>
+                        <button type="button" class="position-absolute end-0 me-3" id="saveBtn">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                    </div>
+                    <h6 class="card-subtitle mb-2">${githubJobs[i].title}</h6>
+                    <h6 class="card-subtitle">${githubJobs[i].location}</h6>
+                    <h6 class="card-subtitle mb-2 salary" ><a href="${githubJobs[i].url}">Click here for more info</a></h6>
+                </div>
+            </div>
+        </div>`;
+
+        document.querySelector('#searchOutputContainer').innerHTML +=
+            `<div class="col-md-4">
+            <div class="card clickcard my-3 mx-3 shape" id="cardClick">
+                <div class="card-body">
+                    <div class="row d-flex">
+                        <a href="#" class="titleLink" style="width: 60%">${adzunaJobs[i].company.display_name}</a>
+                        <button type="button" class="position-absolute end-0 me-3" id="saveBtn">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                    </div>
+                    <h6 class="card-subtitle mb-2">${adzunaJobs[i].title}</h6>
+                    <h6 class="card-subtitle">${adzunaJobs[i].location.display_name}</h6>
+                    <h6 class="card-subtitle mb-2 salary" ><a href="${adzunaJobs[i].redirect_url}">Click here for more info</a></h6>
+                </div>
+            </div>
+        </div>`;
+    }
+}
 
 /* ----------------------- */
 /* ---- CSS ANIMATION ---- */
@@ -50,62 +118,41 @@ function toggleSearchAnim() {
 
 let appID = 'ddcfef90';
 let appKey = '34e2e2ed55214203ba42f1f55e511f13';
-let githubJobs, adzunaJobs;
+let githubJobs=[], adzunaJobs=[];
 
 async function startSearch() {
     //parse search terms
-    let Description = encodeURIComponent(document.querySelector('#keywords').value);
-    let Location = encodeURIComponent(document.querySelector('#location').value);
-    let minSalary = document.querySelector('#minSalary').value;
-    let fullTime = document.getElementById('fullTimeCheck');
-    let partTime = document.getElementById('partTimeCheck');
-    let contract = document.getElementById('contractCheck');
-    let permanent = document.getElementById('permanentCheck');
+    let jobDescription = encodeURIComponent(document.querySelector('#keywords').value);
+    let jobLocation = encodeURIComponent(document.querySelector('#location').value);
+    let jobSalary = parseInt(document.querySelector('#minSalary').value);
 
     //Github Jobs search inputs
     let ghString = "";
-    ghString += `description=${Description}&`;
-    ghString += `location=${Location}`;
+    ghString += `description=${jobDescription}&`;
+    if (jobLocation !== '') ghString += `location=${jobLocation}`;
 
     //Adzuna search inputs
     let adString = "";
-    adString += `what=${Description}`;
-    adString += `&where=${Location}`;
-    adString += `&salary_min=${minSalary}`;
-    if(fullTime.checked == true){
-        adString += `&full_time=1`
-    }
-    if(partTime.checked == true){
-        adString += `&part_time=1`
-    }
-    if(contract.checked == true){
-        adString += `&contract=1`
-    }
-    if(permanent.checked == true){
-        adString += `&permanent=1`
-    }
-
-    console.log(ghString)
-    console.log(adString)
-    // Githubjobs parameters:
-    // ?search= (search terms)
-    // &location= (city name, zip)
-    // &lat/&long= (latitude & longitude)
-    // &full_time=true (for full time)
+    adString += `what=${jobDescription}`;
+    if (jobLocation !== '') adString += `&where=${jobLocation}`;
+    if (jobSalary > 0) adString += `&salary_min=${jobSalary}`;
+    if(document.getElementById('fullTimeCheck').checked == true) adString += `&full_time=1`;
+    if(document.getElementById('partTimeCheck').checked == true) adString += `&part_time=1`;
+    if(document.getElementById('contractCheck').checked == true) adString += `&contract=1`;
+    if(document.getElementById('permanentCheck').checked == true) adString += `&permanent=1`;
 
     // await sendSearchRequests(ghString, adzString, ghLocation);
     await new Promise(resolve => setTimeout(resolve, 1500));
     sendDummyRequests();
-
 }
 
 async function sendSearchRequests(ghString, adString) {
     githubJobs = await $.ajax({
-        url: `https://repos.codehot.tech/cors_proxy.php?url=https://jobs.github.com/positions.json?${ghString}20%`,
+        url: `https://repos.codehot.tech/cors_proxy.php?url=https://jobs.github.com/positions.json?${ghString}`,
         method: 'GET',
     }).then(r => JSON.parse(r)).catch(e => console.log(e));
     adzunaJobs = await $.ajax({
-        url: `https://api.adzuna.com/v1/api/jobs/ca/search/1?app_id=${appID}&app_key=${appKey}&content-type=application/json&results_per_page=50&${adString}20%`,
+        url: `https://api.adzuna.com/v1/api/jobs/ca/search/1?app_id=${appID}&app_key=${appKey}&content-type=application/json&results_per_page=50&${adString}`,
         method: 'GET'
     }).then(r => r.results).catch(e => console.log(e));
 }
