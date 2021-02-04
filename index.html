@@ -27,62 +27,41 @@
     <!-- SAVED JOBS SIDE MENU -->
     <div class="container">
         <div id="mySidenav" class="sidenav">
-            <div class="row">
-                <div class="col my-1">
-
-                    <!-- CAROUSEL -->
-                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <!-- CARD FOR SAVED JOBS -->
-                                <div class="cardBodySaved">
-                                    <div class="savedJobBody">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">Placeholder: djfhdsf;jksdf</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <!-- CARD FOR SAVED JOBS -->
-                                <div class="cardBodySaved">
-                                    <div class="savedJobBody">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">Placeholder: djfhdsf;jksdf</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <!-- CARD FOR SAVED JOBS -->
-                                <div class="cardBodySaved">
-                                    <div class="savedJobBody">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">Placeholder: djfhdsf;jksdf</p>
-                                    </div>
-                                </div>
+            <!-- CAROUSEL -->
+            <div id="savedCardsCarousel" class="carousel slide">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <!-- PAGE 1 -->
+                        <div class="savedJobBody">
+                            <h5 class="card-title">Company Name</h5>
+                            <a class="remove-favorite">&#9733;</a>
+                            <p class="card-text">Job title</p>
+                            <span class="card-text">Description or something idk, two lines maybe</span>
+                        </div>
+                        <div class="cardBodySaved">
+                            <div class="savedJobBody">
+                                <h5 class="card-title">Company Name</h5>
+                                <a class="remove-favorite">&#9733;</a>
+                                <p class="card-text">Job title</p>
+                                <span class="card-text">Description or something idk, two lines maybe</span>
                             </div>
                         </div>
-                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button"
-                            data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carouselExampleControls" role="button"
-                            data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </a>
                     </div>
-
-
-                    <!-- <p class="saved-jobs-title d-flex justify-content-center">Text</p> -->
-                    <!-- <div class="cardBodySaved">
-                        <div class="savedJobBody">
-                          <h5 class="card-title">Card title</h5>
-                          <p class="card-text">Placeholder: djfhdsf;jksdf</p> -->
-                    <!-- <a href="#" class="btn btn-primary">Button</a> -->
-
+                    <div class="carousel-item">
+                        <!-- PAGE 2 -->
+                        <div class="cardBodySaved">
+                            <div class="savedJobBody">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Placeholder: djfhdsf;jksdf</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <ol class="carousel-indicators">
+                <li data-bs-target="#savedCardsCarousel" data-bs-slide-to="0" class="active"></li>
+                <li data-bs-target="#savedCardsCarousel" data-bs-slide-to="1"></li>
+            </ol>
         </div>
     </div>
     </div>
@@ -98,9 +77,32 @@
                 <input class='form-control w-100' id="location" placeholder='Location'></input>
             </div>
             <div class='col-md-6'>
-                <input class='form-control w-100' placeholder='Something'></input>
+                <input class='form-control w-100' placeholder='Minimum Salary'></input>
             </div>
-            <div class='col-sm-2'></div>
+            <div class="col-6 col-md-3">
+                <input class="form-check-input" type="checkbox" name="fullTimeCheck" id="fullTimeCheck">
+                <label class="form-check-label" for="fullTimeCheck">
+                    Full Time
+                </label>
+            </div>
+            <div class="col-6 col-md-3">
+                <input class="form-check-input" type="checkbox" name="partTimeCheck" id="partTimeCheck">
+                <label class="form-check-label" for="partTimeCheck">
+                    Part Time
+                </label>
+            </div>
+            <div class="col-6 col-md-3">
+                <input class="form-check-input" type="checkbox" name="contractCheck" id="contractCheck">
+                <label class="form-check-label" for="contractCheck">
+                    Contract
+                </label>
+            </div>
+            <div class="col-6 col-md-3">
+                <input class="form-check-input" type="checkbox" name="permanentCheck" id="permanentCheck">
+                <label class="form-check-label" for="permanentCheck">
+                    Permanent
+                </label>
+            </div>
         </div>
         <div class='row'>
             <div class='col text-center'>
@@ -115,13 +117,11 @@
     </div>
     <!-- Modal -->
     <div id="emptyModal" class="modal">
-
         <!-- Modal content -->
         <div class="modal-content">
             <span class="close">&times;</span>
             <p>Please enter search parameters</p>
         </div>
-
     </div>
     <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
@@ -132,5 +132,4 @@
     <script src="script.js"></script>
 
 </body>
-
 </html>
