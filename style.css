@@ -38,6 +38,9 @@ body {
 .push-center {
   margin-top: 35vh;
 }
+.form-check-label {
+    color: rgb(226, 226, 226);
+}
 #searchCont {
   transition: 0.3s;
 }
@@ -57,48 +60,26 @@ body {
 .searchBar {
   text-decoration: none;
   background: linear-gradient(
-    -45deg,
-    white,
-    white,
-    white,
-    rgb(163, 248, 244),
-    #60e2d6,
-    rgb(198, 252, 249),
-    white,
-    white,
-    white
-  );
+    -45deg, white, white, white,
+     rgb(163, 248, 244), #60e2d6, rgb(198, 252, 249),
+    white, white, white);
   background-size: 500% 500%;
   position: relative;
   animation: change 4s ease-in-out;
 }
 .searchButton {
   background: linear-gradient(
-    -45deg,
-    white,
-    white,
-    white,
-    white,
-    white,
-    white,
-    #8ae2d9,
-    #75e2d7,
-    #60e2d6
-  );
+    -45deg, white, white, white,
+    white, white, white,
+    #8ae2d9, #75e2d7, #60e2d6);
   background-size: 500% 500%;
   position: relative;
   animation: change 4s ease-in-out;
 }
 @keyframes change {
-  0% {
-    background-position: 0 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  0% {background-position: 0 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
 }
 /* --------------------------- */
 /* -- MAIN CARD DISPLAY CSS -- */
@@ -156,77 +137,47 @@ body {
   z-index: 10;
   top: 0;
   right: 0;
-  background-color: #c7daddcb;
+  background-color: rgba(193, 218, 213, 0.8);
   overflow-x: hidden;
-  padding-top: 90px;
+  padding-top: 80px;
   transition: 1s;
   border: 1px solid rgb(189, 189, 189);
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
 }
-
 @media screen and (max-height: 450px) {
-  .sidenav {
-    padding-top: 15px;
-  }
-  .sidenav a {
-    font-size: 18px;
-  }
+  .sidenav {padding-top: 15px;}
 }
+.carousel {
+    height: 100%;
+}
+.savedJobBody {
+    border: 1px solid rgb(189, 189, 189);
+    border-radius: 5px;
+    background-color: rgb(179, 233, 230);
+    width: 250px;
+    height: 130px;
+    margin: 0.5rem 0;
+    padding: 0.5rem 0.5rem;
+    position: relative;
+  }
 .remove-favorite {
-  font-size: 1.25rem;
-  margin-bottom: 0.5rem;
+    font-size: 2rem;
+    text-decoration: none;
+    color: rgb(101, 136, 202);
+    position: absolute;
+    top: 1px;
+    right: 10px;
 }
 .remove-favorite:hover {
   border-color: #8ae2d9;
   cursor: pointer;
 }
-.cardBodySaved {
-  border: 1px solid rgb(189, 189, 189);
-  border-radius: 5px;
-}
-
-@keyframes change {
-  0% {
-    background-position: 0 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-/* JOB INFO CARDS */
-.card {
-  height: 250px;
-  background: white;
-  border-radius: 15px;
-  transition: background-color 1s ease-out 100ms;
-}
-
-.card:hover {
-  background-color: #60e2d6;
-  transform: scale(1.1);
-}
-
-/* @keyframes slideup{
-  0%{
-      background-position: 0 50%;
-  }
-  50%{
-      background-position: 100% 50%;
-  }
-  100%{
-      background-position: 0% 50%;
-  }
-} */
-
+/* ----------------------- */
+/* -- POPUP MESSAGE CSS -- */
+/* ----------------------- */
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  z-index: 20; /* Sit on top */
   padding-top: 100px; /* Location of the box */
   left: 0;
   top: 0;
@@ -236,7 +187,6 @@ body {
   background-color: rgb(0, 0, 0); /* Fallback color */
   background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
-
 /* Modal Content */
 .modal-content {
   background-color: rgb(163, 248, 244);
@@ -244,8 +194,8 @@ body {
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
+  max-width: 500px;
 }
-
 /* The Close Button */
 .close {
   color: #aaaaaa;
@@ -253,44 +203,6 @@ body {
   font-size: 28px;
   font-weight: bold;
 }
-
-.close:hover,
-.close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-}
-
-/* Modal Content */
-.modal-content {
-  background-color: rgb(163, 248, 244);
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-}
-
-/* The Close Button */
-.close {
-  color: #aaaaaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
 .close:hover,
 .close:focus {
   color: #000;
