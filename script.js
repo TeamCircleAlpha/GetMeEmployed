@@ -40,7 +40,7 @@ function displayCards() {
             <div class="card clickcard my-3 shape" id="cardClick">
                 <div class="card-body">
                     <div class="row d-flex">
-                        <a href="#" class="titleLink" style="width: 60%">${githubJobs[i].company}</a>
+                        <a href="${githubJobs[i].company_url}" class="titleLink" style="width: 60%">${githubJobs[i].company}</a>
                         <button type="button" class="position-absolute end-0 me-3" id="saveBtn">
                             <i class="fas fa-ellipsis-v"></i>
                         </button>
@@ -90,8 +90,8 @@ let githubJobs, adzunaJobs;
 
 async function startSearch() {
     //parse search terms
-    let ghString = document.querySelector('#keywords').value, ghLocation = document.querySelector('#location').value, adzString = 'what=developer';
-
+    let ghString = encodeURIComponent(document.querySelector('#keywords').value); ghLocation = encodeURIComponent(document.querySelector('#location').value);
+    console.log(ghString)
     // Githubjobs parameters:
     // ?search= (search terms)
     // &location= (city name, zip)
@@ -102,13 +102,13 @@ async function startSearch() {
     sendDummyRequests();
 }
 
-async function sendSearchRequests(ghString, adzString, ghLocation) {
+async function sendSearchRequests(ghString, ghLocation) {
     githubJobs = await $.ajax({
-        url: `https://repos.codehot.tech/cors_proxy.php?url=https://jobs.github.com/positions.json?description=${ghString}&location=${ghLocation}`,
+        url: `https://repos.codehot.tech/cors_proxy.php?url=https://jobs.github.com/positions.json?description=${ghString}20%&location=${ghLocation}20%`,
         method: 'GET',
     }).then(r => JSON.parse(r)).catch(e => console.log(e));
     adzunaJobs = await $.ajax({
-        url: `https://api.adzuna.com/v1/api/jobs/ca/search/1?app_id=${appID}&app_key=${appKey}&content-type=application/json&results_per_page=50&what=${ghString}&where=${ghLocation}`,
+        url: `https://api.adzuna.com/v1/api/jobs/ca/search/1?app_id=${appID}&app_key=${appKey}&content-type=application/json&results_per_page=50&what=${ghString}20%&where=${ghLocation}20%`,
         method: 'GET'
     }).then(r => r.results).catch(e => console.log(e));
 }
