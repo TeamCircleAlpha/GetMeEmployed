@@ -45,6 +45,14 @@
 background-color: #60E2D6;
 width: 100%;
 border-bottom: 1px solid rgb(189, 189, 189);
+padding-top: 0px;
+padding-bottom: 0px;
+}
+
+img {
+  width: 90px;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .navbar-toggler{
@@ -72,7 +80,7 @@ margin-top: 35vh;
 }
 
 body{
-background-color: rgb(226, 226, 226);
+background-image: url('assets/GMEbg.png');
 font-family: 'Quicksand', sans-serif;
 }
 /* .cont1 {
@@ -86,29 +94,31 @@ height:100%;
 
 /* The side navigation menu */
 .sidenav {
-height: 100%; /* 100% Full-height */
+height: 100vh; /* 100% Full-height */
 width: 0; /* 0 width - change this with JavaScript */
 position: fixed; /* Stay in place */
 z-index: 1; /* Stay on top */
-top: 0%; /* Stay at the top */
+top: 5vh; /* Stay at the top */
 right: 0;
-background-color: rgb(255, 255, 255); /* Black*/
+background-color:  #fff598cb; /* Black*/
 overflow-x: hidden; /* Disable horizontal scroll */
 padding-top: 60px; /* Place content 60px from the top */
 transition: 1s; /* 1s second transition effect to slide in the sidenav */
-border-left: 1px solid rgb(189, 189, 189);
+border: 1px solid rgb(189, 189, 189);
+border-top-left-radius: 20px;
+border-bottom-left-radius: 20px
 
 }
 
 /* The navigation menu links */ 
-.sidenav a {
+/* .sidenav a {
 padding: 8px 8px 8px 32px;
 text-decoration: none;
 font-size: 25px;
 color: #83fff3;
 display: block;
 transition: 0.3s;
-} 
+}  */
 
 /* When you mouse over the navigation links, change their color */
 .sidenav a:hover {
@@ -153,7 +163,7 @@ padding: 20px;
 }
 
 #savedJobLink:hover{
-color: white;
+color:white;
 text-decoration: none;
 cursor: pointer;
 }
@@ -185,7 +195,7 @@ cursor: pointer;
     background: linear-gradient(-45deg,white,white,white,rgb(163, 248, 244), #60E2D6,rgb(198, 252, 249), white,white,white);
     background-size: 500% 500%;
     position: relative;
-    animation: change 7s ease-in-out;
+    animation: change 4s ease-in-out;
 }
 
 .searchButton{
@@ -193,7 +203,7 @@ cursor: pointer;
     background: linear-gradient(-45deg,white,white,white,white,white,white, #8ae2d9, #75e2d7, #60E2D6);
     background-size: 500% 500%;
     position: relative;
-    animation: change 7s ease-in-out;
+    animation: change 4s ease-in-out;
 }
 
  @keyframes change{
@@ -215,7 +225,7 @@ cursor: pointer;
  .savedJobBody{
      text-align: center;
      padding: 10px 10px;
-     /* background-color: red ; */
+     background-color: rgb(199, 158, 22) ;
      width: 248px;
      overflow: hidden;
      height: 70px;
@@ -223,5 +233,18 @@ cursor: pointer;
  .cardBodySaved:hover{
      border-color: #8ae2d9;
      cursor: pointer;
+ }
+
+ /* JOB INFO CARDS */
+ .card {
+  height: 250px;
+  background: white;
+  border-radius: 15px;
+  transition: background-color 1s ease-out 100ms;
+ }
+
+ .card:hover {
+  background-color: #60E2D6;
+  transform: scale(1.1);
  }
 
