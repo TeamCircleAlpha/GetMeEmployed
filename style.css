@@ -152,23 +152,29 @@ body {
 .savedJobBody {
     border: 1px solid rgb(189, 189, 189);
     border-radius: 5px;
-    background-color: rgb(179, 233, 230);
+    background: rgb(179, 233, 230);
     width: 250px;
-    height: 130px;
+    height: 150px;
     margin: 0.5rem 0;
     padding: 0.5rem 0.5rem;
     position: relative;
+    transition: background-color 1s ease-out 100ms;
+    border-radius: 20px;
   }
+.savedJobBody:hover {
+    background-color: white;
+}
 .remove-favorite {
     font-size: 2rem;
     text-decoration: none;
-    color: rgb(101, 136, 202);
+    color: #57d3c7;
     position: absolute;
     top: 1px;
     right: 10px;
+    transition: color 1s ease-out 100ms;
 }
 .remove-favorite:hover {
-  border-color: #8ae2d9;
+  color: #83fff3;
   cursor: pointer;
 }
 /* ----------------------- */
