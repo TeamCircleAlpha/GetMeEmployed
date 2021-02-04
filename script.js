@@ -10,9 +10,14 @@ document.querySelector('#searchBtn').addEventListener("click", async function ()
     await startSearch();
     // stop loading CSS & display cards
     toggleSearchAnim();
+    //Checks search input if it is empty shows modal
+    if(document.querySelector('#keywords').value===""&&document.querySelector('#location').value===""){
+        showModal();
+    }else{
     document.querySelector('#searchCont').classList.remove('push-center');
-    document.querySelector('#searchCont').style.marginTop = "1.5rem";
+    document.querySelector('#searchCont').style.marginTop = "5px";
     displayCards();
+    }
 });
 
 // opens side nav menu on click
@@ -37,10 +42,10 @@ function displayCards() {
     for (var i=0; i<9; i++) {
         document.querySelector('#searchOutputContainer').innerHTML += 
         `<div class="col-md-4">
-            <div class="card clickcard my-3 shape" id="cardClick">
+            <div class="card clickcard my-3 mx-3 shape" id="cardClick">
                 <div class="card-body">
                     <div class="row d-flex">
-                        <a href="${githubJobs[i].company_url}" class="titleLink" style="width: 60%">${githubJobs[i].company}</a>
+                        <a href="" class="titleLink" style="width: 60%">${githubJobs[i].company}</a>
                         <button type="button" class="position-absolute end-0 me-3" id="saveBtn">
                             <i class="fas fa-ellipsis-v"></i>
                         </button>
@@ -54,7 +59,7 @@ function displayCards() {
 
         document.querySelector('#searchOutputContainer').innerHTML += 
         `<div class="col-md-4">
-            <div class="card clickcard my-3 shape" id="cardClick">
+            <div class="card clickcard my-3 mx-3 shape" id="cardClick">
                 <div class="card-body">
                     <div class="row d-flex">
                         <a href="#" class="titleLink" style="width: 60%">${adzunaJobs[i].company.display_name}</a>
@@ -97,9 +102,11 @@ async function startSearch() {
     // &location= (city name, zip)
     // &lat/&long= (latitude & longitude)
     // &full_time=true (for full time)
+
     // await sendSearchRequests(ghString, adzString, ghLocation);
     await new Promise(resolve => setTimeout(resolve, 1500));
     sendDummyRequests();
+
 }
 
 async function sendSearchRequests(ghString, ghLocation) {
@@ -190,4 +197,26 @@ function sendDummyRequests() {
         title: "Food Delivery - Weekly Pay",
         __CLASS__: "Adzuna::API::Response::Job"}
     ];
+}
+// Search invalid modal
+var modal = document.querySelector('#emptyModal');
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+function showModal(){
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
 }
