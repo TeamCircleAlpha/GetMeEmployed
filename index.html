@@ -32,7 +32,6 @@
                 <div class="carousel-inner">
                     <div class="carousel-item active" id="pg1">
                         <!-- PAGE 1 -->
-                       
                     </div>
                     <div class="carousel-item" id="pg2">
                         <!-- PAGE 2 -->
@@ -42,8 +41,10 @@
                         <!-- PAGE 3 -->
                             
                     </div>
+                    <!-- Everything in this div needs to be built dynamically -->
                 </div>
-                <ol class="carousel-indicators">
+                <ol class="carousel-indicators" id="carouselPageIndicator">
+                    <!-- This indicator needs to be built dynamically too -->
                     <li data-bs-target="#savedCardsCarousel" data-bs-slide-to="0" class="active"></li>
                     <li data-bs-target="#savedCardsCarousel" data-bs-slide-to="1"></li>
                     <li data-bs-target="#savedCardsCarousel" data-bs-slide-to="2"></li>
@@ -100,7 +101,6 @@
     <div class="container-md mt-2" style='max-width: 900px'>
         <div class="row" id="searchOutputContainer"></div>
     </div>
-    </div>
     <!-- Modal -->
     <div id="emptyModal" class="modal">
         <div class="modal-content">
@@ -117,4 +117,5 @@
     <script src="script.js"></script>
 
 </body>
+
 </html>

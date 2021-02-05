@@ -1,7 +1,44 @@
+/* ---------------------- */
+/* ---- ON PAGE LOAD ---- */
+/* ---------------------- */
+var saveList = [];
+// load saved list from local storage
+if (JSON.parse(localStorage.getItem("saveList")) !== null) {
+    saveList = JSON.parse(localStorage.getItem("saveList"));
+}
+// carousel saved list
+// styling: how many pages?
+function renderList() {
+    if (saveList.length < 5){
+        for (let i=0; i<saveList.length; i++){
+            document.querySelector("#pg1").innerHTML += saveList[i]
+            }
+        } 
+        else if (saveList.length < 10){
+            for (let j=0; j<5; j++){
+                document.querySelector("#pg1").innerHTML += saveList[j]
+            }
+            for (let w=5; w<saveList.length; w++){
+                document.querySelector("#pg2").innerHTML += saveList[w]
+            }
+        }
+        else if (10 <= saveList.length < 15){
+            for (let v=0; v<5; v++){
+                document.querySelector("#pg1").innerHTML += saveList[v]
+            }
+            for (let b=5; b< 10; b++){
+                document.querySelector("#pg2").innerHTML += saveList[b]
+            }
+            for (let n=10; n<saveList.length; n++){
+                document.querySelector("#pg3").innerHTML += saveList[n]
+            }
+        }  
+}
+renderList()
+
 /* ------------------------ */
 /* - BUTTON FUNCTIONALITY - */
 /* ------------------------ */
-
 // on search button click
 document.querySelector('#searchBtn').addEventListener("click", async function () {
     // start loading CSS
@@ -55,52 +92,102 @@ window.onclick = function (event) {
 }
 
 // generate cards
-// function displayCards() {
-//     // clear old search
-//     document.querySelector('#searchOutputContainer').innerHTML = '';
-//     // calculate entries to display
-//     let numOfEntries = 0;
-//     if (githubJobs.length > 9 && adzunaJobs.length > 9) numOfEntries = 9;
-//     else if (githubJobs.length >= adzunaJobs.length) numOfEntries = adzunaJobs.length;
-//     else if (githubJobs.length < adzunaJobs.length) numOfEntries = githubJobs.length;
-//     else console.log('Unexpected error with API output');
-//     // add new results
-//     for (var i = 0; i < numOfEntries; i++) {
-//         document.querySelector('#searchOutputContainer').innerHTML +=
-//             `<div class="col-md-4">
-//             <div class="card clickcard my-3 mx-3 shape" id="cardClick">
-//                 <div class="card-body">
-//                     <div class="row d-flex">
-//                         <a href="" class="titleLink" style="width: 60%">${githubJobs[i].company}</a>
-//                         <button type="button" class="position-absolute end-0 me-3" id="saveBtn">
-//                             <i class="fas fa-ellipsis-v"></i>
-//                         </button>
-//                     </div>
-//                     <h6 class="card-subtitle mb-2">${githubJobs[i].title}</h6>
-//                     <h6 class="card-subtitle">${githubJobs[i].location}</h6>
-//                     <h6 class="card-subtitle mb-2 salary" ><a href="${githubJobs[i].url}">Click here for more info</a></h6>
-//                 </div>
-//             </div>
-//         </div>`;
+function displayCards() {
+    // clear old search
+    document.querySelector('#searchOutputContainer').innerHTML = '';
+    // calculate entries to display
+    let numOfEntries = 0;
+    if (githubJobs.length > 9 && adzunaJobs.length > 9) numOfEntries = 9;
+    else if (githubJobs.length >= adzunaJobs.length) numOfEntries = adzunaJobs.length;
+    else if (githubJobs.length < adzunaJobs.length) numOfEntries = githubJobs.length;
+    else console.log('Unexpected error with API output');
+    // add new results
+    for (var i = 0; i < numOfEntries; i++) {
+        document.querySelector('#searchOutputContainer').innerHTML += 
+        `<div class="col-md-4">
+            <div class="card clickcard my-3 mx-3 shape" id="cardClick">
+                <div class="card-body">
+                    <div class="row d-flex">
+                            <a class="titleLink" style="width: 80%">${githubJobs[i].company}</a>
+                            <p onclick="star(this)" class="saveBtn">&#9733</p>
+                    </div>
+                    <h6 class="card-subtitle mb-2">${githubJobs[i].title}</h6>
+                    <h6 class="card-subtitle">${githubJobs[i].location}</h6>
+                    <h6 class="card-subtitle mb-2 salary"><a href="${githubJobs[i].url}" target="_blank">Click here for more info</a></h6>
+                </div>
+            </div>
+        </div>`;
+        document.querySelector('#searchOutputContainer').innerHTML += 
+        `<div class="col-md-4">
+            <div class="card clickcard my-3 mx-3 shape" id="cardClick">
+                <div class="card-body">
+                    <div class="row d-flex">
+                            <a class="titleLink" style="width: 80%">${githubJobs[i].company}</a>
+                            <p onclick="star(this)" class="saveBtn">&#9733</p>
+                    </div>
+                    <h6 class="card-subtitle mb-2">${adzunaJobs[i].title}</h6>
+                    <h6 class="card-subtitle">${adzunaJobs[i].location.display_name}</h6>
+                    <h6 class="card-subtitle mb-2 salary"><a href="${adzunaJobs[i].redirect_url}" target="_blank">Click here for more info</a></h6>
+                </div>
+            </div>
+        </div>`;
+    }
+}
+// // saves card to sidebar
+function star(el){
 
-//         document.querySelector('#searchOutputContainer').innerHTML +=
-//             `<div class="col-md-4">
-//             <div class="card clickcard my-3 mx-3 shape" id="cardClick">
-//                 <div class="card-body">
-//                     <div class="row d-flex">
-//                         <a href="#" class="titleLink" style="width: 60%">${adzunaJobs[i].company.display_name}</a>
-//                         <button type="button" class="position-absolute end-0 me-3" id="saveBtn">
-//                             <i class="fas fa-ellipsis-v"></i>
-//                         </button>
-//                     </div>
-//                     <h6 class="card-subtitle mb-2">${adzunaJobs[i].title}</h6>
-//                     <h6 class="card-subtitle">${adzunaJobs[i].location.display_name}</h6>
-//                     <h6 class="card-subtitle mb-2 salary" ><a href="${adzunaJobs[i].redirect_url}">Click here for more info</a></h6>
-//                 </div>
-//             </div>
-//         </div>`;
-//     }
-// }
+    var sideNav = document.querySelector("#pg1")
+    var sideNav2 = document.querySelector("#pg2")
+    var sideNav3 = document.querySelector("#pg3")
+    var companyName = el.previousElementSibling.textContent;
+    var link = el.parentElement.parentElement.children[3].children[0].href
+
+    sideNav.innerHTML = ""
+    sideNav2.innerHTML = ""
+    sideNav3.innerHTML = ""
+
+    //if star is orange, don't push
+    if(el.parentElement.children[1].style.color === "orange"){}
+    else {
+    el.parentElement.children[1].style.color = "orange"
+
+
+
+    saveList.push(
+    `<a href=${link} target="_blank">
+        <div class="savedJobBody">
+            <h5 class="card-title">${companyName}</h5>
+            <a class="remove-favorite">&#9733;</a>
+            <p class="card-text">Job title</p>
+            <span class="card-text">Description or something idk, two lines maybe</span>
+        </div>
+    </a>`);
+    }
+
+    if (saveList.length < 5){
+        for (let i=0; i<saveList.length; i++){
+            sideNav.innerHTML += saveList[i]
+            }
+        } else if (saveList.length < 10){
+            for (let j=0; j<5; j++){
+                sideNav.innerHTML += saveList[j]
+            }
+            for (let w=5; w<saveList.length; w++){
+                sideNav2.innerHTML += saveList[w]
+            }
+        } else if (10 <= saveList.length < 15){
+            for (let v=0; v<5; v++){
+                sideNav.innerHTML += saveList[v]
+            }
+            for (let b=5; b< 10; b++){
+                sideNav2.innerHTML += saveList[b]
+            }
+            for (let n=10; n<saveList.length; n++){
+                sideNav3.innerHTML += saveList[n]
+            }
+        }  
+    localStorage.setItem("saveList", JSON.stringify(saveList))
+}
 
 /* ----------------------- */
 /* ---- CSS ANIMATION ---- */
@@ -125,12 +212,10 @@ async function startSearch() {
     let jobDescription = encodeURIComponent(document.querySelector('#keywords').value);
     let jobLocation = encodeURIComponent(document.querySelector('#location').value);
     let jobSalary = parseInt(document.querySelector('#minSalary').value);
-
     //Github Jobs search inputs
     let ghString = "";
     ghString += `description=${jobDescription}&`;
     if (jobLocation !== '') ghString += `location=${jobLocation}`;
-
     //Adzuna search inputs
     let adString = "";
     adString += `what=${jobDescription}`;
@@ -140,7 +225,6 @@ async function startSearch() {
     if(document.getElementById('partTimeCheck').checked == true) adString += `&part_time=1`;
     if(document.getElementById('contractCheck').checked == true) adString += `&contract=1`;
     if(document.getElementById('permanentCheck').checked == true) adString += `&permanent=1`;
-
     // await sendSearchRequests(ghString, adzString, ghLocation);
     await new Promise(resolve => setTimeout(resolve, 1500));
     sendDummyRequests();
@@ -269,138 +353,3 @@ window.onclick = function (event) {
         modal.style.display = "none";
     }
 }
-
-var saveList = []
-
-// generate cards
-async function displayCards() {
-    // clear old search
-    document.querySelector('#searchOutputContainer').innerHTML = '';
-    // add new results
-    for (var i=0; i<9; i++) {
-        document.querySelector('#searchOutputContainer').innerHTML += 
-        `<div class="col-md-4">
-            <div class="card clickcard my-3 mx-3 shape" id="cardClick">
-                <div class="card-body">
-                    <div class="row d-flex">
-                            <a class="titleLink" style="width: 80%">${githubJobs[i].company}</a>
-                            <p onclick="star(this)" class="saveBtn">&#9733</p>
-                    </div>
-                    <h6 class="card-subtitle mb-2">${githubJobs[i].title}</h6>
-                    <h6 class="card-subtitle">${githubJobs[i].location}</h6>
-                    <h6 class="card-subtitle mb-2 salary"><a href="${githubJobs[i].url}">Click here for more info</a></h6>
-                </div>
-            </div>
-        </div>`;
-
-        document.querySelector('#searchOutputContainer').innerHTML += 
-        `<div class="col-md-4">
-            <div class="card clickcard my-3 mx-3 shape" id="cardClick">
-                <div class="card-body">
-                    <div class="row d-flex">
-                            <a class="titleLink" style="width: 80%">${githubJobs[i].company}</a>
-                            <p onclick="star(this)" class="saveBtn">&#9733</p>
-                    </div>
-                    <h6 class="card-subtitle mb-2">${adzunaJobs[i].title}</h6>
-                    <h6 class="card-subtitle">${adzunaJobs[i].location.display_name}</h6>
-                    <h6 class="card-subtitle mb-2 salary"><a href="${adzunaJobs[i].redirect_url}">Click here for more info</a></h6>
-                </div>
-            </div>
-        </div>`;
-    }
-} 
-
-//saved cards array = local.storage item
-function init(){
-    if (JSON.parse(localStorage.getItem("saveList")) !== null)
-        {saveList = JSON.parse(localStorage.getItem("saveList"))
-    }
-}
-init()
-
-//render carousel pages
-function renderList() {
-    if (saveList.length < 5){
-        for (let i=0; i<saveList.length; i++){
-            document.querySelector("#pg1").innerHTML += saveList[i]
-            }
-        } 
-        else if (saveList.length < 10){
-            for (let j=0; j<5; j++){
-                document.querySelector("#pg1").innerHTML += saveList[j]
-            }
-            for (let w=5; w<saveList.length; w++){
-                document.querySelector("#pg2").innerHTML += saveList[w]
-            }
-        }
-        else if (10 <= saveList.length < 15){
-            for (let v=0; v<5; v++){
-                document.querySelector("#pg1").innerHTML += saveList[v]
-            }
-            for (let b=5; b< 10; b++){
-                document.querySelector("#pg2").innerHTML += saveList[b]
-            }
-            for (let n=10; n<saveList.length; n++){
-                document.querySelector("#pg3").innerHTML += saveList[n]
-            }
-        }  
-}
-renderList()
-
-// Card push to saved function
-function star(el){
-
-    var sideNav = document.querySelector("#pg1")
-    var sideNav2 = document.querySelector("#pg2")
-    var sideNav3 = document.querySelector("#pg3")
-
-    sideNav.innerHTML = ""
-    sideNav2.innerHTML = ""
-    sideNav3.innerHTML = ""
-
-    var jobTitle = el.previousElementSibling.textContent;
-    var link = el.parentElement.parentElement.children[3].children[0].href
-
-    //if star is orange, don't push
-    if(el.parentElement.children[1].style.color === "orange"){}
-    else {
-    el.parentElement.children[1].style.color = "orange"
-
-
-    saveList.push(`<a href=${link}><div class="savedJobBody">
-        <h5 class="card-title">${jobTitle}</h5>
-        <a class="remove-favorite">&#9733;</a>
-        <p class="card-text">Job title</p>
-        <span class="card-text">Description or something idk, two lines maybe</span>
-        </div></a>`)
-    }
-
-    //5-card limit per carousel page
-    if (saveList.length < 5){
-        for (let i=0; i<saveList.length; i++){
-            sideNav.innerHTML += saveList[i]
-            }
-        } else if (saveList.length < 10){
-            for (let j=0; j<5; j++){
-                sideNav.innerHTML += saveList[j]
-            }
-            for (let w=5; w<saveList.length; w++){
-                sideNav2.innerHTML += saveList[w]
-            }
-        } else if (10 <= saveList.length < 15){
-            for (let v=0; v<5; v++){
-                sideNav.innerHTML += saveList[v]
-            }
-            for (let b=5; b< 10; b++){
-                sideNav2.innerHTML += saveList[b]
-            }
-            for (let n=10; n<saveList.length; n++){
-                sideNav3.innerHTML += saveList[n]
-            }
-        }  
-    localStorage.setItem("saveList", JSON.stringify(saveList))
-}
-
-$('.remove-favorite').on('click', function(){
-    $(this).parent().remove();
-  });
