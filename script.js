@@ -109,7 +109,7 @@ function displayCards() {
                 <div class="card-body">
                     <div class="row d-flex">
                             <a class="titleLink" style="width: 80%">${githubJobs[i].company}</a>
-                            <p onclick="star(this)" class="saveBtn">&#9733</p>
+                            <p onclick="star(this)" id=${i} class="saveBtn">&#9733</p>
                     </div>
                     <h6 class="card-subtitle mb-2">${githubJobs[i].title}</h6>
                     <h6 class="card-subtitle">${githubJobs[i].location}</h6>
@@ -123,7 +123,7 @@ function displayCards() {
                 <div class="card-body">
                     <div class="row d-flex">
                             <a class="titleLink" style="width: 80%">${githubJobs[i].company}</a>
-                            <p onclick="star(this)" class="saveBtn">&#9733</p>
+                            <p onclick="star(this)" id=${i} class="saveBtn">&#9733</p>
                     </div>
                     <h6 class="card-subtitle mb-2">${adzunaJobs[i].title}</h6>
                     <h6 class="card-subtitle">${adzunaJobs[i].location.display_name}</h6>
@@ -145,19 +145,24 @@ function star(el){
     sideNav.innerHTML = ""
     sideNav2.innerHTML = ""
     sideNav3.innerHTML = ""
-
+    var index =el.parentElement.children[1].id;
     //if star is orange, don't push
-    if(el.parentElement.children[1].style.color === "orange"){}
+    if(el.parentElement.children[1].style.color === "orange"){
+        el.parentElement.children[1].style.color="lightgrey"
+       
+      
+        console.log(JSON.parse(saveList[index]))
+    }
     else {
     el.parentElement.children[1].style.color = "orange"
 
 
-
+// push favourite into side nav
     saveList.push(
     `<a href=${link} target="_blank">
-        <div class="savedJobBody">
+        <div class="savedJobBody" id=${index}>
             <h5 class="card-title">${companyName}</h5>
-            <a class="remove-favorite">&#9733;</a>
+            <a class="remove-favorite ${el.parentElement.children[1].style.color === "orange"?'fav':'nofav'}">&#9733;</a>
             <p class="card-text">Job title</p>
             <span class="card-text">Description, place holder. Couple lines</span>
         </div>
@@ -167,6 +172,11 @@ function star(el){
     renderList()
     localStorage.setItem("saveList", JSON.stringify(saveList))
 }
+// remove favourite from sidenav
+saveList.splice(
+
+)
+
 
 /* ----------------------- */
 /* ---- CSS ANIMATION ---- */
