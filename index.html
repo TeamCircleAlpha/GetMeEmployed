@@ -30,40 +30,27 @@
             <!-- CAROUSEL -->
             <div id="savedCardsCarousel" class="carousel slide">
                 <div class="carousel-inner">
-                    <div class="carousel-item active">
+                    <div class="carousel-item active" id="pg1">
                         <!-- PAGE 1 -->
-                        <div class="savedJobBody">
-                            <h5 class="card-title">Company Name</h5>
-                            <a class="remove-favorite">&#9733;</a>
-                            <p class="card-text">Job title</p>
-                            <span class="card-text">Description or something idk, two lines maybe</span>
-                        </div>
-                        <div class="cardBodySaved">
-                            <div class="savedJobBody">
-                                <h5 class="card-title">Company Name</h5>
-                                <a class="remove-favorite">&#9733;</a>
-                                <p class="card-text">Job title</p>
-                                <span class="card-text">Description or something idk, two lines maybe</span>
-                            </div>
-                        </div>
                     </div>
-                    <div class="carousel-item">
+                    <div class="carousel-item" id="pg2">
                         <!-- PAGE 2 -->
-                        <div class="cardBodySaved">
-                            <div class="savedJobBody">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Placeholder: djfhdsf;jksdf</p>
-                            </div>
-                        </div>
+                            
                     </div>
+                    <div class="carousel-item" id="pg3">
+                        <!-- PAGE 3 -->
+                            
+                    </div>
+                    <!-- Everything in this div needs to be built dynamically -->
                 </div>
-                <ol class="carousel-indicators">
+                <ol class="carousel-indicators" id="carouselPageIndicator">
+                    <!-- This indicator needs to be built dynamically too -->
                     <li data-bs-target="#savedCardsCarousel" data-bs-slide-to="0" class="active"></li>
                     <li data-bs-target="#savedCardsCarousel" data-bs-slide-to="1"></li>
+                    <li data-bs-target="#savedCardsCarousel" data-bs-slide-to="2"></li>
                 </ol>
             </div>
         </div>
-    </div>
     </div>
     <!-- SEARCH FORM BLOCK -->
     <div class='container-md push-center' id="searchCont" style='max-width: 800px'>
@@ -77,7 +64,7 @@
                 <input class='form-control w-100' id="location" placeholder='Location'></input>
             </div>
             <div class='col-4 col-md-6'>
-                <input class='form-control w-100' placeholder='Min. Salary'></input>
+                <input class='form-control w-100' type="number" id="minSalary" placeholder='Min. Salary'></input>
             </div>
             <div class="col-6 col-md-3">
                 <input class="form-check-input" type="checkbox" name="fullTimeCheck" id="fullTimeCheck">
@@ -114,13 +101,11 @@
     <div class="container-md mt-2" style='max-width: 900px'>
         <div class="row" id="searchOutputContainer"></div>
     </div>
-    </div>
     <!-- Modal -->
     <div id="emptyModal" class="modal">
-        <!-- Modal content -->
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <p>Please enter search parameters</p>
+            <span class="close" id="modalClose">&times;</span>
+            <p id="modalMsg"></p>
         </div>
     </div>
     <!-- SCRIPTS -->
@@ -132,4 +117,5 @@
     <script src="script.js"></script>
 
 </body>
+
 </html>
