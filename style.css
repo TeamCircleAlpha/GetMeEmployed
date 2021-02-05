@@ -117,18 +117,14 @@ body {
   font-family: "Quicksand", sans-serif;
 }
 .saveBtn {
-    color: #60E2D6;
-    font-size: 30px;
-    line-height:60%;
-    width:10%
+  color:#60e2d6;
+  font-size: 30px;
+  line-height:60%;
+  width:10%
 }
 
 .saveBtn:hover{
-    cursor:pointer
-}
-#saveBtn:focus {
-  box-shadow: 0 0 0 3pt rgb(0, 162, 255);
-  outline: 0;
+  cursor:pointer
 }
 /* ---------------------- */
 /* -- SIDEBAR MENU CSS -- */
