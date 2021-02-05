@@ -172,6 +172,12 @@ body {
     right: 10px;
     transition: color 1s ease-out 100ms;
 }
+.fav{
+color: orange;
+}
+.nofav{
+color:#57d3c7;
+}
 .remove-favorite:hover {
   color: #83fff3;
   cursor: pointer;
