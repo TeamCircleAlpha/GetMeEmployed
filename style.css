@@ -54,6 +54,9 @@ body {
   background-color: #83fff3;
   transform: scale(1.2);
 }
+.form-check-input:active, .form-check-input:checked {
+  background-color: #60e2d6;
+}
 /* -------------------- */
 /* -- CSS ANIMATIONS -- */
 /* -------------------- */
