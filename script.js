@@ -1,7 +1,22 @@
+/* ---------------------- */
+/* ---- ON PAGE LOAD ---- */
+/* ---------------------- */
+var saveList = [];
+// load saved list from local storage
+if (JSON.parse(localStorage.getItem("saveList")) !== null) {
+    saveList = JSON.parse(localStorage.getItem("saveList"));
+}
+// rebuild existing saved list
+for (let i=0; i<saveList.length; i++) {
+    // build side nav pages inside carousel
+    document.querySelector("#carouselInner").innerHTML += saveList[i];
+    // build carousel navigation buttons
+    // ...
+}
+
 /* ------------------------ */
 /* - BUTTON FUNCTIONALITY - */
 /* ------------------------ */
-
 // on search button click
 document.querySelector('#searchBtn').addEventListener("click", async function () {
     // start loading CSS
@@ -66,40 +81,62 @@ function displayCards() {
     else console.log('Unexpected error with API output');
     // add new results
     for (var i = 0; i < numOfEntries; i++) {
-        document.querySelector('#searchOutputContainer').innerHTML +=
-            `<div class="col-md-4">
+        document.querySelector('#searchOutputContainer').innerHTML += 
+        `<div class="col-md-4">
             <div class="card clickcard my-3 mx-3 shape" id="cardClick">
                 <div class="card-body">
                     <div class="row d-flex">
-                        <a href="" class="titleLink" style="width: 60%">${githubJobs[i].company}</a>
-                        <button type="button" class="position-absolute end-0 me-3" id="saveBtn">
-                            <i class="fas fa-ellipsis-v"></i>
-                        </button>
+                            <a class="titleLink" style="width: 80%">${githubJobs[i].company}</a>
+                            <p onclick="star(this)" class="saveBtn">&#9733</p>
                     </div>
                     <h6 class="card-subtitle mb-2">${githubJobs[i].title}</h6>
                     <h6 class="card-subtitle">${githubJobs[i].location}</h6>
-                    <h6 class="card-subtitle mb-2 salary" ><a href="${githubJobs[i].url}">Click here for more info</a></h6>
+                    <h6 class="card-subtitle mb-2 salary"><a href="${githubJobs[i].url}" target="_blank">Click here for more info</a></h6>
                 </div>
             </div>
         </div>`;
-
-        document.querySelector('#searchOutputContainer').innerHTML +=
-            `<div class="col-md-4">
+        document.querySelector('#searchOutputContainer').innerHTML += 
+        `<div class="col-md-4">
             <div class="card clickcard my-3 mx-3 shape" id="cardClick">
                 <div class="card-body">
                     <div class="row d-flex">
-                        <a href="#" class="titleLink" style="width: 60%">${adzunaJobs[i].company.display_name}</a>
-                        <button type="button" class="position-absolute end-0 me-3" id="saveBtn">
-                            <i class="fas fa-ellipsis-v"></i>
-                        </button>
+                            <a class="titleLink" style="width: 80%">${githubJobs[i].company}</a>
+                            <p onclick="star(this)" class="saveBtn">&#9733</p>
                     </div>
                     <h6 class="card-subtitle mb-2">${adzunaJobs[i].title}</h6>
                     <h6 class="card-subtitle">${adzunaJobs[i].location.display_name}</h6>
-                    <h6 class="card-subtitle mb-2 salary" ><a href="${adzunaJobs[i].redirect_url}">Click here for more info</a></h6>
+                    <h6 class="card-subtitle mb-2 salary"><a href="${adzunaJobs[i].redirect_url}" target="_blank">Click here for more info</a></h6>
                 </div>
             </div>
         </div>`;
     }
+}
+// saves card to sidebar
+function star(el){
+
+    var sideNav = document.querySelector("#carouselInner");
+    var companyName = el.previousElementSibling.textContent;
+    var link = el.parentElement.parentElement.children[3].children[0].href;
+    sideNav.innerHTML = "";
+    el.parentElement.children[1].style.color = "orange";
+
+    saveList.push(
+    `<a href=${link} target="_blank">
+        <div class="savedJobBody">
+            <h5 class="card-title">${companyName}</h5>
+            <a class="remove-favorite">&#9733;</a>
+            <p class="card-text">Job title</p>
+            <span class="card-text">Description or something idk, two lines maybe</span>
+        </div>
+    </a>`);
+
+    for (let i=0; i<saveList.length; i++) {
+        // build side nav pages inside carousel
+        document.querySelector("#carouselInner").innerHTML += saveList[i];
+        // build carousel navigation buttons
+        // ...
+    }
+    localStorage.setItem("saveList", JSON.stringify(saveList));
 }
 
 /* ----------------------- */
@@ -125,12 +162,10 @@ async function startSearch() {
     let jobDescription = encodeURIComponent(document.querySelector('#keywords').value);
     let jobLocation = encodeURIComponent(document.querySelector('#location').value);
     let jobSalary = parseInt(document.querySelector('#minSalary').value);
-
     //Github Jobs search inputs
     let ghString = "";
     ghString += `description=${jobDescription}&`;
     if (jobLocation !== '') ghString += `location=${jobLocation}`;
-
     //Adzuna search inputs
     let adString = "";
     adString += `what=${jobDescription}`;
@@ -140,7 +175,6 @@ async function startSearch() {
     if(document.getElementById('partTimeCheck').checked == true) adString += `&part_time=1`;
     if(document.getElementById('contractCheck').checked == true) adString += `&contract=1`;
     if(document.getElementById('permanentCheck').checked == true) adString += `&permanent=1`;
-
     // await sendSearchRequests(ghString, adzString, ghLocation);
     await new Promise(resolve => setTimeout(resolve, 1500));
     sendDummyRequests();
@@ -246,99 +280,4 @@ function sendDummyRequests() {
             __CLASS__: "Adzuna::API::Response::Job"
         }
     ];
-}
-// Search invalid modal
-var modal = document.querySelector('#emptyModal');
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks the button, open the modal 
-function showModal() {
-    modal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function () {
-    modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
-// generate cards
-function displayCards() {
-    // clear old search
-    document.querySelector('#searchOutputContainer').innerHTML = '';
-    // add new results
-    for (var i=0; i<9; i++) {
-        document.querySelector('#searchOutputContainer').innerHTML += 
-        `<div class="col-md-4">
-            <div class="card clickcard my-3 mx-3 shape" id="cardClick">
-                <div class="card-body">
-                    <div class="row d-flex">
-                            <a class="titleLink" style="width: 80%">${githubJobs[i].company}</a>
-                            <p onclick="star(this)" class="saveBtn">&#9733</p>
-                    </div>
-                    <h6 class="card-subtitle mb-2">${githubJobs[i].title}</h6>
-                    <h6 class="card-subtitle">${githubJobs[i].location}</h6>
-                    <h6 class="card-subtitle mb-2 salary"><a href="${githubJobs[i].url}">Click here for more info</a></h6>
-                </div>
-            </div>
-        </div>`;
-
-        document.querySelector('#searchOutputContainer').innerHTML += 
-        `<div class="col-md-4">
-            <div class="card clickcard my-3 mx-3 shape" id="cardClick">
-                <div class="card-body">
-                    <div class="row d-flex">
-                            <a class="titleLink" style="width: 80%">${githubJobs[i].company}</a>
-                            <p onclick="star(this)" class="saveBtn">&#9733</p>
-                    </div>
-                    <h6 class="card-subtitle mb-2">${adzunaJobs[i].title}</h6>
-                    <h6 class="card-subtitle">${adzunaJobs[i].location.display_name}</h6>
-                    <h6 class="card-subtitle mb-2 salary"><a href="${adzunaJobs[i].redirect_url}">Click here for more info</a></h6>
-                </div>
-            </div>
-        </div>`;
-    }
-}
-var saveList = []
-
-function renderItem(){
-
-    if (JSON.parse(localStorage.getItem("saveList")) !== null)
-        {saveList = JSON.parse(localStorage.getItem("saveList"))}
-
-    for (let i=0; i<saveList.length; i++){
-        document.querySelector(".active").innerHTML += saveList[i]}
-}
-renderItem()
-
-function star(el){
-
-    var sideNav = document.querySelector(".active")
-
-    sideNav.innerHTML = ""
-
-    var jobTitle = el.previousElementSibling.textContent;
-    var link = el.parentElement.parentElement.children[3].children[0].href
-    el.parentElement.children[1].style.color = "orange"
-   
-    saveList.push(
-    `<a href=${link}><div class="savedJobBody">
-                            <h5 class="card-title">${jobTitle}</h5>
-                            <a class="remove-favorite">&#9733;</a>
-                            <p class="card-text">Job title</p>
-                            <span class="card-text">Description or something idk, two lines maybe</span>
-                        </div></a>`)
-
-    for (let i=0; i<saveList.length; i++){
-        sideNav.innerHTML += saveList[i]
-    }
-
-    localStorage.setItem("saveList", JSON.stringify(saveList))
 }
