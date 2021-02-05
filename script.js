@@ -8,32 +8,32 @@ if (JSON.parse(localStorage.getItem("saveList")) !== null) {
 }
 // carousel saved list
 // styling: how many pages?
-function renderList() {
-    if (saveList.length < 5){
-        for (let i=0; i<saveList.length; i++){
-            document.querySelector("#pg1").innerHTML += saveList[i]
-            }
-        } 
-        else if (saveList.length < 10){
-            for (let j=0; j<5; j++){
-                document.querySelector("#pg1").innerHTML += saveList[j]
-            }
-            for (let w=5; w<saveList.length; w++){
-                document.querySelector("#pg2").innerHTML += saveList[w]
-            }
-        }
-        else if (10 <= saveList.length < 15){
-            for (let v=0; v<5; v++){
-                document.querySelector("#pg1").innerHTML += saveList[v]
-            }
-            for (let b=5; b< 10; b++){
-                document.querySelector("#pg2").innerHTML += saveList[b]
-            }
-            for (let n=10; n<saveList.length; n++){
-                document.querySelector("#pg3").innerHTML += saveList[n]
-            }
-        }  
-}
+// function renderList() {
+//     if (saveList.length < 5){
+//         for (let i=0; i<saveList.length; i++){
+//             document.querySelector("#pg1").innerHTML += saveList[i]
+//             }
+//         } 
+//         else if (saveList.length < 10){
+//             for (let j=0; j<5; j++){
+//                 document.querySelector("#pg1").innerHTML += saveList[j]
+//             }
+//             for (let w=5; w<saveList.length; w++){
+//                 document.querySelector("#pg2").innerHTML += saveList[w]
+//             }
+//         }
+//         else if (10 <= saveList.length < 15){
+//             for (let v=0; v<5; v++){
+//                 document.querySelector("#pg1").innerHTML += saveList[v]
+//             }
+//             for (let b=5; b< 10; b++){
+//                 document.querySelector("#pg2").innerHTML += saveList[b]
+//             }
+//             for (let n=10; n<saveList.length; n++){
+//                 document.querySelector("#pg3").innerHTML += saveList[n]
+//             }
+//         }  
+// }
 renderList()
 
 /* ------------------------ */
@@ -137,14 +137,14 @@ function displayCards() {
 function star(el){
 
     var sideNav = document.querySelector("#pg1")
-    var sideNav2 = document.querySelector("#pg2")
-    var sideNav3 = document.querySelector("#pg3")
+    // var sideNav2 = document.querySelector("#pg2")
+    // var sideNav3 = document.querySelector("#pg3")
     var companyName = el.previousElementSibling.textContent;
     var link = el.parentElement.parentElement.children[3].children[0].href
 
     sideNav.innerHTML = ""
-    sideNav2.innerHTML = ""
-    sideNav3.innerHTML = ""
+    // sideNav2.innerHTML = ""
+    // sideNav3.innerHTML = ""
     var index =el.parentElement.children[1].id;
     //if star is orange, don't push
     if(el.parentElement.children[1].style.color === "orange"){
@@ -158,24 +158,68 @@ function star(el){
 
 
 // push favourite into side nav
-    saveList.push(
-    `<a href=${link} target="_blank">
-        <div class="savedJobBody" id=${index}>
-            <h5 class="card-title">${companyName}</h5>
-            <a class="remove-favorite ${el.parentElement.children[1].style.color === "orange"?'fav':'nofav'}">&#9733;</a>
-            <p class="card-text">Job title</p>
-            <span class="card-text">Description, place holder. Couple lines</span>
-        </div>
-    </a>`);
+    var info = {site: link, cName: companyName}
+    saveList.push(info)
     }
 
     renderList()
     localStorage.setItem("saveList", JSON.stringify(saveList))
 }
-// remove favourite from sidenav
-saveList.splice(
 
-)
+function renderList(){
+    // if (document.querySelector("#mySidenav").clientHeight > 800){
+        if (saveList.length < 5){
+            for (let i=0; i<saveList.length; i++){
+                document.querySelector("#pg1").innerHTML += `<a href=${saveList[i].site} target="_blank">
+                <div class="savedJobBody">
+                    <h5 class="card-title">${saveList[i].cName}</h5>
+                    <a class="remove-favorite">&#9733;</a>
+                    <p class="card-text">Job title</p>
+                    <span class="card-text">Description, place holder. Couple lines</span>
+                </div>
+            </a>`
+            }
+        } else if (5 <= saveList.length < 10){
+            for(let i=0; i<5; i++){
+                document.querySelector("#pg1").innerHTML += `<a href=${saveList[i].site} target="_blank">
+                <div class="savedJobBody">
+                    <h5 class="card-title">${saveList[i].cName}</h5>
+                    <a class="remove-favorite">&#9733;</a>
+                    <p class="card-text">Job title</p>
+                    <span class="card-text">Description, place holder. Couple lines</span>
+                </div>
+            </a>`
+                }  
+            for(let j=5; j<saveList.length; j++){
+                if (document.querySelector("#pg1").clientHeight > document.querySelector("#mySidenav").clientHeight - 200){
+                    document.querySelector(".carousel-inner").innerHTML += `<div class="carousel-item" id="pg2"></div>`;
+                    document.querySelector(".carousel-indicators").innerHTML += `<li data-bs-target="#savedCardsCarousel" data-bs-slide-to="1"></li>`}
+                document.querySelector("#pg2").innerHTML += `<a href=${saveList[j].site} target="_blank">
+                <div class="savedJobBody">
+                    <h5 class="card-title">${saveList[j].cName}</h5>
+                    <a class="remove-favorite">&#9733;</a>
+                    <p class="card-text">Job title</p>
+                    <span class="card-text">Description, place holder. Couple lines</span>
+                </div>
+            </a>`
+                }
+            
+        // } else if (10 <= saveList.length) {
+        //     for (let w=10; w<saveList.length; w++){
+        //         if (document.querySelector("#pg2").clientHeight > document.querySelector("#mySidenav").clientHeight - 200){
+        //             document.querySelector(".carousel-inner").innerHTML += `<div class="carousel-item" id="pg3"></div>`;
+        //             document.querySelector(".carousel-indicators").innerHTML += `<li data-bs-target="#savedCardsCarousel" data-bs-slide-to="2"></li>`}
+        //         document.querySelector("#pg3").innerHTML += `<a href=${saveList[w].site} target="_blank">
+        //         <div class="savedJobBody">
+        //             <h5 class="card-title">${saveList[w].cName}</h5>
+        //             <a class="remove-favorite">&#9733;</a>
+        //             <p class="card-text">Job title</p>
+        //             <span class="card-text">Description, place holder. Couple lines</span>
+        //         </div>
+        //     </a>`
+        //     }
+        }
+}
 
 
 /* ----------------------- */
