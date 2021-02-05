@@ -6,13 +6,35 @@ var saveList = [];
 if (JSON.parse(localStorage.getItem("saveList")) !== null) {
     saveList = JSON.parse(localStorage.getItem("saveList"));
 }
-// rebuild existing saved list
-for (let i=0; i<saveList.length; i++) {
-    // build side nav pages inside carousel
-    document.querySelector("#carouselInner").innerHTML += saveList[i];
-    // build carousel navigation buttons
-    // ...
+// carousel saved list
+// styling: how many pages?
+function renderList() {
+    if (saveList.length < 5){
+        for (let i=0; i<saveList.length; i++){
+            document.querySelector("#pg1").innerHTML += saveList[i]
+            }
+        } 
+        else if (saveList.length < 10){
+            for (let j=0; j<5; j++){
+                document.querySelector("#pg1").innerHTML += saveList[j]
+            }
+            for (let w=5; w<saveList.length; w++){
+                document.querySelector("#pg2").innerHTML += saveList[w]
+            }
+        }
+        else if (10 <= saveList.length < 15){
+            for (let v=0; v<5; v++){
+                document.querySelector("#pg1").innerHTML += saveList[v]
+            }
+            for (let b=5; b< 10; b++){
+                document.querySelector("#pg2").innerHTML += saveList[b]
+            }
+            for (let n=10; n<saveList.length; n++){
+                document.querySelector("#pg3").innerHTML += saveList[n]
+            }
+        }  
 }
+renderList()
 
 /* ------------------------ */
 /* - BUTTON FUNCTIONALITY - */
@@ -111,14 +133,25 @@ function displayCards() {
         </div>`;
     }
 }
-// saves card to sidebar
+// // saves card to sidebar
 function star(el){
 
-    var sideNav = document.querySelector("#carouselInner");
+    var sideNav = document.querySelector("#pg1")
+    var sideNav2 = document.querySelector("#pg2")
+    var sideNav3 = document.querySelector("#pg3")
     var companyName = el.previousElementSibling.textContent;
-    var link = el.parentElement.parentElement.children[3].children[0].href;
-    sideNav.innerHTML = "";
-    el.parentElement.children[1].style.color = "orange";
+    var link = el.parentElement.parentElement.children[3].children[0].href
+
+    sideNav.innerHTML = ""
+    sideNav2.innerHTML = ""
+    sideNav3.innerHTML = ""
+
+    //if star is orange, don't push
+    if(el.parentElement.children[1].style.color === "orange"){}
+    else {
+    el.parentElement.children[1].style.color = "orange"
+
+
 
     saveList.push(
     `<a href=${link} target="_blank">
@@ -129,14 +162,31 @@ function star(el){
             <span class="card-text">Description or something idk, two lines maybe</span>
         </div>
     </a>`);
-
-    for (let i=0; i<saveList.length; i++) {
-        // build side nav pages inside carousel
-        document.querySelector("#carouselInner").innerHTML += saveList[i];
-        // build carousel navigation buttons
-        // ...
     }
-    localStorage.setItem("saveList", JSON.stringify(saveList));
+
+    if (saveList.length < 5){
+        for (let i=0; i<saveList.length; i++){
+            sideNav.innerHTML += saveList[i]
+            }
+        } else if (saveList.length < 10){
+            for (let j=0; j<5; j++){
+                sideNav.innerHTML += saveList[j]
+            }
+            for (let w=5; w<saveList.length; w++){
+                sideNav2.innerHTML += saveList[w]
+            }
+        } else if (10 <= saveList.length < 15){
+            for (let v=0; v<5; v++){
+                sideNav.innerHTML += saveList[v]
+            }
+            for (let b=5; b< 10; b++){
+                sideNav2.innerHTML += saveList[b]
+            }
+            for (let n=10; n<saveList.length; n++){
+                sideNav3.innerHTML += saveList[n]
+            }
+        }  
+    localStorage.setItem("saveList", JSON.stringify(saveList))
 }
 
 /* ----------------------- */
@@ -280,4 +330,26 @@ function sendDummyRequests() {
             __CLASS__: "Adzuna::API::Response::Job"
         }
     ];
+}
+// Search invalid modal
+var modal = document.querySelector('#emptyModal');
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+function showModal() {
+    modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function () {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
 }
