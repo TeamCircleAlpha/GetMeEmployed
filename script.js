@@ -159,33 +159,12 @@ function star(el){
             <h5 class="card-title">${companyName}</h5>
             <a class="remove-favorite">&#9733;</a>
             <p class="card-text">Job title</p>
-            <span class="card-text">Description or something idk, two lines maybe</span>
+            <span class="card-text">Description, place holder. Couple lines</span>
         </div>
     </a>`);
     }
 
-    if (saveList.length < 5){
-        for (let i=0; i<saveList.length; i++){
-            sideNav.innerHTML += saveList[i]
-            }
-        } else if (saveList.length < 10){
-            for (let j=0; j<5; j++){
-                sideNav.innerHTML += saveList[j]
-            }
-            for (let w=5; w<saveList.length; w++){
-                sideNav2.innerHTML += saveList[w]
-            }
-        } else if (10 <= saveList.length < 15){
-            for (let v=0; v<5; v++){
-                sideNav.innerHTML += saveList[v]
-            }
-            for (let b=5; b< 10; b++){
-                sideNav2.innerHTML += saveList[b]
-            }
-            for (let n=10; n<saveList.length; n++){
-                sideNav3.innerHTML += saveList[n]
-            }
-        }  
+    renderList()
     localStorage.setItem("saveList", JSON.stringify(saveList))
 }
 
@@ -330,26 +309,4 @@ function sendDummyRequests() {
             __CLASS__: "Adzuna::API::Response::Job"
         }
     ];
-}
-// Search invalid modal
-var modal = document.querySelector('#emptyModal');
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks the button, open the modal 
-function showModal() {
-    modal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function () {
-    modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
 }
