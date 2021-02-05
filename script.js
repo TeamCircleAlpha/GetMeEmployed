@@ -34,7 +34,7 @@ function renderList() {
             }
         }  
 }
-renderList()
+// renderList()
 
 /* ------------------------ */
 /* - BUTTON FUNCTIONALITY - */
@@ -65,7 +65,7 @@ document.querySelector('#searchBtn').addEventListener("click", async function ()
 document.querySelector('#savedJobLink').addEventListener("click", function () {
     if (document.querySelector("#mySidenav").style.width === "") {
         // open side nav menu
-        document.querySelector("#mySidenav").style.width = "250px";
+        document.querySelector("#mySidenav").style.width = "253px";
     }
     else {
         // close side nav menu
@@ -186,6 +186,47 @@ saveList.splice(
 function toggleSearchAnim() {
     document.querySelector('.searchInput').classList.toggle('searchBar');
     document.querySelector('#searchBtn').classList.toggle('searchButton');
+}
+
+// drag to move sidenav
+let oldX = 0;
+let tracking = false;
+document.querySelector('#mySidenav').addEventListener('mousedown', e => sidenavStartScroll(e));
+window.addEventListener('mousemove', e => sidenavScroll(e));
+window.addEventListener('mouseup', stopScroll);
+
+function sidenavStartScroll(e) {
+    tracking = true;
+    oldX = e.clientX;
+}
+
+function sidenavScroll(e) {
+    // find old offset
+    let oldOffsetStr = document.querySelector('#sidenavIn').style.transform.replace(/[^-\d.]/g, '');
+    let oldOffset = parseFloat(oldOffsetStr || 0);
+    let deltaX = e.clientX - oldX;
+    if (tracking) {
+        document.querySelector('#sidenavIn').style.transform = `translateX(${oldOffset+deltaX}px)`;
+    }
+    oldX = e.clientX;
+}
+
+function stopScroll() {
+    tracking = false;
+    let oldOffsetStr = document.querySelector('#sidenavIn').style.transform.replace(/[^-\d.]/g, '');
+    let oldOffset = parseFloat(oldOffsetStr);
+    let farEdge = document.querySelector('#sidenavIn').style.width - 253;
+    let closestEdge = Math.round(oldOffset/253)*253;
+    if (closestEdge > 0) closestEdge = 0;
+    else if (closestEdge < farEdge) closestEdge = farEdge;
+    anime({
+            targets: '#sidenavIn',
+            translateX: closestEdge,
+            duration: 300,
+            easing: 'easeOutSine'
+    })
+    document.querySelector('.trackInfo').innerHTML = `old offset: ${oldOffset}`;
+    // IF add back page indicators: switch page indicator to correct page
 }
 
 /* ------------------------ */
