@@ -2,6 +2,8 @@
 /* ---- ON PAGE LOAD ---- */
 /* ---------------------- */
 var saveList = [];
+var keywordSavedList = JSON.parse(localStorage.getItem('keywordSaved')) || [];
+
 // load saved list from local storage
 if (JSON.parse(localStorage.getItem("saveList")) !== null) {
     saveList = JSON.parse(localStorage.getItem("saveList"));
@@ -9,13 +11,13 @@ if (JSON.parse(localStorage.getItem("saveList")) !== null) {
 // populate sidenav with saved items
 let maxCardsCol = Math.floor((window.innerHeight - 90) / 150);
 if (maxCardsCol < 1) maxCardsCol = 1;
-let numOfPages = Math.ceil(saveList.length/maxCardsCol);
+let numOfPages;
 renderList();
 
 function renderList() {
     let k = 0;
     let innerHTMLStr = '';
-    document.querySelector('#sidenav-indicators').innerHTML = '';
+    numOfPages = Math.ceil(saveList.length/maxCardsCol);
 
     for (let i = 0; i < numOfPages; i++) {
         // build sidenav dots
@@ -42,13 +44,44 @@ function renderList() {
 }
 if (saveList.length > 0) renderList();
 
-/* ------------------------ */
-/* - BUTTON FUNCTIONALITY - */
-/* ------------------------ */
+
+//  Keyword save list shown when click search bar
+const pSearch = document.querySelector('.searchInput')
+pSearch.addEventListener('focus', function(){
+    document.querySelector('.previousSearched').classList.remove('d-none');
+    let width = document.querySelector('#keywords').style.width;
+    document.querySelector('.previousSearched').style.width = width;
+})
+
+pSearch.addEventListener('blur', function(){
+    document.querySelector('.previousSearched').classList.add('d-none')
+})
+    
+function keywordSaved(){
+    let searchBarValue = document.querySelector('.searchInput').value
+
+    if (keywordSavedList.indexOf(searchBarValue) === -1){
+        keywordSavedList.push(searchBarValue)
+        document.querySelector('.previousSearched').innerHTML += `<li class="list-group-item">${searchBarValue}</li>`
+        localStorage.setItem("keywordSaved", JSON.stringify(keywordSavedList))
+    }
+}
+
+(function(){
+    let keywordListParse = JSON.parse(localStorage.getItem('keywordSaved')) || []
+
+    for (let i=0; i<keywordSavedList.length; i++){
+        document.querySelector('.previousSearched').innerHTML += `<li class="list-group-item">${keywordListParse[i]}</li>`
+    }
+})();
+
+
 // on search button click
 document.querySelector('#searchBtn').addEventListener("click", async function () {
     // start loading CSS
     toggleSearchAnim();
+    // sends search value to saved keywords popout when keywords is clicked
+    keywordSaved();
     // parse input & call API
     await startSearch();
     // stop loading CSS & display cards
@@ -65,6 +98,7 @@ document.querySelector('#searchBtn').addEventListener("click", async function ()
         document.querySelector('#searchCont').style.marginTop = "90px";
         displayCards();
     }
+    
 });
 
 // opens side nav menu on click
