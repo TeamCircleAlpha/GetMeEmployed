@@ -18,6 +18,7 @@ function renderList() {
     let k = 0;
     let innerHTMLStr = '';
     numOfPages = Math.ceil(saveList.length/maxCardsCol);
+    document.querySelector('#sidenav-indicators').innerHTML = '';
 
     for (let i = 0; i < numOfPages; i++) {
         // build sidenav dots
@@ -28,8 +29,8 @@ function renderList() {
             innerHTMLStr +=
                 `<a href='${saveList[k].link}' target="_blank">
                 <div class="savedJobBody" id=${saveList[k].id}>
-                    <h5 class="card-title" onclick="removeSaved('${saveList[k].id}')">${saveList[k].companyName}</h5>
-                    <a class="remove-favorite">&#9733;</a>
+                    <h5 class="card-title">${saveList[k].companyName}</h5>
+                    <a class="remove-favorite" onclick="removeSaved('${saveList[k].id}')">&#9733;</a>
                     <span class="card-text">${saveList[k].jobTitle}</span>
                     <br />
                     <p class="card-text">${saveList[k].description}</p>
@@ -44,19 +45,17 @@ function renderList() {
 }
 if (saveList.length > 0) renderList();
 
-
 //  Keyword save list shown when click search bar
-const pSearch = document.querySelector('.searchInput')
-pSearch.addEventListener('focus', function(){
+document.querySelector('.searchInput').addEventListener('focus', function(){
     document.querySelector('.previousSearched').classList.remove('d-none');
-    let width = document.querySelector('#keywords').style.width;
+    let width = `${document.querySelector('#keywords').offsetWidth}px`;
     document.querySelector('.previousSearched').style.width = width;
 })
 
-pSearch.addEventListener('blur', function(){
-    document.querySelector('.previousSearched').classList.add('d-none')
+document.querySelector('.searchInput').addEventListener('blur', function(){
+    document.querySelector('.previousSearched').classList.add('d-none');
 })
-    
+
 function keywordSaved(){
     let searchBarValue = document.querySelector('.searchInput').value
 
@@ -67,14 +66,12 @@ function keywordSaved(){
     }
 }
 
-(function(){
-    let keywordListParse = JSON.parse(localStorage.getItem('keywordSaved')) || []
+let keywordListParse = JSON.parse(localStorage.getItem('keywordSaved')) || [];
 
-    for (let i=0; i<keywordSavedList.length; i++){
-        document.querySelector('.previousSearched').innerHTML += `<li class="list-group-item">${keywordListParse[i]}</li>`
-    }
-})();
-
+for (let i=0; i<keywordSavedList.length; i++){
+    document.querySelector('.previousSearched').innerHTML += 
+    `<li class="list-group-item">${keywordListParse[i]}</li>`;
+}
 
 // on search button click
 document.querySelector('#searchBtn').addEventListener("click", async function () {
@@ -98,7 +95,6 @@ document.querySelector('#searchBtn').addEventListener("click", async function ()
         document.querySelector('#searchCont').style.marginTop = "90px";
         displayCards();
     }
-    
 });
 
 // opens side nav menu on click
@@ -128,6 +124,18 @@ document.querySelector('#modalClose').onclick = function () {
 window.onclick = function (event) {
     if (event.target == document.querySelector('#emptyModal')) {
         document.querySelector('#emptyModal').style.display = "none";
+    }
+    if (event.target != document.querySelector('#savedJobLink') && document.querySelector("#mySidenav").style.width != "") {
+        console.log('into while loop');
+        let elem = event.target;
+        while (elem != document.querySelector('html')) {
+            if (elem != document.querySelector("#mySidenav")) {
+                console.log('elem not sidenav')
+                document.querySelector("#mySidenav").style.width = "";
+            }
+            console.log('moving to next element');
+            elem = elem.parentElement;
+        }
     }
 }
 
@@ -163,7 +171,7 @@ function displayCards() {
                 <div class="card-body">
                     <div class="row d-flex">
                             <a class="titleLink" style="width: 80%">${adzunaJobs[i].company.display_name}</a>
-                            <p onclick="star(this)" id=${i+10} class="saveBtn">&#9733</p>
+                            <p onclick="star(this)" id=${i+100} class="saveBtn">&#9733</p>
                     </div>
                     <h6 class="card-subtitle">${adzunaJobs[i].title}</h6>
                     <p class="card-subtitle my-3">${adzunaJobs[i].location.display_name}</p>
@@ -196,6 +204,7 @@ function star(el) {
     localStorage.setItem("saveList", JSON.stringify(saveList));
     renderList();
 }
+
 // remove favourite from sidenav
 function removeSaved(id) {
     // remove id
