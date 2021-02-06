@@ -50,18 +50,18 @@ document.querySelector('.previousSearched').innerHTML = '';
 
 for (let i=(keywordSavedList.length-1); i>-1; i--) {
     document.querySelector('.previousSearched').innerHTML += 
-    `<li class="list-group-item">${keywordSavedList[i]}</li>`;
+    `<li class="list-group-item keyword-saved-list" onclick=placeInSearch('${keywordSavedList[i]}')>${keywordSavedList[i]}</li>`;
 }
+
+/* -------------------------------- */
+/* -- BUTTON CLICK FUNCTIONALITY -- */
+/* -------------------------------- */
 
 // Keyword save list shown when click search bar
 document.querySelector('.searchInput').addEventListener('focus', function(){
     document.querySelector('.previousSearched').classList.remove('d-none');
     let width = `${document.querySelector('#keywords').offsetWidth}px`;
     document.querySelector('.previousSearched').style.width = width;
-})
-// Keyword save list close when click off
-document.querySelector('.searchInput').addEventListener('blur', function(){
-    document.querySelector('.previousSearched').classList.add('d-none');
 })
 
 // Generates the keyword saved list when clicking on the search bar
@@ -78,14 +78,28 @@ function keywordSaved() {
         let length = keywordSavedList.length < 5 ? keywordSavedList.length : 5;
         for (let i=(length -1); i>-1; i--){
             document.querySelector('.previousSearched').innerHTML += 
-            `<li class="list-group-item">${keywordSavedList[i]}</li>`;
+            `<li class="list-group-item keyword-saved-list" onclick=placeInSearch('${keywordSavedList[i]}')>${keywordSavedList[i]}</li>`;
         }
         localStorage.setItem("keywordSaved", JSON.stringify(keywordSavedList));
     }
 }
 
+function placeInSearch(str) {
+    document.querySelector('.searchInput').value = str;
+    document.querySelector('.previousSearched').classList.add('d-none');
+}
+
 // on search button click
-document.querySelector('#searchBtn').addEventListener("click", async function () {
+document.querySelector('#searchBtn').addEventListener("click", searchEvent);
+document.querySelector('.searchInput').addEventListener("keypress", function(event) {
+    if (event.code === "Enter") {
+      event.preventDefault();
+      document.querySelector('.previousSearched').classList.add('d-none');
+      searchEvent();
+    }
+});
+
+async function searchEvent() {
     // start loading CSS
     toggleSearchAnim();
     // parse input & call API
@@ -106,7 +120,7 @@ document.querySelector('#searchBtn').addEventListener("click", async function ()
         // sends search value to saved keywords popout when keywords is clicked
         keywordSaved();
     }
-});
+}
 
 // opens side nav menu on click
 document.querySelector('#savedJobLink').addEventListener("click", function () {
@@ -148,6 +162,17 @@ window.onmousedown = function (event) {
         }
         if (!inSidenav) document.querySelector("#mySidenav").style.width = '';
     }
+    // When user clicks outside the previousSearch while its open
+    if (!document.querySelector('.previousSearched').classList.contains('d-none')) {
+        // document.querySelector('.previousSearched').classList.add('d-none');
+        let elem = event.target;
+        let insidePrevSearch = false;
+        if (elem === document.querySelector('.previousSearched')) insidePrevSearch = true;
+        else if (elem.parentElement === document.querySelector('.previousSearched')) {
+            insidePrevSearch = true;
+        }
+        if (!insidePrevSearch) document.querySelector('.previousSearched').classList.add('d-none');
+    }
 }
 
 // generate cards
@@ -182,7 +207,7 @@ function displayCards() {
                     </div>
                     <h6 class="card-subtitle">${githubJobs[i].title}</h6>
                     <p class="card-subtitle my-3">${githubJobs[i].location}</p>
-                    <p class="card-subtitle mt-5 job-link"><a href="${githubJobs[i].url}" target="_blank">Click here for more info</a></p>
+                    <p class="card-subtitle mt-3 job-link"><a href="${githubJobs[i].url}" target="_blank">Click here for more info</a></p>
                 </div>
             </div>
         </div>`;
@@ -196,7 +221,7 @@ function displayCards() {
                     </div>
                     <h6 class="card-subtitle">${adzunaJobs[i].title}</h6>
                     <p class="card-subtitle my-3">${adzunaJobs[i].location.display_name}</p>
-                    <p class="card-subtitle mt-5 job-link"><a href="${adzunaJobs[i].redirect_url}" target="_blank">Click here for more info</a></p>
+                    <p class="card-subtitle mt-3 job-link"><a href="${adzunaJobs[i].redirect_url}" target="_blank">Click here for more info</a></p>
                 </div>
             </div>
         </div>`;
@@ -231,7 +256,6 @@ function removeSaved(link) {
             saveList.splice(i,1);
         }
     }
-    console.log(saveList);
     localStorage.setItem("saveList", JSON.stringify(saveList));
     displayCards();
     renderList();
@@ -321,9 +345,9 @@ async function startSearch() {
     if (document.getElementById('partTimeCheck').checked == true) adString += `&part_time=1`;
     if (document.getElementById('contractCheck').checked == true) adString += `&contract=1`;
     if (document.getElementById('permanentCheck').checked == true) adString += `&permanent=1`;
-    // await sendSearchRequests(ghString, adzString, ghLocation);
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    sendDummyRequests();
+    await sendSearchRequests(ghString, adString);
+    // await new Promise(resolve => setTimeout(resolve, 3000));
+    // sendDummyRequests();
 }
 
 async function sendSearchRequests(ghString, adString) {

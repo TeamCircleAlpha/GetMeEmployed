@@ -60,7 +60,13 @@ body {
 .previousSearched{
   position: absolute;
   z-index: 5;
-  
+}
+.keyword-saved-list {
+  min-height: 1rem;
+}
+.keyword-saved-list:hover {
+  cursor:pointer;
+  background-color: rgb(221, 221, 221);
 }
 /* -------------------- */
 /* -- CSS ANIMATIONS -- */
@@ -73,7 +79,7 @@ body {
     white, white, white);
   background-size: 500% 500%;
   position: relative;
-  animation: change 4s ease-in-out;
+  animation: change 4s ease-in-out infinite;
 }
 .searchButton {
   background: linear-gradient(
@@ -82,7 +88,7 @@ body {
     #8ae2d9, #75e2d7, #60e2d6);
   background-size: 500% 500%;
   position: relative;
-  animation: change 4s ease-in-out;
+  animation: change 4s ease-in-out infinite;
 }
 @keyframes change {
   0% {background-position: 0 50%;}
