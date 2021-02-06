@@ -8,46 +8,49 @@ var keywordSavedList = JSON.parse(localStorage.getItem('keywordSaved')) || [];
 if (JSON.parse(localStorage.getItem("saveList")) !== null) {
     saveList = JSON.parse(localStorage.getItem("saveList"));
 }
-// if(JSON.parse(localStorage.getItem('keywordSavedList')) !== null){
-//     keywordSavedList = JSON.parse(localStorage.getItem('keywordSavedList'));
-// }
-// carousel saved list
-// styling: how many pages?
+// populate sidenav with saved items
+let maxCardsCol = Math.floor((window.innerHeight - 90) / 150);
+if (maxCardsCol < 1) maxCardsCol = 1;
+let numOfPages;
+renderList();
+
 function renderList() {
-    if (saveList.length < 5) {
-        for (let i = 0; i < saveList.length; i++) {
-            document.querySelector("#pg1").innerHTML += saveList[i]
+    let k = 0;
+    let innerHTMLStr = '';
+    numOfPages = Math.ceil(saveList.length/maxCardsCol);
+
+    for (let i = 0; i < numOfPages; i++) {
+        // build sidenav dots
+        document.querySelector('#sidenav-indicators').innerHTML += '<span class="sn-dot"></span>';
+        // build sidenav main
+        innerHTMLStr += '<div class="sidenav-col">';
+        for (let j = 0; j < maxCardsCol; j++) {
+            innerHTMLStr +=
+                `<a href='${saveList[k].link}' target="_blank">
+                <div class="savedJobBody" id=${saveList[k].id}>
+                    <h5 class="card-title" onclick="removeSaved('${saveList[k].id}')">${saveList[k].companyName}</h5>
+                    <a class="remove-favorite">&#9733;</a>
+                    <span class="card-text">${saveList[k].jobTitle}</span>
+                    <br />
+                    <p class="card-text">${saveList[k].description}</p>
+                </div>
+            </a>`;
+            k++;
+            if (k === saveList.length) break;
         }
+        innerHTMLStr += '</div>';
     }
-    else if (saveList.length < 10) {
-        for (let j = 0; j < 5; j++) {
-            document.querySelector("#pg1").innerHTML += saveList[j]
-        }
-        for (let w = 5; w < saveList.length; w++) {
-            document.querySelector("#pg2").innerHTML += saveList[w]
-        }
-    }
-    else if (10 <= saveList.length < 15) {
-        for (let v = 0; v < 5; v++) {
-            document.querySelector("#pg1").innerHTML += saveList[v]
-        }
-        for (let b = 5; b < 10; b++) {
-            document.querySelector("#pg2").innerHTML += saveList[b]
-        }
-        for (let n = 10; n < saveList.length; n++) {
-            document.querySelector("#pg3").innerHTML += saveList[n]
-        }
-    }
+    document.querySelector('#sidenavIn').innerHTML = innerHTMLStr;
 }
-
-
-renderList()
+if (saveList.length > 0) renderList();
 
 
 //  Keyword save list shown when click search bar
 const pSearch = document.querySelector('.searchInput')
 pSearch.addEventListener('focus', function(){
-    document.querySelector('.previousSearched').classList.remove('d-none')
+    document.querySelector('.previousSearched').classList.remove('d-none');
+    let width = document.querySelector('#keywords').style.width;
+    document.querySelector('.previousSearched').style.width = width;
 })
 
 pSearch.addEventListener('blur', function(){
@@ -109,7 +112,7 @@ document.querySelector('#searchBtn').addEventListener("click", async function ()
 document.querySelector('#savedJobLink').addEventListener("click", function () {
     if (document.querySelector("#mySidenav").style.width === "") {
         // open side nav menu
-        document.querySelector("#mySidenav").style.width = "250px";
+        document.querySelector("#mySidenav").style.width = "253px";
     }
     else {
         // close side nav menu
@@ -153,11 +156,11 @@ function displayCards() {
                 <div class="card-body">
                     <div class="row d-flex">
                             <a class="titleLink" style="width: 80%">${githubJobs[i].company}</a>
-                            <p onclick="star(this)" class="saveBtn">&#9733</p>
+                            <p onclick="star(this)" id=${i} class="saveBtn">&#9733</p>
                     </div>
-                    <h6 class="card-subtitle mb-2">${githubJobs[i].title}</h6>
-                    <h6 class="card-subtitle">${githubJobs[i].location}</h6>
-                    <h6 class="card-subtitle mb-2 salary"><a href="${githubJobs[i].url}" target="_blank">Click here for more info</a></h6>
+                    <h6 class="card-subtitle">${githubJobs[i].title}</h6>
+                    <p class="card-subtitle my-3">${githubJobs[i].location}</p>
+                    <p class="card-subtitle mt-5 job-link"><a href="${githubJobs[i].url}" target="_blank">Click here for more info</a></p>
                 </div>
             </div>
         </div>`;
@@ -166,71 +169,44 @@ function displayCards() {
             <div class="card clickcard my-3 mx-3 shape" id="cardClick">
                 <div class="card-body">
                     <div class="row d-flex">
-                            <a class="titleLink" style="width: 80%">${githubJobs[i].company}</a>
-                            <p onclick="star(this)" class="saveBtn">&#9733</p>
+                            <a class="titleLink" style="width: 80%">${adzunaJobs[i].company.display_name}</a>
+                            <p onclick="star(this)" id=${i+10} class="saveBtn">&#9733</p>
                     </div>
-                    <h6 class="card-subtitle mb-2">${adzunaJobs[i].title}</h6>
-                    <h6 class="card-subtitle">${adzunaJobs[i].location.display_name}</h6>
-                    <h6 class="card-subtitle mb-2 salary"><a href="${adzunaJobs[i].redirect_url}" target="_blank">Click here for more info</a></h6>
+                    <h6 class="card-subtitle">${adzunaJobs[i].title}</h6>
+                    <p class="card-subtitle my-3">${adzunaJobs[i].location.display_name}</p>
+                    <p class="card-subtitle mt-5 job-link"><a href="${adzunaJobs[i].redirect_url}" target="_blank">Click here for more info</a></p>
                 </div>
             </div>
         </div>`;
     }
 }
-// // saves card to sidebar
+// saves card to sidebar
 function star(el) {
 
-    var sideNav = document.querySelector("#pg1")
-    var sideNav2 = document.querySelector("#pg2")
-    var sideNav3 = document.querySelector("#pg3")
-    var companyName = el.previousElementSibling.textContent;
-    var link = el.parentElement.parentElement.children[3].children[0].href
-
-    sideNav.innerHTML = ""
-    sideNav2.innerHTML = ""
-    sideNav3.innerHTML = ""
-
-    //if star is orange, don't push
-    if (el.parentElement.children[1].style.color === "orange") { }
+    //if star is orange, remove entry from sidenav
+    if (el.parentElement.children[1].style.color === "orange") {
+        el.parentElement.children[1].style.color = "lightgrey";
+        removeSaved(this.id);
+    }
     else {
-        el.parentElement.children[1].style.color = "orange"
-
-
-
-        saveList.push(
-            `<a href=${link} target="_blank">
-        <div class="savedJobBody">
-            <h5 class="card-title">${companyName}</h5>
-            <a class="remove-favorite">&#9733;</a>
-            <p class="card-text">Job title</p>
-            <span class="card-text">Description or something idk, two lines maybe</span>
-        </div>
-    </a>`);
+        el.parentElement.children[1].style.color = "orange";
+        // push favourite into side nav
+        saveList.push({
+            id: el.parentElement.children[1].id,
+            link: el.parentElement.parentElement.children[3].children[0].href,
+            companyName: el.previousElementSibling.textContent,
+            jobTitle: el.parentElement.parentElement.children[1].innerText,
+            description: el.parentElement.parentElement.children[2].innerText
+        })
     }
 
-    if (saveList.length < 5) {
-        for (let i = 0; i < saveList.length; i++) {
-            sideNav.innerHTML += saveList[i]
-        }
-    } else if (saveList.length < 10) {
-        for (let j = 0; j < 5; j++) {
-            sideNav.innerHTML += saveList[j]
-        }
-        for (let w = 5; w < saveList.length; w++) {
-            sideNav2.innerHTML += saveList[w]
-        }
-    } else if (10 <= saveList.length < 15) {
-        for (let v = 0; v < 5; v++) {
-            sideNav.innerHTML += saveList[v]
-        }
-        for (let b = 5; b < 10; b++) {
-            sideNav2.innerHTML += saveList[b]
-        }
-        for (let n = 10; n < saveList.length; n++) {
-            sideNav3.innerHTML += saveList[n]
-        }
-    }
-    localStorage.setItem("saveList", JSON.stringify(saveList))
+    localStorage.setItem("saveList", JSON.stringify(saveList));
+    renderList();
+}
+// remove favourite from sidenav
+function removeSaved(id) {
+    // remove id
+    // renderList();
 }
 
 /* ----------------------- */
@@ -241,6 +217,54 @@ function star(el) {
 function toggleSearchAnim() {
     document.querySelector('.searchInput').classList.toggle('searchBar');
     document.querySelector('#searchBtn').classList.toggle('searchButton');
+}
+
+// drag to move sidenav
+let oldX = 0;
+let tracking = false;
+document.querySelector('#mySidenav').addEventListener('mousedown', e => sidenavStartScroll(e));
+window.addEventListener('mousemove', e => sidenavScroll(e));
+window.addEventListener('mouseup', stopScroll);
+
+function sidenavStartScroll(e) {
+    tracking = true;
+    oldX = e.clientX;
+}
+
+function sidenavScroll(e) {
+    // find old offset
+    let oldOffsetStr = document.querySelector('#sidenavIn').style.transform.replace(/[^-\d.]/g, '');
+    let oldOffset = parseFloat(oldOffsetStr || 0);
+    let deltaX = e.clientX - oldX;
+    if (tracking) {
+        document.querySelector('#sidenavIn').style.transform = `translateX(${oldOffset + deltaX}px)`;
+    }
+    oldX = e.clientX;
+}
+
+function stopScroll() {
+    tracking = false;
+    let oldOffsetStr = document.querySelector('#sidenavIn').style.transform.replace(/[^-\d.]/g, '');
+    let oldOffset = parseFloat(oldOffsetStr);
+    if (isNaN(oldOffset)) oldOffset = 0;
+    let farEdge = -1*(numOfPages*250-250);
+    let closestEdge = Math.round(oldOffset / 250) * 250;
+    if (closestEdge > 0) closestEdge = 0;
+    else if (closestEdge < farEdge) closestEdge = farEdge;
+    anime({
+        targets: '#sidenavIn',
+        translateX: closestEdge,
+        duration: 300,
+        easing: 'easeOutSine'
+    });
+    // switch page indicator to correct page
+    let pageNum = -1 * closestEdge / 250;
+    for (let i = 0; i < document.querySelector('#sidenav-indicators').children.length; i++) {
+        if (i === pageNum) {
+            document.querySelector('#sidenav-indicators').children[i].classList.add('active');
+        }
+        else document.querySelector('#sidenav-indicators').children[i].classList.remove('active');
+    }
 }
 
 /* ------------------------ */
@@ -375,4 +399,3 @@ function sendDummyRequests() {
         }
     ];
 }
-
