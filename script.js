@@ -47,6 +47,7 @@ if (saveList.length > 0) renderList();
 
 //  Keyword save list shown when click search bar
 const pSearch = document.querySelector('.searchInput')
+
 pSearch.addEventListener('focus', function(){
     document.querySelector('.previousSearched').classList.remove('d-none');
     let width = document.querySelector('#keywords').style.width;
@@ -56,25 +57,31 @@ pSearch.addEventListener('focus', function(){
 pSearch.addEventListener('blur', function(){
     document.querySelector('.previousSearched').classList.add('d-none')
 })
-    
+// Generates the keyword saved list when clicking on the search bar
 function keywordSaved(){
     let searchBarValue = document.querySelector('.searchInput').value
 
     if (keywordSavedList.indexOf(searchBarValue) === -1){
+        let keywordList = document.querySelector('.previousSearched')
         keywordSavedList.push(searchBarValue)
-        document.querySelector('.previousSearched').innerHTML += `<li class="list-group-item">${searchBarValue}</li>`
+        keywordList.innerHTML = ''
+        let length = keywordSavedList.length < 5 ? keywordSavedList.length : 5
+        for (let i=(length -1); i>-1; i--){
+            document.querySelector('.previousSearched').innerHTML += `<li class="list-group-item">${keywordSavedList[i]}</li>`
+        }
+        
         localStorage.setItem("keywordSaved", JSON.stringify(keywordSavedList))
     }
 }
-
+// repopulates keyword saved search array when page is reloaded
 (function(){
     let keywordListParse = JSON.parse(localStorage.getItem('keywordSaved')) || []
+    document.querySelector('.previousSearched').innerHTML = ''
 
-    for (let i=0; i<keywordSavedList.length; i++){
+    for (let i=(keywordSavedList.length-1); i>-1; i--){
         document.querySelector('.previousSearched').innerHTML += `<li class="list-group-item">${keywordListParse[i]}</li>`
     }
 })();
-
 
 // on search button click
 document.querySelector('#searchBtn').addEventListener("click", async function () {
