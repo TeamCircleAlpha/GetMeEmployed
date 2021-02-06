@@ -9,11 +9,18 @@ if (JSON.parse(localStorage.getItem("saveList")) !== null) {
 // populate sidenav with saved items
 let maxCardsCol = Math.floor((window.innerHeight - 90) / 150);
 if (maxCardsCol < 1) maxCardsCol = 1;
+let numOfPages = Math.ceil(saveList.length/maxCardsCol);
+renderList();
 
 function renderList() {
     let k = 0;
     let innerHTMLStr = '';
-    for (let i = 0; i < saveList.length; i++) {
+    document.querySelector('#sidenav-indicators').innerHTML = '';
+
+    for (let i = 0; i < numOfPages; i++) {
+        // build sidenav dots
+        document.querySelector('#sidenav-indicators').innerHTML += '<span class="sn-dot"></span>';
+        // build sidenav main
         innerHTMLStr += '<div class="sidenav-col">';
         for (let j = 0; j < maxCardsCol; j++) {
             innerHTMLStr +=
@@ -21,14 +28,15 @@ function renderList() {
                 <div class="savedJobBody" id=${saveList[k].id}>
                     <h5 class="card-title" onclick="removeSaved('${saveList[k].id}')">${saveList[k].companyName}</h5>
                     <a class="remove-favorite">&#9733;</a>
-                    <p class="card-text">${saveList[k].jobTitle}</p>
-                    <span class="card-text">${saveList[k].description}</span>
+                    <span class="card-text">${saveList[k].jobTitle}</span>
+                    <br />
+                    <p class="card-text">${saveList[k].description}</p>
                 </div>
             </a>`;
             k++;
+            if (k === saveList.length) break;
         }
         innerHTMLStr += '</div>';
-        if (k = saveList.length-1) break;
     }
     document.querySelector('#sidenavIn').innerHTML = innerHTMLStr;
 }
@@ -109,9 +117,9 @@ function displayCards() {
                             <a class="titleLink" style="width: 80%">${githubJobs[i].company}</a>
                             <p onclick="star(this)" id=${i} class="saveBtn">&#9733</p>
                     </div>
-                    <h6 class="card-subtitle mb-2">${githubJobs[i].title}</h6>
-                    <h6 class="card-subtitle">${githubJobs[i].location}</h6>
-                    <h6 class="card-subtitle mb-2 salary"><a href="${githubJobs[i].url}" target="_blank">Click here for more info</a></h6>
+                    <h6 class="card-subtitle">${githubJobs[i].title}</h6>
+                    <p class="card-subtitle my-3">${githubJobs[i].location}</p>
+                    <p class="card-subtitle mt-5 job-link"><a href="${githubJobs[i].url}" target="_blank">Click here for more info</a></p>
                 </div>
             </div>
         </div>`;
@@ -120,12 +128,12 @@ function displayCards() {
             <div class="card clickcard my-3 mx-3 shape" id="cardClick">
                 <div class="card-body">
                     <div class="row d-flex">
-                            <a class="titleLink" style="width: 80%">${adzunaJobs[i].company}</a>
+                            <a class="titleLink" style="width: 80%">${adzunaJobs[i].company.display_name}</a>
                             <p onclick="star(this)" id=${i+10} class="saveBtn">&#9733</p>
                     </div>
-                    <h6 class="card-subtitle mb-2">${adzunaJobs[i].title}</h6>
-                    <h6 class="card-subtitle">${adzunaJobs[i].location.display_name}</h6>
-                    <h6 class="card-subtitle mb-2 salary"><a href="${adzunaJobs[i].redirect_url}" target="_blank">Click here for more info</a></h6>
+                    <h6 class="card-subtitle">${adzunaJobs[i].title}</h6>
+                    <p class="card-subtitle my-3">${adzunaJobs[i].location.display_name}</p>
+                    <p class="card-subtitle mt-5 job-link"><a href="${adzunaJobs[i].redirect_url}" target="_blank">Click here for more info</a></p>
                 </div>
             </div>
         </div>`;
@@ -134,35 +142,31 @@ function displayCards() {
 // saves card to sidebar
 function star(el) {
 
-    var companyName = el.previousElementSibling.textContent;
-    var link = el.parentElement.parentElement.children[3].children[0].href
-    var index = el.parentElement.children[1].id;
-
-    //if star is orange, don't push
+    //if star is orange, remove entry from sidenav
     if (el.parentElement.children[1].style.color === "orange") {
         el.parentElement.children[1].style.color = "lightgrey";
+        removeSaved(this.id);
     }
     else {
         el.parentElement.children[1].style.color = "orange";
         // push favourite into side nav
         saveList.push({
-            id: index,
-            link: link,
-            companyName: companyName,
-            jobTitle: 'UNFINISHED',
-            description: 'UNFINISHED'
+            id: el.parentElement.children[1].id,
+            link: el.parentElement.parentElement.children[3].children[0].href,
+            companyName: el.previousElementSibling.textContent,
+            jobTitle: el.parentElement.parentElement.children[1].innerText,
+            description: el.parentElement.parentElement.children[2].innerText
         })
     }
 
     localStorage.setItem("saveList", JSON.stringify(saveList));
-    renderList();
-
+    renderList();a
 }
 // remove favourite from sidenav
-saveList.splice(
-
-)
-
+function removeSaved(id) {
+    // remove id
+    // renderList();
+}
 
 /* ----------------------- */
 /* ---- CSS ANIMATION ---- */
@@ -202,7 +206,7 @@ function stopScroll() {
     let oldOffsetStr = document.querySelector('#sidenavIn').style.transform.replace(/[^-\d.]/g, '');
     let oldOffset = parseFloat(oldOffsetStr);
     if (isNaN(oldOffset)) oldOffset = 0;
-    let farEdge = document.querySelector('#sidenavIn').style.width - 253;
+    let farEdge = numOfPages*253-253;
     let closestEdge = Math.round(oldOffset / 253) * 253;
     if (closestEdge > 0) closestEdge = 0;
     else if (closestEdge < farEdge) closestEdge = farEdge;
@@ -212,7 +216,7 @@ function stopScroll() {
         duration: 300,
         easing: 'easeOutSine'
     });
-    // IF add back page indicators: switch page indicator to correct page
+    // switch page indicator to correct page
     let pageNum = -1 * closestEdge / 253;
     for (let i = 0; i < document.querySelector('#sidenav-indicators').children.length; i++) {
         if (i === pageNum) {
