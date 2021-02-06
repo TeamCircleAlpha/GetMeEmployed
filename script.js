@@ -6,36 +6,30 @@ var saveList = [];
 if (JSON.parse(localStorage.getItem("saveList")) !== null) {
     saveList = JSON.parse(localStorage.getItem("saveList"));
 }
-// carousel saved list
-// find height of window --> calculate how many cards per sidenav column
-// styling: how many pages?
+// populate sidenav with saved items
+let maxCardsCol = Math.floor((window.innerHeight - 90) / 150);
 function renderList() {
-    if (saveList.length < 5){
-        for (let i=0; i<saveList.length; i++){
-            document.querySelector("#pg1").innerHTML += saveList[i]
-            }
-        } 
-        else if (saveList.length < 10){
-            for (let j=0; j<5; j++){
-                document.querySelector("#pg1").innerHTML += saveList[j]
-            }
-            for (let w=5; w<saveList.length; w++){
-                document.querySelector("#pg2").innerHTML += saveList[w]
-            }
+    let k = 0;
+    let innerHTMLStr = '';
+    for (let i = 0; i < maxCardsCol; i++) {
+        innerHTMLStr += '<div class="sidenav-col">';
+        for (let j = 0; j < maxCardsCol; j++) {
+            innerHTMLStr +=
+                `<a href='${saveList[k].link}' target="_blank">
+                <div class="savedJobBody" id=${saveList[k].id}>
+                    <h5 class="card-title" onclick="removeSaved('${saveList[k].id}')">${saveList[k].companyName}</h5>
+                    <a class="remove-favorite">&#9733;</a>
+                    <p class="card-text">${saveList[k].jobTitle}</p>
+                    <span class="card-text">${saveList[k].description}</span>
+                </div>
+            </a>`;
+            k++;
         }
-        else if (10 <= saveList.length < 15){
-            for (let v=0; v<5; v++){
-                document.querySelector("#pg1").innerHTML += saveList[v]
-            }
-            for (let b=5; b< 10; b++){
-                document.querySelector("#pg2").innerHTML += saveList[b]
-            }
-            for (let n=10; n<saveList.length; n++){
-                document.querySelector("#pg3").innerHTML += saveList[n]
-            }
-        }  
+        innerHTMLStr += '</div>'
+    }
+    document.querySelector('#sidenavIn').innerHTML = innerHTMLStr;
 }
-// renderList()
+if (saveList.length > 0) renderList();
 
 /* ------------------------ */
 /* - BUTTON FUNCTIONALITY - */
@@ -51,7 +45,7 @@ document.querySelector('#searchBtn').addEventListener("click", async function ()
     //Checks search input if it is empty shows modal
     if (document.querySelector('#keywords').value === "" && document.querySelector('#location').value === "") {
         showModal('Please enter at least 1 search keyword.');
-    } 
+    }
     else if (githubJobs.length === 0 || adzunaJobs.length === 0) {
         showModal('No search results found.');
     }
@@ -104,8 +98,8 @@ function displayCards() {
     else console.log('Unexpected error with API output');
     // add new results
     for (var i = 0; i < numOfEntries; i++) {
-        document.querySelector('#searchOutputContainer').innerHTML += 
-        `<div class="col-md-4">
+        document.querySelector('#searchOutputContainer').innerHTML +=
+            `<div class="col-md-4">
             <div class="card clickcard my-3 mx-3 shape" id="cardClick">
                 <div class="card-body">
                     <div class="row d-flex">
@@ -118,13 +112,13 @@ function displayCards() {
                 </div>
             </div>
         </div>`;
-        document.querySelector('#searchOutputContainer').innerHTML += 
-        `<div class="col-md-4">
+        document.querySelector('#searchOutputContainer').innerHTML +=
+            `<div class="col-md-4">
             <div class="card clickcard my-3 mx-3 shape" id="cardClick">
                 <div class="card-body">
                     <div class="row d-flex">
-                            <a class="titleLink" style="width: 80%">${githubJobs[i].company}</a>
-                            <p onclick="star(this)" id=${i} class="saveBtn">&#9733</p>
+                            <a class="titleLink" style="width: 80%">${adzunaJobs[i].company}</a>
+                            <p onclick="star(this)" id=${i+10} class="saveBtn">&#9733</p>
                     </div>
                     <h6 class="card-subtitle mb-2">${adzunaJobs[i].title}</h6>
                     <h6 class="card-subtitle">${adzunaJobs[i].location.display_name}</h6>
@@ -134,44 +128,32 @@ function displayCards() {
         </div>`;
     }
 }
-// // saves card to sidebar
-function star(el){
+// saves card to sidebar
+function star(el) {
 
-    var sideNav = document.querySelector("#pg1")
-    var sideNav2 = document.querySelector("#pg2")
-    var sideNav3 = document.querySelector("#pg3")
     var companyName = el.previousElementSibling.textContent;
     var link = el.parentElement.parentElement.children[3].children[0].href
+    var index = el.parentElement.children[1].id;
 
-    sideNav.innerHTML = ""
-    sideNav2.innerHTML = ""
-    sideNav3.innerHTML = ""
-    var index =el.parentElement.children[1].id;
     //if star is orange, don't push
-    if(el.parentElement.children[1].style.color === "orange"){
-        el.parentElement.children[1].style.color="lightgrey"
-       
-      
-        console.log(JSON.parse(saveList[index]))
+    if (el.parentElement.children[1].style.color === "orange") {
+        el.parentElement.children[1].style.color = "lightgrey";
     }
     else {
-    el.parentElement.children[1].style.color = "orange"
-
-
-// push favourite into side nav
-    saveList.push(
-    `<a href=${link} target="_blank">
-        <div class="savedJobBody" id=${index}>
-            <h5 class="card-title">${companyName}</h5>
-            <a class="remove-favorite ${el.parentElement.children[1].style.color === "orange"?'fav':'nofav'}">&#9733;</a>
-            <p class="card-text">Job title</p>
-            <span class="card-text">Description, place holder. Couple lines</span>
-        </div>
-    </a>`);
+        el.parentElement.children[1].style.color = "orange";
+        // push favourite into side nav
+        saveList.push({
+            id: index,
+            link: link,
+            companyName: companyName,
+            jobTitle: 'UNFINISHED',
+            description: 'UNFINISHED'
+        })
     }
 
-    renderList()
-    localStorage.setItem("saveList", JSON.stringify(saveList))
+    localStorage.setItem("saveList", JSON.stringify(saveList));
+    renderList();
+
 }
 // remove favourite from sidenav
 saveList.splice(
@@ -207,7 +189,7 @@ function sidenavScroll(e) {
     let oldOffset = parseFloat(oldOffsetStr || 0);
     let deltaX = e.clientX - oldX;
     if (tracking) {
-        document.querySelector('#sidenavIn').style.transform = `translateX(${oldOffset+deltaX}px)`;
+        document.querySelector('#sidenavIn').style.transform = `translateX(${oldOffset + deltaX}px)`;
     }
     oldX = e.clientX;
 }
@@ -218,18 +200,18 @@ function stopScroll() {
     let oldOffset = parseFloat(oldOffsetStr);
     if (isNaN(oldOffset)) oldOffset = 0;
     let farEdge = document.querySelector('#sidenavIn').style.width - 253;
-    let closestEdge = Math.round(oldOffset/253)*253;
+    let closestEdge = Math.round(oldOffset / 253) * 253;
     if (closestEdge > 0) closestEdge = 0;
     else if (closestEdge < farEdge) closestEdge = farEdge;
     anime({
-            targets: '#sidenavIn',
-            translateX: closestEdge,
-            duration: 300,
-            easing: 'easeOutSine'
+        targets: '#sidenavIn',
+        translateX: closestEdge,
+        duration: 300,
+        easing: 'easeOutSine'
     });
     // IF add back page indicators: switch page indicator to correct page
-    let pageNum = -1*closestEdge/253;
-    for (let i=0; i<document.querySelector('#sidenav-indicators').children.length; i++) {
+    let pageNum = -1 * closestEdge / 253;
+    for (let i = 0; i < document.querySelector('#sidenav-indicators').children.length; i++) {
         if (i === pageNum) {
             document.querySelector('#sidenav-indicators').children[i].classList.add('active');
         }
@@ -243,7 +225,7 @@ function stopScroll() {
 
 let appID = 'ddcfef90';
 let appKey = '34e2e2ed55214203ba42f1f55e511f13';
-let githubJobs=[], adzunaJobs=[];
+let githubJobs = [], adzunaJobs = [];
 
 async function startSearch() {
     //parse search terms
@@ -259,10 +241,10 @@ async function startSearch() {
     adString += `what=${jobDescription}`;
     if (jobLocation !== '') adString += `&where=${jobLocation}`;
     if (jobSalary > 0) adString += `&salary_min=${jobSalary}`;
-    if(document.getElementById('fullTimeCheck').checked == true) adString += `&full_time=1`;
-    if(document.getElementById('partTimeCheck').checked == true) adString += `&part_time=1`;
-    if(document.getElementById('contractCheck').checked == true) adString += `&contract=1`;
-    if(document.getElementById('permanentCheck').checked == true) adString += `&permanent=1`;
+    if (document.getElementById('fullTimeCheck').checked == true) adString += `&full_time=1`;
+    if (document.getElementById('partTimeCheck').checked == true) adString += `&part_time=1`;
+    if (document.getElementById('contractCheck').checked == true) adString += `&contract=1`;
+    if (document.getElementById('permanentCheck').checked == true) adString += `&permanent=1`;
     // await sendSearchRequests(ghString, adzString, ghLocation);
     await new Promise(resolve => setTimeout(resolve, 1500));
     sendDummyRequests();
