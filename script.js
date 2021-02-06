@@ -2,7 +2,6 @@
 /* ---- ON PAGE LOAD ---- */
 /* ---------------------- */
 var saveList = [];
-var keywordSavedList = JSON.parse(localStorage.getItem('keywordSaved')) || [];
 
 // load saved list from local storage
 if (JSON.parse(localStorage.getItem("saveList")) !== null) {
@@ -45,32 +44,40 @@ function renderList() {
 }
 if (saveList.length > 0) renderList();
 
-//  Keyword save list shown when click search bar
+// repopulates keyword saved search array when page is reloaded
+let keywordSavedList = JSON.parse(localStorage.getItem('keywordSaved')) || [];
+document.querySelector('.previousSearched').innerHTML = '';
+
+for (let i=(keywordSavedList.length-1); i>-1; i--) {
+    document.querySelector('.previousSearched').innerHTML += 
+    `<li class="list-group-item">${keywordSavedList[i]}</li>`;
+}
+
+// Keyword save list shown when click search bar
 document.querySelector('.searchInput').addEventListener('focus', function(){
     document.querySelector('.previousSearched').classList.remove('d-none');
     let width = `${document.querySelector('#keywords').offsetWidth}px`;
     document.querySelector('.previousSearched').style.width = width;
 })
-
+// Keyword save list close when click off
 document.querySelector('.searchInput').addEventListener('blur', function(){
     document.querySelector('.previousSearched').classList.add('d-none');
 })
 
-function keywordSaved(){
-    let searchBarValue = document.querySelector('.searchInput').value
+// Generates the keyword saved list when clicking on the search bar
+function keywordSaved() {
+    let searchBarValue = document.querySelector('.searchInput').value;
 
     if (keywordSavedList.indexOf(searchBarValue) === -1){
-        keywordSavedList.push(searchBarValue)
-        document.querySelector('.previousSearched').innerHTML += `<li class="list-group-item">${searchBarValue}</li>`
-        localStorage.setItem("keywordSaved", JSON.stringify(keywordSavedList))
+        keywordSavedList.push(searchBarValue);
+        if (keywordSavedList.length > 5) keywordSavedList.shift();
+        let length = keywordSavedList.length < 5 ? keywordSavedList.length : 5;
+        for (let i=(length -1); i>-1; i--){
+            document.querySelector('.previousSearched').innerHTML += 
+            `<li class="list-group-item">${keywordSavedList[i]}</li>`;
+        }
+        localStorage.setItem("keywordSaved", JSON.stringify(keywordSavedList));
     }
-}
-
-let keywordListParse = JSON.parse(localStorage.getItem('keywordSaved')) || [];
-
-for (let i=0; i<keywordSavedList.length; i++){
-    document.querySelector('.previousSearched').innerHTML += 
-    `<li class="list-group-item">${keywordListParse[i]}</li>`;
 }
 
 // on search button click
@@ -121,21 +128,21 @@ document.querySelector('#modalClose').onclick = function () {
 }
 
 // When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
+window.onmousedown = function (event) {
     if (event.target == document.querySelector('#emptyModal')) {
         document.querySelector('#emptyModal').style.display = "none";
     }
     if (event.target != document.querySelector('#savedJobLink') && document.querySelector("#mySidenav").style.width != "") {
         console.log('into while loop');
         let elem = event.target;
-        while (elem != document.querySelector('html')) {
-            if (elem != document.querySelector("#mySidenav")) {
-                console.log('elem not sidenav')
-                document.querySelector("#mySidenav").style.width = "";
+        let inSidenav = false;
+        while (elem !== document.querySelector('html')) {
+            if (elem === document.querySelector("#mySidenav")) {
+                inSidenav = true;
             }
-            console.log('moving to next element');
             elem = elem.parentElement;
         }
+        if (!inSidenav) document.querySelector("#mySidenav").style.width = '';
     }
 }
 
