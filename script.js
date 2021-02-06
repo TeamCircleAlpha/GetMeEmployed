@@ -25,11 +25,12 @@ function renderList() {
         // build sidenav main
         innerHTMLStr += '<div class="sidenav-col">';
         for (let j = 0; j < maxCardsCol; j++) {
+
             innerHTMLStr +=
-                `<a href='${saveList[k].link}' target="_blank">
+                `<a href='${saveList[k].link}' target="_blank" data-index = ${k}>
                 <div class="savedJobBody" id=${saveList[k].id}>
-                    <h5 class="card-title" onclick="removeSaved('${saveList[k].id}')">${saveList[k].companyName}</h5>
-                    <a class="remove-favorite">&#9733;</a>
+                    <h5 class="card-title">${saveList[k].companyName}</h5>
+                    <a class="remove-favorite" onclick="removeSaved(this)">&#9733;</a>
                     <span class="card-text">${saveList[k].jobTitle}</span>
                     <br />
                     <p class="card-text">${saveList[k].description}</p>
@@ -197,9 +198,12 @@ function star(el) {
     renderList();
 }
 // remove favourite from sidenav
-function removeSaved(id) {
-    // remove id
-    // renderList();
+function removeSaved(el) {
+    var index = el.parentElement.children[0].getAttribute("data-index")
+   saveList.splice(index, 1)
+   console.log(el.parentElement.children[0].getAttribute("data-index"), 1)
+   localStorage.setItem("saveList", JSON.stringify(saveList));
+   renderList()
 }
 
 /* ----------------------- */
