@@ -34,7 +34,7 @@ if (JSON.parse(localStorage.getItem("saveList")) !== null) {
 //             }
 //         }  
 // }
-renderList()
+// renderList()
 
 /* ------------------------ */
 /* - BUTTON FUNCTIONALITY - */
@@ -65,7 +65,7 @@ document.querySelector('#searchBtn').addEventListener("click", async function ()
 document.querySelector('#savedJobLink').addEventListener("click", function () {
     if (document.querySelector("#mySidenav").style.width === "") {
         // open side nav menu
-        document.querySelector("#mySidenav").style.width = "250px";
+        document.querySelector("#mySidenav").style.width = "253px";
     }
     else {
         // close side nav menu
@@ -136,7 +136,7 @@ function displayCards() {
 // // saves card to sidebar
 function star(el){
 
-    var sideNav = document.querySelector("#pg1")
+    var sideNav = document.querySelector("#firstc")
     // var sideNav2 = document.querySelector("#pg2")
     // var sideNav3 = document.querySelector("#pg3")
     var companyName = el.previousElementSibling.textContent;
@@ -170,7 +170,7 @@ function renderList(){
     // if (document.querySelector("#mySidenav").clientHeight > 800){
         if (saveList.length < 5){
             for (let i=0; i<saveList.length; i++){
-                document.querySelector("#pg1").innerHTML += `<a href=${saveList[i].site} target="_blank">
+                document.querySelector("#firstc").innerHTML += `<a href=${saveList[i].site} target="_blank">
                 <div class="savedJobBody">
                     <h5 class="card-title">${saveList[i].cName}</h5>
                     <a class="remove-favorite">&#9733;</a>
@@ -179,30 +179,30 @@ function renderList(){
                 </div>
             </a>`
             }
-        } else if (5 <= saveList.length < 10){
-            for(let i=0; i<5; i++){
-                document.querySelector("#pg1").innerHTML += `<a href=${saveList[i].site} target="_blank">
-                <div class="savedJobBody">
-                    <h5 class="card-title">${saveList[i].cName}</h5>
-                    <a class="remove-favorite">&#9733;</a>
-                    <p class="card-text">Job title</p>
-                    <span class="card-text">Description, place holder. Couple lines</span>
-                </div>
-            </a>`
-                }  
-            for(let j=5; j<saveList.length; j++){
-                if (document.querySelector("#pg1").clientHeight > document.querySelector("#mySidenav").clientHeight - 200){
-                    document.querySelector(".carousel-inner").innerHTML += `<div class="carousel-item" id="pg2"></div>`;
-                    document.querySelector(".carousel-indicators").innerHTML += `<li data-bs-target="#savedCardsCarousel" data-bs-slide-to="1"></li>`}
-                document.querySelector("#pg2").innerHTML += `<a href=${saveList[j].site} target="_blank">
-                <div class="savedJobBody">
-                    <h5 class="card-title">${saveList[j].cName}</h5>
-                    <a class="remove-favorite">&#9733;</a>
-                    <p class="card-text">Job title</p>
-                    <span class="card-text">Description, place holder. Couple lines</span>
-                </div>
-            </a>`
-                }
+        // } else if (5 <= saveList.length < 10){
+        //     for(let i=0; i<5; i++){
+        //         document.querySelector("#firstc").innerHTML += `<a href=${saveList[i].site} target="_blank">
+        //         <div class="savedJobBody">
+        //             <h5 class="card-title">${saveList[i].cName}</h5>
+        //             <a class="remove-favorite">&#9733;</a>
+        //             <p class="card-text">Job title</p>
+        //             <span class="card-text">Description, place holder. Couple lines</span>
+        //         </div>
+        //     </a>`
+                // }  
+            // for(let j=5; j<saveList.length; j++){
+            //     if (document.querySelector("#pg1").clientHeight > document.querySelector("#mySidenav").clientHeight - 200){
+            //         document.querySelector(".carousel-inner").innerHTML += `<div class="carousel-item" id="pg2"></div>`;
+            //         document.querySelector(".carousel-indicators").innerHTML += `<li data-bs-target="#savedCardsCarousel" data-bs-slide-to="1"></li>`}
+            //     document.querySelector("#pg2").innerHTML += `<a href=${saveList[j].site} target="_blank">
+            //     <div class="savedJobBody">
+            //         <h5 class="card-title">${saveList[j].cName}</h5>
+            //         <a class="remove-favorite">&#9733;</a>
+            //         <p class="card-text">Job title</p>
+            //         <span class="card-text">Description, place holder. Couple lines</span>
+            //     </div>
+            // </a>`
+            //     }
             
         // } else if (10 <= saveList.length) {
         //     for (let w=10; w<saveList.length; w++){
@@ -230,6 +230,47 @@ function renderList(){
 function toggleSearchAnim() {
     document.querySelector('.searchInput').classList.toggle('searchBar');
     document.querySelector('#searchBtn').classList.toggle('searchButton');
+}
+
+// drag to move sidenav
+let oldX = 0;
+let tracking = false;
+document.querySelector('#mySidenav').addEventListener('mousedown', e => sidenavStartScroll(e));
+window.addEventListener('mousemove', e => sidenavScroll(e));
+window.addEventListener('mouseup', stopScroll);
+
+function sidenavStartScroll(e) {
+    tracking = true;
+    oldX = e.clientX;
+}
+
+function sidenavScroll(e) {
+    // find old offset
+    let oldOffsetStr = document.querySelector('#sidenavIn').style.transform.replace(/[^-\d.]/g, '');
+    let oldOffset = parseFloat(oldOffsetStr || 0);
+    let deltaX = e.clientX - oldX;
+    if (tracking) {
+        document.querySelector('#sidenavIn').style.transform = `translateX(${oldOffset+deltaX}px)`;
+    }
+    oldX = e.clientX;
+}
+
+function stopScroll() {
+    tracking = false;
+    let oldOffsetStr = document.querySelector('#sidenavIn').style.transform.replace(/[^-\d.]/g, '');
+    let oldOffset = parseFloat(oldOffsetStr);
+    let farEdge = document.querySelector('#sidenavIn').style.width - 253;
+    let closestEdge = Math.round(oldOffset/253)*253;
+    if (closestEdge > 0) closestEdge = 0;
+    else if (closestEdge < farEdge) closestEdge = farEdge;
+    anime({
+            targets: '#sidenavIn',
+            translateX: closestEdge,
+            duration: 300,
+            easing: 'easeOutSine'
+    })
+    document.querySelector('.trackInfo').innerHTML = `old offset: ${oldOffset}`;
+    // IF add back page indicators: switch page indicator to correct page
 }
 
 /* ------------------------ */
