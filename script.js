@@ -88,8 +88,6 @@ function keywordSaved() {
 document.querySelector('#searchBtn').addEventListener("click", async function () {
     // start loading CSS
     toggleSearchAnim();
-    // sends search value to saved keywords popout when keywords is clicked
-    keywordSaved();
     // parse input & call API
     await startSearch();
     // stop loading CSS & display cards
@@ -105,6 +103,8 @@ document.querySelector('#searchBtn').addEventListener("click", async function ()
         document.querySelector('#searchCont').classList.remove('push-center');
         document.querySelector('#searchCont').style.marginTop = "90px";
         displayCards();
+        // sends search value to saved keywords popout when keywords is clicked
+        keywordSaved();
     }
 });
 
