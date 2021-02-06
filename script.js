@@ -7,6 +7,7 @@ if (JSON.parse(localStorage.getItem("saveList")) !== null) {
     saveList = JSON.parse(localStorage.getItem("saveList"));
 }
 // carousel saved list
+// find height of window --> calculate how many cards per sidenav column
 // styling: how many pages?
 function renderList() {
     if (saveList.length < 5){
@@ -215,6 +216,7 @@ function stopScroll() {
     tracking = false;
     let oldOffsetStr = document.querySelector('#sidenavIn').style.transform.replace(/[^-\d.]/g, '');
     let oldOffset = parseFloat(oldOffsetStr);
+    if (isNaN(oldOffset)) oldOffset = 0;
     let farEdge = document.querySelector('#sidenavIn').style.width - 253;
     let closestEdge = Math.round(oldOffset/253)*253;
     if (closestEdge > 0) closestEdge = 0;
@@ -224,9 +226,15 @@ function stopScroll() {
             translateX: closestEdge,
             duration: 300,
             easing: 'easeOutSine'
-    })
-    document.querySelector('.trackInfo').innerHTML = `old offset: ${oldOffset}`;
+    });
     // IF add back page indicators: switch page indicator to correct page
+    let pageNum = -1*closestEdge/253;
+    for (let i=0; i<document.querySelector('#sidenav-indicators').children.length; i++) {
+        if (i === pageNum) {
+            document.querySelector('#sidenav-indicators').children[i].classList.add('active');
+        }
+        else document.querySelector('#sidenav-indicators').children[i].classList.remove('active');
+    }
 }
 
 /* ------------------------ */

@@ -28,8 +28,20 @@
     <div class="container">
         <div id="mySidenav" class="sidenav">
             <!-- CAROUSEL -->
+            <div id="sidenav-indicators" class="sn-dot-container text-center">
+                <span class="sn-dot active"></span>
+                <span class="sn-dot"></span>
+            </div>
             <div class="sidenav-inner" id="sidenavIn">
                 <div class="sidenav-col">
+                    <a href='#' target="_blank">
+                        <div class="savedJobBody" id=idN>
+                            <h5 class="card-title">${companyName}</h5>
+                            <a class="remove-favorite">&#9733;</a>
+                            <p class="card-text">Job title</p>
+                            <span class="card-text">Description, place holder. Couple lines</span>
+                        </div>
+                    </a>
                     <a href='#' target="_blank">
                         <div class="savedJobBody" id=idN>
                             <h5 class="card-title">${companyName}</h5>
@@ -66,18 +78,6 @@
                     </a>
                 </div>
             </div>
-            <!-- <div id="savedCardsCarousel" class="carousel slide">
-                <div class="carousel-inner">
-                    <div class="carousel-item active" id="pg1"></div>
-                    <div class="carousel-item" id="pg2"></div>
-                    <div class="carousel-item" id="pg3"></div>
-                </div>
-                <ol class="carousel-indicators" id="carouselPageIndicator">
-                    <li data-bs-target="#savedCardsCarousel" data-bs-slide-to="0" class="active"></li>
-                    <li data-bs-target="#savedCardsCarousel" data-bs-slide-to="1"></li>
-                    <li data-bs-target="#savedCardsCarousel" data-bs-slide-to="2"></li>
-                </ol>
-            </div> -->
         </div>
     </div>
     <!-- SEARCH FORM BLOCK -->

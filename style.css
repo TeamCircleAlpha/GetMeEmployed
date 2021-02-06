@@ -154,8 +154,25 @@ body {
   transform: translateX(0px);
 }
 .sidenav-col {
-  height: 90vh;
   display:inline-block;
+  vertical-align: top;
+}
+.sn-dot-container {
+  overflow-x: hidden;
+  width: 250px;
+  margin-top: 6px;
+}
+.sn-dot {
+  height: 10px;
+  width: 10px;
+  margin: 0 4px;
+  background-color: rgb(240, 240, 240);
+  border-radius: 50%;
+  display: inline-block;
+  z-index: 20;
+}
+.sn-dot-container .active {
+  background-color: rgb(86, 202, 183);
 }
 .savedJobBody {
   border: 1px solid rgb(189, 189, 189);
