@@ -57,24 +57,29 @@ pSearch.addEventListener('blur', function(){
 function keywordSaved(){
     let searchBarValue = document.querySelector('.searchInput').value
 
-   
-
     if (keywordSavedList.indexOf(searchBarValue) === -1){
+        let list = document.querySelector('.previousSearched')
         keywordSavedList.push(searchBarValue)
-        document.querySelector('.previousSearched').innerHTML += `<li class="list-group-item">${searchBarValue}</li>`
+        list.innerHTML = ''
+        let length = keywordSavedList.length < 5 ? keywordSavedList.length : 5
+        for (let i=(length -1); i>-1; i--){
+            document.querySelector('.previousSearched').innerHTML += `<li class="list-group-item">${keywordSavedList[i]}</li>`
+        }
+        // document.querySelector('.previousSearched').innerHTML += `<li class="list-group-item">${searchBarValue}</li>`
         localStorage.setItem("keywordSaved", JSON.stringify(keywordSavedList))
     }
 }
 
 (function(){
     let keywordListParse = JSON.parse(localStorage.getItem('keywordSaved')) || []
+    document.querySelector('.previousSearched').innerHTML = ''
 
-    for (let i=0; i<keywordSavedList.length; i++){
+    for (let i=(keywordSavedList.length-1); i>-1; i--){
         document.querySelector('.previousSearched').innerHTML += `<li class="list-group-item">${keywordListParse[i]}</li>`
     }
 })();
 
-
+// if (keywordSavedList.length === 5)
 // on search button click
 document.querySelector('#searchBtn').addEventListener("click", async function () {
     // start loading CSS
