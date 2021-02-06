@@ -9,10 +9,11 @@ if (JSON.parse(localStorage.getItem("saveList")) !== null) {
 // populate sidenav with saved items
 let maxCardsCol = Math.floor((window.innerHeight - 90) / 150);
 if (maxCardsCol < 1) maxCardsCol = 1;
+
 function renderList() {
     let k = 0;
     let innerHTMLStr = '';
-    for (let i = 0; i < maxCardsCol; i++) {
+    for (let i = 0; i < saveList.length; i++) {
         innerHTMLStr += '<div class="sidenav-col">';
         for (let j = 0; j < maxCardsCol; j++) {
             innerHTMLStr +=
@@ -26,7 +27,8 @@ function renderList() {
             </a>`;
             k++;
         }
-        innerHTMLStr += '</div>'
+        innerHTMLStr += '</div>';
+        if (k = saveList.length-1) break;
     }
     document.querySelector('#sidenavIn').innerHTML = innerHTMLStr;
 }
