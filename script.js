@@ -8,33 +8,33 @@ if (JSON.parse(localStorage.getItem("saveList")) !== null) {
 }
 // carousel saved list
 // styling: how many pages?
-// function renderList() {
-//     if (saveList.length < 5){
-//         for (let i=0; i<saveList.length; i++){
-//             document.querySelector("#pg1").innerHTML += saveList[i]
-//             }
-//         } 
-//         else if (saveList.length < 10){
-//             for (let j=0; j<5; j++){
-//                 document.querySelector("#pg1").innerHTML += saveList[j]
-//             }
-//             for (let w=5; w<saveList.length; w++){
-//                 document.querySelector("#pg2").innerHTML += saveList[w]
-//             }
-//         }
-//         else if (10 <= saveList.length < 15){
-//             for (let v=0; v<5; v++){
-//                 document.querySelector("#pg1").innerHTML += saveList[v]
-//             }
-//             for (let b=5; b< 10; b++){
-//                 document.querySelector("#pg2").innerHTML += saveList[b]
-//             }
-//             for (let n=10; n<saveList.length; n++){
-//                 document.querySelector("#pg3").innerHTML += saveList[n]
-//             }
-//         }  
-// }
-// renderList()
+function renderList() {
+    if (saveList.length < 5){
+        for (let i=0; i<saveList.length; i++){
+            document.querySelector("#firstc").innerHTML += saveList[i]
+            }
+        } 
+        else if (saveList.length < 10){
+            for (let j=0; j<5; j++){
+                document.querySelector("#firstc").innerHTML += saveList[j]
+            }
+            for (let w=5; w<saveList.length; w++){
+                document.querySelector("#secondc").innerHTML += saveList[w]
+            }
+        }
+        else if (10 <= saveList.length < 15){
+            for (let v=0; v<5; v++){
+                document.querySelector("#firstc").innerHTML += saveList[v]
+            }
+            for (let b=5; b< 10; b++){
+                document.querySelector("#secondc").innerHTML += saveList[b]
+            }
+            for (let n=10; n<saveList.length; n++){
+                document.querySelector("#thirdc").innerHTML += saveList[n]
+            }
+        }  
+}
+renderList()
 
 /* ------------------------ */
 /* - BUTTON FUNCTIONALITY - */
@@ -137,21 +137,21 @@ function displayCards() {
 function star(el){
 
     var sideNav = document.querySelector("#firstc")
-    // var sideNav2 = document.querySelector("#pg2")
-    // var sideNav3 = document.querySelector("#pg3")
+    var sideNav2 = document.querySelector("#secondc")
+    var sideNav3 = document.querySelector("#thirdc")
     var companyName = el.previousElementSibling.textContent;
     var link = el.parentElement.parentElement.children[3].children[0].href
 
     sideNav.innerHTML = ""
-    // sideNav2.innerHTML = ""
-    // sideNav3.innerHTML = ""
+    sideNav2.innerHTML = ""
+    sideNav3.innerHTML = ""
     var index =el.parentElement.children[1].id;
     //if star is orange, don't push
     if(el.parentElement.children[1].style.color === "orange"){
         el.parentElement.children[1].style.color="lightgrey"
        
       
-        console.log(JSON.parse(saveList[index]))
+        // console.log(JSON.parse(saveList[index]))
     }
     else {
     el.parentElement.children[1].style.color = "orange"
@@ -162,23 +162,93 @@ function star(el){
     saveList.push(info)
     }
 
-    renderList()
+    // renderList()
     localStorage.setItem("saveList", JSON.stringify(saveList))
+    renderList()
 }
 
-function renderList(){
-    // if (document.querySelector("#mySidenav").clientHeight > 800){
-        if (saveList.length < 5){
-            for (let i=0; i<saveList.length; i++){
-                document.querySelector("#firstc").innerHTML += `<a href=${saveList[i].site} target="_blank">
-                <div class="savedJobBody">
-                    <h5 class="card-title">${saveList[i].cName}</h5>
-                    <a class="remove-favorite">&#9733;</a>
-                    <p class="card-text">Job title</p>
-                    <span class="card-text">Description, place holder. Couple lines</span>
-                </div>
-            </a>`
+function renderList() {
+    if (saveList.length < 5){
+        for (let i=0; i<saveList.length; i++){
+            document.querySelector("#firstc").innerHTML += `<a href=${saveList[i].site} target="_blank">
+                    <div class="savedJobBody">
+                        <h5 class="card-title">${saveList[i].cName}</h5>
+                        <a class="remove-favorite">&#9733;</a>
+                        <p class="card-text">Job title</p>
+                        <span class="card-text">Description, place holder. Couple lines</span>
+                    </div>
+                </a>`
             }
+        } 
+        else if (5 <= saveList.length < 10){
+            for (let j=0; j<5; j++){
+                document.querySelector("#firstc").innerHTML += `<a href=${saveList[j].site} target="_blank">
+                        <div class="savedJobBody">
+                            <h5 class="card-title">${saveList[j].cName}</h5>
+                            <a class="remove-favorite">&#9733;</a>
+                            <p class="card-text">Job title</p>
+                            <span class="card-text">Description, place holder. Couple lines</span>
+                        </div>
+                    </a>`
+            }
+            for (let w=5; w<saveList.length; w++){
+                document.querySelector("#secondc").innerHTML += `<a href=${saveList[w].site} target="_blank">
+                        <div class="savedJobBody">
+                            <h5 class="card-title">${saveList[w].cName}</h5>
+                            <a class="remove-favorite">&#9733;</a>
+                            <p class="card-text">Job title</p>
+                            <span class="card-text">Description, place holder. Couple lines</span>
+                        </div>
+                    </a>`
+            }
+        }
+        else if (10 <= saveList.length < 15){
+            for (let v=0; v<5; v++){
+                document.querySelector("#firstc").innerHTML += `<a href=${saveList[v].site} target="_blank">
+                        <div class="savedJobBody">
+                            <h5 class="card-title">${saveList[v].cName}</h5>
+                            <a class="remove-favorite">&#9733;</a>
+                            <p class="card-text">Job title</p>
+                            <span class="card-text">Description, place holder. Couple lines</span>
+                        </div>
+                    </a>`
+            }
+            for (let b=5; b< 10; b++){
+                document.querySelector("#secondc").innerHTML += `<a href=${saveList[b].site} target="_blank">
+                        <div class="savedJobBody">
+                            <h5 class="card-title">${saveList[b].cName}</h5>
+                            <a class="remove-favorite">&#9733;</a>
+                            <p class="card-text">Job title</p>
+                            <span class="card-text">Description, place holder. Couple lines</span>
+                        </div>
+                    </a>`
+            }
+            for (let n=10; n<saveList.length; n++){
+                document.querySelector("#thirdc").innerHTML += `<a href=${saveList[n].site} target="_blank">
+                        <div class="savedJobBody">
+                            <h5 class="card-title">${saveList[n].cName}</h5>
+                            <a class="remove-favorite">&#9733;</a>
+                            <p class="card-text">Job title</p>
+                            <span class="card-text">Description, place holder. Couple lines</span>
+                        </div>
+                    </a>`
+            }
+        }  
+}
+
+// function renderList(){
+    // if (document.querySelector("#mySidenav").clientHeight > 800){
+        // if (saveList.length < 5){
+        //     for (let i=0; i<saveList.length; i++){
+        //         document.querySelector("#firstc").innerHTML += `<a href=${saveList[i].site} target="_blank">
+        //         <div class="savedJobBody">
+        //             <h5 class="card-title">${saveList[i].cName}</h5>
+        //             <a class="remove-favorite">&#9733;</a>
+        //             <p class="card-text">Job title</p>
+        //             <span class="card-text">Description, place holder. Couple lines</span>
+        //         </div>
+        //     </a>`
+        //     }
         // } else if (5 <= saveList.length < 10){
         //     for(let i=0; i<5; i++){
         //         document.querySelector("#firstc").innerHTML += `<a href=${saveList[i].site} target="_blank">
@@ -218,8 +288,8 @@ function renderList(){
         //         </div>
         //     </a>`
         //     }
-        }
-}
+        // }
+// }
 
 
 /* ----------------------- */
