@@ -11,13 +11,13 @@ if (JSON.parse(localStorage.getItem("saveList")) !== null) {
 // populate sidenav with saved items
 let maxCardsCol = Math.floor((window.innerHeight - 90) / 150);
 if (maxCardsCol < 1) maxCardsCol = 1;
-let numOfPages = Math.ceil(saveList.length/maxCardsCol);
+let numOfPages;
 renderList();
 
 function renderList() {
     let k = 0;
     let innerHTMLStr = '';
-    document.querySelector('#sidenav-indicators').innerHTML = '';
+    numOfPages = Math.ceil(saveList.length/maxCardsCol);
 
     for (let i = 0; i < numOfPages; i++) {
         // build sidenav dots
@@ -48,7 +48,9 @@ if (saveList.length > 0) renderList();
 //  Keyword save list shown when click search bar
 const pSearch = document.querySelector('.searchInput')
 pSearch.addEventListener('focus', function(){
-    document.querySelector('.previousSearched').classList.remove('d-none')
+    document.querySelector('.previousSearched').classList.remove('d-none');
+    let width = document.querySelector('#keywords').style.width;
+    document.querySelector('.previousSearched').style.width = width;
 })
 
 pSearch.addEventListener('blur', function(){
@@ -57,8 +59,6 @@ pSearch.addEventListener('blur', function(){
     
 function keywordSaved(){
     let searchBarValue = document.querySelector('.searchInput').value
-
-   
 
     if (keywordSavedList.indexOf(searchBarValue) === -1){
         keywordSavedList.push(searchBarValue)
