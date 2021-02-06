@@ -8,6 +8,7 @@ if (JSON.parse(localStorage.getItem("saveList")) !== null) {
 }
 // populate sidenav with saved items
 let maxCardsCol = Math.floor((window.innerHeight - 90) / 150);
+if (maxCardsCol < 1) maxCardsCol = 1;
 function renderList() {
     let k = 0;
     let innerHTMLStr = '';
