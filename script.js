@@ -17,7 +17,7 @@ renderList();
 function renderList() {
     let k = 0;
     let innerHTMLStr = '';
-    numOfPages = Math.ceil(saveList.length/maxCardsCol);
+    let numOfPages = Math.ceil(saveList.length/maxCardsCol);
 
     for (let i = 0; i < numOfPages; i++) {
         // build sidenav dots
@@ -30,7 +30,7 @@ function renderList() {
                 `<a href='${saveList[k].link}' target="_blank" data-index = ${k}>
                 <div class="savedJobBody" id=${saveList[k].id}>
                     <h5 class="card-title">${saveList[k].companyName}</h5>
-                    <a class="remove-favorite" onclick="removeSaved(this)">&#9733;</a>
+                    <a class="remove-favorite" onclick="removeSaved('${saveList[k].id}')">&#9733;</a>
                     <span class="card-text">${saveList[k].jobTitle}</span>
                     <br />
                     <p class="card-text">${saveList[k].description}</p>
@@ -149,7 +149,7 @@ function displayCards() {
             <div class="card clickcard my-3 mx-3 shape" id="cardClick">
                 <div class="card-body">
                     <div class="row d-flex">
-                            <a class="titleLink" style="width: 80%">${githubJobs[i].company}</a>
+                            <a class="titleLink" style="width: 80%" >${githubJobs[i].company}</a>
                             <p onclick="star(this)" id=${i} class="saveBtn">&#9733</p>
                     </div>
                     <h6 class="card-subtitle">${githubJobs[i].title}</h6>
@@ -163,8 +163,8 @@ function displayCards() {
             <div class="card clickcard my-3 mx-3 shape" id="cardClick">
                 <div class="card-body">
                     <div class="row d-flex">
-                            <a class="titleLink" style="width: 80%">${adzunaJobs[i].company.display_name}</a>
-                            <p onclick="star(this)" id=${i+10} class="saveBtn">&#9733</p>
+                            <a class="titleLink" style="width: 80%" data-index =${i+100}>${adzunaJobs[i].company.display_name}</a>
+                            <p onclick="star(this)" id=${i+100} class="saveBtn">&#9733</p>
                     </div>
                     <h6 class="card-subtitle">${adzunaJobs[i].title}</h6>
                     <p class="card-subtitle my-3">${adzunaJobs[i].location.display_name}</p>
@@ -180,7 +180,8 @@ function star(el) {
     //if star is orange, remove entry from sidenav
     if (el.parentElement.children[1].style.color === "orange") {
         el.parentElement.children[1].style.color = "lightgrey";
-        removeSaved(this.id);
+        //function remove saved
+        removeSaved(el.id)
     }
     else {
         el.parentElement.children[1].style.color = "orange";
@@ -197,13 +198,15 @@ function star(el) {
     localStorage.setItem("saveList", JSON.stringify(saveList));
     renderList();
 }
-// remove favourite from sidenav
-function removeSaved(el) {
-    var index = el.parentElement.children[0].getAttribute("data-index")
-   saveList.splice(index, 1)
-   console.log(el.parentElement.children[0].getAttribute("data-index"), 1)
-   localStorage.setItem("saveList", JSON.stringify(saveList));
-   renderList()
+
+function removeSaved(id) {
+    for (let i=0; i<saveList.length; i++) {
+        if (saveList[i].id === id) {
+            saveList.splice(i,1);
+        }
+    }
+    localStorage.setItem("saveList", JSON.stringify(saveList));
+    renderList();
 }
 
 /* ----------------------- */
