@@ -2,47 +2,85 @@
 /* ---- ON PAGE LOAD ---- */
 /* ---------------------- */
 var saveList = [];
+var keywordSavedList = JSON.parse(localStorage.getItem('keywordSaved')) || [];
+
 // load saved list from local storage
 if (JSON.parse(localStorage.getItem("saveList")) !== null) {
     saveList = JSON.parse(localStorage.getItem("saveList"));
 }
+// if(JSON.parse(localStorage.getItem('keywordSavedList')) !== null){
+//     keywordSavedList = JSON.parse(localStorage.getItem('keywordSavedList'));
+// }
 // carousel saved list
 // styling: how many pages?
 function renderList() {
-    if (saveList.length < 5){
-        for (let i=0; i<saveList.length; i++){
+    if (saveList.length < 5) {
+        for (let i = 0; i < saveList.length; i++) {
             document.querySelector("#pg1").innerHTML += saveList[i]
-            }
-        } 
-        else if (saveList.length < 10){
-            for (let j=0; j<5; j++){
-                document.querySelector("#pg1").innerHTML += saveList[j]
-            }
-            for (let w=5; w<saveList.length; w++){
-                document.querySelector("#pg2").innerHTML += saveList[w]
-            }
         }
-        else if (10 <= saveList.length < 15){
-            for (let v=0; v<5; v++){
-                document.querySelector("#pg1").innerHTML += saveList[v]
-            }
-            for (let b=5; b< 10; b++){
-                document.querySelector("#pg2").innerHTML += saveList[b]
-            }
-            for (let n=10; n<saveList.length; n++){
-                document.querySelector("#pg3").innerHTML += saveList[n]
-            }
-        }  
+    }
+    else if (saveList.length < 10) {
+        for (let j = 0; j < 5; j++) {
+            document.querySelector("#pg1").innerHTML += saveList[j]
+        }
+        for (let w = 5; w < saveList.length; w++) {
+            document.querySelector("#pg2").innerHTML += saveList[w]
+        }
+    }
+    else if (10 <= saveList.length < 15) {
+        for (let v = 0; v < 5; v++) {
+            document.querySelector("#pg1").innerHTML += saveList[v]
+        }
+        for (let b = 5; b < 10; b++) {
+            document.querySelector("#pg2").innerHTML += saveList[b]
+        }
+        for (let n = 10; n < saveList.length; n++) {
+            document.querySelector("#pg3").innerHTML += saveList[n]
+        }
+    }
 }
+
+
 renderList()
 
-/* ------------------------ */
-/* - BUTTON FUNCTIONALITY - */
-/* ------------------------ */
+
+//  Keyword save list shown when click search bar
+const pSearch = document.querySelector('.searchInput')
+pSearch.addEventListener('focus', function(){
+    document.querySelector('.previousSearched').classList.remove('d-none')
+})
+
+pSearch.addEventListener('blur', function(){
+    document.querySelector('.previousSearched').classList.add('d-none')
+})
+    
+function keywordSaved(){
+    let searchBarValue = document.querySelector('.searchInput').value
+
+   
+
+    if (keywordSavedList.indexOf(searchBarValue) === -1){
+        keywordSavedList.push(searchBarValue)
+        document.querySelector('.previousSearched').innerHTML += `<li class="list-group-item">${searchBarValue}</li>`
+        localStorage.setItem("keywordSaved", JSON.stringify(keywordSavedList))
+    }
+}
+
+(function(){
+    let keywordListParse = JSON.parse(localStorage.getItem('keywordSaved')) || []
+
+    for (let i=0; i<keywordSavedList.length; i++){
+        document.querySelector('.previousSearched').innerHTML += `<li class="list-group-item">${keywordListParse[i]}</li>`
+    }
+})();
+
+
 // on search button click
 document.querySelector('#searchBtn').addEventListener("click", async function () {
     // start loading CSS
     toggleSearchAnim();
+    // sends search value to saved keywords popout when keywords is clicked
+    keywordSaved();
     // parse input & call API
     await startSearch();
     // stop loading CSS & display cards
@@ -50,7 +88,7 @@ document.querySelector('#searchBtn').addEventListener("click", async function ()
     //Checks search input if it is empty shows modal
     if (document.querySelector('#keywords').value === "" && document.querySelector('#location').value === "") {
         showModal('Please enter at least 1 search keyword.');
-    } 
+    }
     else if (githubJobs.length === 0 || adzunaJobs.length === 0) {
         showModal('No search results found.');
     }
@@ -59,6 +97,7 @@ document.querySelector('#searchBtn').addEventListener("click", async function ()
         document.querySelector('#searchCont').style.marginTop = "90px";
         displayCards();
     }
+    
 });
 
 // opens side nav menu on click
@@ -103,8 +142,8 @@ function displayCards() {
     else console.log('Unexpected error with API output');
     // add new results
     for (var i = 0; i < numOfEntries; i++) {
-        document.querySelector('#searchOutputContainer').innerHTML += 
-        `<div class="col-md-4">
+        document.querySelector('#searchOutputContainer').innerHTML +=
+            `<div class="col-md-4">
             <div class="card clickcard my-3 mx-3 shape" id="cardClick">
                 <div class="card-body">
                     <div class="row d-flex">
@@ -117,8 +156,8 @@ function displayCards() {
                 </div>
             </div>
         </div>`;
-        document.querySelector('#searchOutputContainer').innerHTML += 
-        `<div class="col-md-4">
+        document.querySelector('#searchOutputContainer').innerHTML +=
+            `<div class="col-md-4">
             <div class="card clickcard my-3 mx-3 shape" id="cardClick">
                 <div class="card-body">
                     <div class="row d-flex">
@@ -134,7 +173,7 @@ function displayCards() {
     }
 }
 // // saves card to sidebar
-function star(el){
+function star(el) {
 
     var sideNav = document.querySelector("#pg1")
     var sideNav2 = document.querySelector("#pg2")
@@ -147,14 +186,14 @@ function star(el){
     sideNav3.innerHTML = ""
 
     //if star is orange, don't push
-    if(el.parentElement.children[1].style.color === "orange"){}
+    if (el.parentElement.children[1].style.color === "orange") { }
     else {
-    el.parentElement.children[1].style.color = "orange"
+        el.parentElement.children[1].style.color = "orange"
 
 
 
-    saveList.push(
-    `<a href=${link} target="_blank">
+        saveList.push(
+            `<a href=${link} target="_blank">
         <div class="savedJobBody">
             <h5 class="card-title">${companyName}</h5>
             <a class="remove-favorite">&#9733;</a>
@@ -164,28 +203,28 @@ function star(el){
     </a>`);
     }
 
-    if (saveList.length < 5){
-        for (let i=0; i<saveList.length; i++){
+    if (saveList.length < 5) {
+        for (let i = 0; i < saveList.length; i++) {
             sideNav.innerHTML += saveList[i]
-            }
-        } else if (saveList.length < 10){
-            for (let j=0; j<5; j++){
-                sideNav.innerHTML += saveList[j]
-            }
-            for (let w=5; w<saveList.length; w++){
-                sideNav2.innerHTML += saveList[w]
-            }
-        } else if (10 <= saveList.length < 15){
-            for (let v=0; v<5; v++){
-                sideNav.innerHTML += saveList[v]
-            }
-            for (let b=5; b< 10; b++){
-                sideNav2.innerHTML += saveList[b]
-            }
-            for (let n=10; n<saveList.length; n++){
-                sideNav3.innerHTML += saveList[n]
-            }
-        }  
+        }
+    } else if (saveList.length < 10) {
+        for (let j = 0; j < 5; j++) {
+            sideNav.innerHTML += saveList[j]
+        }
+        for (let w = 5; w < saveList.length; w++) {
+            sideNav2.innerHTML += saveList[w]
+        }
+    } else if (10 <= saveList.length < 15) {
+        for (let v = 0; v < 5; v++) {
+            sideNav.innerHTML += saveList[v]
+        }
+        for (let b = 5; b < 10; b++) {
+            sideNav2.innerHTML += saveList[b]
+        }
+        for (let n = 10; n < saveList.length; n++) {
+            sideNav3.innerHTML += saveList[n]
+        }
+    }
     localStorage.setItem("saveList", JSON.stringify(saveList))
 }
 
@@ -205,7 +244,7 @@ function toggleSearchAnim() {
 
 let appID = 'ddcfef90';
 let appKey = '34e2e2ed55214203ba42f1f55e511f13';
-let githubJobs=[], adzunaJobs=[];
+let githubJobs = [], adzunaJobs = [];
 
 async function startSearch() {
     //parse search terms
@@ -221,10 +260,10 @@ async function startSearch() {
     adString += `what=${jobDescription}`;
     if (jobLocation !== '') adString += `&where=${jobLocation}`;
     if (jobSalary > 0) adString += `&salary_min=${jobSalary}`;
-    if(document.getElementById('fullTimeCheck').checked == true) adString += `&full_time=1`;
-    if(document.getElementById('partTimeCheck').checked == true) adString += `&part_time=1`;
-    if(document.getElementById('contractCheck').checked == true) adString += `&contract=1`;
-    if(document.getElementById('permanentCheck').checked == true) adString += `&permanent=1`;
+    if (document.getElementById('fullTimeCheck').checked == true) adString += `&full_time=1`;
+    if (document.getElementById('partTimeCheck').checked == true) adString += `&part_time=1`;
+    if (document.getElementById('contractCheck').checked == true) adString += `&contract=1`;
+    if (document.getElementById('permanentCheck').checked == true) adString += `&permanent=1`;
     // await sendSearchRequests(ghString, adzString, ghLocation);
     await new Promise(resolve => setTimeout(resolve, 1500));
     sendDummyRequests();
@@ -331,25 +370,4 @@ function sendDummyRequests() {
         }
     ];
 }
-// Search invalid modal
-var modal = document.querySelector('#emptyModal');
 
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks the button, open the modal 
-function showModal() {
-    modal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function () {
-    modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
