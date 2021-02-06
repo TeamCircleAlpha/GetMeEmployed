@@ -160,7 +160,7 @@ function star(el) {
     }
 
     localStorage.setItem("saveList", JSON.stringify(saveList));
-    renderList();a
+    renderList();
 }
 // remove favourite from sidenav
 function removeSaved(id) {
@@ -206,8 +206,8 @@ function stopScroll() {
     let oldOffsetStr = document.querySelector('#sidenavIn').style.transform.replace(/[^-\d.]/g, '');
     let oldOffset = parseFloat(oldOffsetStr);
     if (isNaN(oldOffset)) oldOffset = 0;
-    let farEdge = numOfPages*253-253;
-    let closestEdge = Math.round(oldOffset / 253) * 253;
+    let farEdge = -1*(numOfPages*250-250);
+    let closestEdge = Math.round(oldOffset / 250) * 250;
     if (closestEdge > 0) closestEdge = 0;
     else if (closestEdge < farEdge) closestEdge = farEdge;
     anime({
@@ -217,7 +217,7 @@ function stopScroll() {
         easing: 'easeOutSine'
     });
     // switch page indicator to correct page
-    let pageNum = -1 * closestEdge / 253;
+    let pageNum = -1 * closestEdge / 250;
     for (let i = 0; i < document.querySelector('#sidenav-indicators').children.length; i++) {
         if (i === pageNum) {
             document.querySelector('#sidenav-indicators').children[i].classList.add('active');
