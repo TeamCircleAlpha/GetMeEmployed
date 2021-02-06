@@ -27,9 +27,9 @@ function renderList() {
         for (let j = 0; j < maxCardsCol; j++) {
             innerHTMLStr +=
                 `<a href='${saveList[k].link}' target="_blank">
-                <div class="savedJobBody" id=${saveList[k].id}>
+                <div class="savedJobBody">
                     <h5 class="card-title">${saveList[k].companyName}</h5>
-                    <a class="remove-favorite" onclick="removeSaved('${saveList[k].id}')">&#9733;</a>
+                    <a class="remove-favorite" onclick="removeSaved('${saveList[k].link}')">&#9733;</a>
                     <span class="card-text">${saveList[k].jobTitle}</span>
                     <br />
                     <p class="card-text">${saveList[k].description}</p>
@@ -69,8 +69,12 @@ function keywordSaved() {
     let searchBarValue = document.querySelector('.searchInput').value;
 
     if (keywordSavedList.indexOf(searchBarValue) === -1){
+        // add new keyword to array
         keywordSavedList.push(searchBarValue);
+        // remove first entry of array if new length > 5
         if (keywordSavedList.length > 5) keywordSavedList.shift();
+        // populate search list
+        document.querySelector('.previousSearched').innerHTML = '';
         let length = keywordSavedList.length < 5 ? keywordSavedList.length : 5;
         for (let i=(length -1); i>-1; i--){
             document.querySelector('.previousSearched').innerHTML += 
@@ -127,13 +131,13 @@ document.querySelector('#modalClose').onclick = function () {
     document.querySelector('#emptyModal').style.display = "none";
 }
 
-// When the user clicks anywhere outside of the modal, close it
 window.onmousedown = function (event) {
+    // When the user clicks anywhere outside of the modal, close it
     if (event.target == document.querySelector('#emptyModal')) {
         document.querySelector('#emptyModal').style.display = "none";
     }
+    // When user clicks outside the sidenav while its open, close it
     if (event.target != document.querySelector('#savedJobLink') && document.querySelector("#mySidenav").style.width != "") {
-        console.log('into while loop');
         let elem = event.target;
         let inSidenav = false;
         while (elem !== document.querySelector('html')) {
@@ -152,19 +156,29 @@ function displayCards() {
     document.querySelector('#searchOutputContainer').innerHTML = '';
     // calculate entries to display
     let numOfEntries = 0;
+    let existingGithubLink = false, existingAdzunaLink = false;
+    let gitStyle = '', adzStyle = '';
     if (githubJobs.length > 9 && adzunaJobs.length > 9) numOfEntries = 9;
     else if (githubJobs.length >= adzunaJobs.length) numOfEntries = adzunaJobs.length;
     else if (githubJobs.length < adzunaJobs.length) numOfEntries = githubJobs.length;
     else console.log('Unexpected error with API output');
     // add new results
     for (var i = 0; i < numOfEntries; i++) {
+        // check if these cards exist in the saveList
+        for (let j=0; j<saveList.length;j++) {
+            if (githubJobs[i].url === saveList[j].link) existingGithubLink = true;
+            if (adzunaJobs[i].redirect_url === saveList[j].link) existingAdzunaLink = true;
+        }
+        if (existingGithubLink) gitStyle = 'style="color:orange"';
+        if (existingAdzunaLink) adzStyle = 'style="color:orange"';
+        // build 1 card for github & 1 card for adzuna
         document.querySelector('#searchOutputContainer').innerHTML +=
             `<div class="col-md-4">
             <div class="card clickcard my-3 mx-3 shape" id="cardClick">
                 <div class="card-body">
                     <div class="row d-flex">
                             <a class="titleLink" style="width: 80%">${githubJobs[i].company}</a>
-                            <p onclick="star(this)" id=${i} class="saveBtn">&#9733</p>
+                            <p onclick="star(this)" ${gitStyle} id=${githubJobs[i].url} class="saveBtn">&#9733</p>
                     </div>
                     <h6 class="card-subtitle">${githubJobs[i].title}</h6>
                     <p class="card-subtitle my-3">${githubJobs[i].location}</p>
@@ -178,7 +192,7 @@ function displayCards() {
                 <div class="card-body">
                     <div class="row d-flex">
                             <a class="titleLink" style="width: 80%">${adzunaJobs[i].company.display_name}</a>
-                            <p onclick="star(this)" id=${i+100} class="saveBtn">&#9733</p>
+                            <p onclick="star(this)" ${adzStyle} id=${adzunaJobs[i].redirect_url} class="saveBtn">&#9733</p>
                     </div>
                     <h6 class="card-subtitle">${adzunaJobs[i].title}</h6>
                     <p class="card-subtitle my-3">${adzunaJobs[i].location.display_name}</p>
@@ -194,28 +208,34 @@ function star(el) {
     //if star is orange, remove entry from sidenav
     if (el.parentElement.children[1].style.color === "orange") {
         el.parentElement.children[1].style.color = "lightgrey";
-        removeSaved(this.id);
+        removeSaved(el.id);
     }
     else {
         el.parentElement.children[1].style.color = "orange";
         // push favourite into side nav
         saveList.push({
-            id: el.parentElement.children[1].id,
             link: el.parentElement.parentElement.children[3].children[0].href,
             companyName: el.previousElementSibling.textContent,
             jobTitle: el.parentElement.parentElement.children[1].innerText,
             description: el.parentElement.parentElement.children[2].innerText
         })
+        localStorage.setItem("saveList", JSON.stringify(saveList));
+        displayCards();
+        renderList();
     }
-
-    localStorage.setItem("saveList", JSON.stringify(saveList));
-    renderList();
 }
 
 // remove favourite from sidenav
-function removeSaved(id) {
-    // remove id
-    // renderList();
+function removeSaved(link) {
+    for (let i=0; i<saveList.length; i++) {
+        if (saveList[i].link === link) {
+            saveList.splice(i,1);
+        }
+    }
+    console.log(saveList);
+    localStorage.setItem("saveList", JSON.stringify(saveList));
+    displayCards();
+    renderList();
 }
 
 /* ----------------------- */
