@@ -18,4 +18,4 @@ https://teamcirclealpha.github.io/GetMeEmployed/
 
 ## Screenshots
 
-\[Screenshot\]
+![Screenshot](./assets/screenshot.png)
