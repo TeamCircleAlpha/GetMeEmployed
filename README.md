@@ -1,5 +1,12 @@
 # Get Me Employed
 
+Collaborators:
+Andrew Boyle
+Chang Xiao
+Jose Espinoza
+Mischa Dabrowski
+Tyler Petri
+
 User Story
 - I am looking for a new job
 - I am tired of searcing across multiple platforms and seeing the same listings over and over again
