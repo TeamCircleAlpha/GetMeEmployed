@@ -1,11 +1,11 @@
 # Get Me Employed
 
 Collaborators:
-Andrew Boyle
-Chang Xiao
-Jose Espinoza
-Mischa Dabrowski
-Tyler Petri
+- Andrew Boyle
+- Chang Xiao
+- Jose Espinoza
+- Mischa Dabrowski
+- Tyler Petri
 
 User Story
 - I am looking for a new job
