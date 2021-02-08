@@ -25,4 +25,6 @@ https://teamcirclealpha.github.io/GetMeEmployed/
 
 ## Screenshots
 
-![Screenshot](./assets/screenshot.png)
+![Screenshot](./assets/SS1.png)
+![Screenshot](./assets/SS2.png)
+![Screenshot](./assets/SS3.png)
